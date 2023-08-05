@@ -13,7 +13,8 @@ app.get('/api/v1/products', (req, res) =>
 { res.status(200).json({
     status: 'success',
     data: { products },
-    number: products.length
+    number: products.length,
+    origin: 'dummy products'
 })}
 )
 
