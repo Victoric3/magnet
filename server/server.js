@@ -9,15 +9,17 @@ mongoose.connect(magnetDb, {
 })
 .then(console.log('server successfully running'))
 .catch(err => console.log(err))
-
 const productControllers = require('./controllers/productControllers')
 app.use(express.json())
 //top level code above
 
 
-app.post('/api/v1/products', productControllers.createProduct
+// app.post('/api/v1/products', productControllers.createProduct)
+// app.get('/api/v1/products', productControllers.getAllProducts)
 
-)
-const userRoute = require('./routes/user')
+
+const userRoute = require('./routes/userRoute')
 app.use('/users', userRoute)
+const ProductRoute = require('./routes/productRoute')
+app.use('/api/v1/products', ProductRoute)
 app.listen(3000, () => {console.log('aphaMagnet3Server is running on port 3000');})

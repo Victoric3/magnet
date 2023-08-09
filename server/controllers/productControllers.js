@@ -37,4 +37,39 @@ exports.createProduct = async (req, res) => {
 // }
 }
 
-
+exports.getAllProducts = async (req, res) => {
+  try{
+    const allProducts = await Product.find()
+    
+    res.status(201).json(
+      {
+    status: 'success',
+    products: allProducts
+      }
+    )}catch(err){
+    res.status(404).json(
+      {
+        status: 'failed',
+        errorMessage: err.message
+      }
+    )
+  }
+}
+exports.getProduct = async (req, res) => {
+  try{
+    const product = await Product.findById(req.params.id)
+    
+    res.status(201).json(
+      {
+    status: 'success',
+    products: product
+      }
+    )}catch(err){
+    res.status(404).json(
+      {
+        status: 'failed',
+        errorMessage: err.message
+      }
+    )
+  }
+}
