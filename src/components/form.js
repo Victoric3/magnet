@@ -3,16 +3,15 @@ import { styled } from '@mui/system';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 
-const CenteredForm = styled('div')`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+const Centered = styled('div')`
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
 `;
-
 const FormContainer = styled('form')`
   display: flex;
   flex-direction: column;
@@ -20,22 +19,26 @@ const FormContainer = styled('form')`
   width: 400px;
   border-radius: 8px;
 
-`;
-const CenteredFormComponent = () => {
+  `;
+  const CenteredFormComponent = () => {
+  const navigate = useNavigate()
   const UseHandleSubmit = (event) => {
     event.preventDefault();
-    useNavigate('/')
+    navigate("/")
+    console.log('submitted');
 
     // Handle form submission logic here
   };
+  
   const [FirstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [Hobby, setHobby] = useState('');
   const [email, setEmail] = useState('');
 
+    
 
   return (
-    <CenteredForm>
+    <Centered>
       <FormContainer onSubmit={UseHandleSubmit}>
         <Typography
         variant='h4'
@@ -71,11 +74,11 @@ const CenteredFormComponent = () => {
         value={email}
         onChange={e => setEmail(e.target.value)}
         required/>
-        <Button variant="contained" type="submit">
+        <Button variant="contained" type="submit" >
           Submit
         </Button>
       </FormContainer>
-    </CenteredForm>
+    </Centered>
   );
 };
 

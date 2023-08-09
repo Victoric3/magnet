@@ -1,23 +1,23 @@
 const express = require('express')
-const fs = require('fs')
 const mongoose = require('mongoose')
 const app = express()
-const magnetDb = 'mongodb://localhost/magnetdb';
-mongoose.connect(magnetDb)
+
+const magnetDb = 'mongodb://127.0.0.1/magnetdb';
+mongoose.connect(magnetDb, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
 .then(console.log('server successfully running'))
 .catch(err => console.log(err))
-const Product = require('./models/productModel')
-const products = JSON.parse(fs.readFileSync(`${__dirname}/../src/data/products.json`))
 
-app.get('/api/v1/products', (req, res) => 
-{ res.status(200).json({
-    status: 'success',
-    data: { products },
-    number: products.length,
-    origin: 'dummy products'
-})}
+const productControllers = require('./controllers/productControllers')
+app.use(express.json())
+//top level code above
+
+
+app.post('/api/v1/products', productControllers.createProduct
+
 )
-
 const userRoute = require('./routes/user')
 app.use('/users', userRoute)
-app.listen(3000, () => {console.log('aphaMagnet3Server is running on ports 3000');})
+app.listen(3000, () => {console.log('aphaMagnet3Server is running on port 3000');})

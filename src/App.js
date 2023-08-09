@@ -1,15 +1,17 @@
-import { Router, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import CenteredFormComponent from './components/form';
+import Home from './components/home';
 
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Routes exact path='/' >
-        <CenteredFormComponent />
-        </Routes>
-      </Router>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/form' element={ <CenteredFormComponent />} />
+       
+      </Routes>
+  
     </div>
   );
 }
