@@ -73,3 +73,42 @@ exports.getProduct = async (req, res) => {
     )
   }
 }
+exports.updateProduct = async (req, res) => {
+  try{
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true
+    })
+    
+    res.status(201).json(
+      {
+    status: 'success',
+    products: product
+      }
+    )}catch(err){
+    res.status(404).json(
+      {
+        status: 'failed',
+        errorMessage: err.message
+      }
+    )
+  }
+}
+exports.deleteProduct = async (req, res) => {
+  try{
+    const product = await Product.findByIdAndDelete(req.params.id)
+    
+    res.status(201).json(
+      {
+    status: 'success',
+    message: 'you product has been deleted successfully'
+  }
+    )}catch(err){
+    res.status(404).json(
+      {
+        status: 'failed',
+        errorMessage: err.message
+      }
+    )
+  }
+}

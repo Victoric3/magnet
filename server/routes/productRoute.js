@@ -10,5 +10,7 @@ router
 router
 .route('/:id')
 .get(productControllers.getProduct)
+.patch(productControllers.updateProduct)
+.delete(productControllers.deleteProduct)
 
 module.exports = router
