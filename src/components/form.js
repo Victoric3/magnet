@@ -24,8 +24,7 @@ const FormContainer = styled('form')`
   const navigate = useNavigate()
   const UseHandleSubmit = (event) => {
     event.preventDefault();
-    navigate("/")
-    console.log('submitted');
+    navigate("/");
 
     // Handle form submission logic here
   };
