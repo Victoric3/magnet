@@ -1,0 +1,117 @@
+
+.contactWrapper{
+    background-color: black;
+    color: white;
+    padding: 13px;
+    margin-top: 100px;
+}
+
+  .ContactContent {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    justify-content: center;
+
+  }
+  
+  /* SocialMediaContainer styles */
+  .SocialMediaContainer {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+    gap: 20px;
+  }
+  .contactUs{
+    margin: 20px;
+    text-align: start;
+    align-self: flex-start;
+  }
+  .SocialMediaContainer .MuiSvgIcon-root {
+    font-size: 36px;
+    cursor: pointer;
+  }
+  
+  .SocialMediaContainer .MuiSvgIcon-root:hover {
+    color: #ff3811;
+  }
+  
+  /* AboutUsContainer styles */
+  .AboutUsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  /* QuickLinks styles */
+  .QuickLinks {
+    margin-top: 20px;
+    text-align: start;
+  }
+  li{
+    list-style-type: none
+  }
+  ul a{
+    display: flex
+  }
+  a:hover{
+    color: #ff3811;
+  }
+ 
+  
+  /* CopyrightContainer styles */
+  .CopyrightContainer {
+    margin-top: 30px;
+    text-align: center;
+  }
+  .Divider {
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.445);
+    height: 100%;
+    margin: 0;
+  }
+  .DividerHori{
+    width: 100%;
+    height: 1px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.445);
+    align-self: center;
+  }
+  .DividerHori2{
+    width: 100%;
+    height: 40px;
+    padding: 40px 0px;
+  }
+  .imgFlex{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 40px;
+  }
+  .logo{
+    width: 100px;
+    height: auto;
+  }
+  .title{
+    height: 50px;
+    width: auto;
+  }
+  
+@media (max-width: 768px) {
+    .ContactContent{
+        flex-direction: column;
+        gap: 20px;
+        justify-content: start;
+    }
+    .contactUs{
+        margin: 0px;
+    }
+    .imgFlex{
+        align-items: start;
+        margin: 0px;
+    }
+    .title{
+        width: 80%;
+        height: auto;
+    }
+}

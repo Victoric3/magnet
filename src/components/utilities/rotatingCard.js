@@ -35,11 +35,15 @@ const RotatingCard = (props) => {
            }}/>
           }
             
-            <Typography variant="h3" className={`description ${flipped ? 'back' : 'front'}`} sx={{textAlign: 'start'}}>
-            {flipped ?  props.BackContent.description1  :  props.FrontContent.description }
+            <Typography variant="h3" className={`description ${flipped ? 'back' : 'front'}`} sx={{textAlign:  'start'}}>
+            {flipped ?  props.BackContent.description1  :  props.FrontContent.description1 }
             </Typography>
-            <Typography variant="h3" className={`description ${flipped ? 'back' : 'front'}`} sx={{textAlign: 'start'}}>
-            {flipped ?  props.BackContent.description2?props.BackContent.description2:''  :  '' }
+            <Typography variant="h4" className={`description ${flipped ? 'back' : 'front'}`} 
+            sx={{
+              color:  !flipped ? props.FrontContent.titleBackground :'',
+              textAlign: 'start', 
+              }}>
+            {flipped ?  props.BackContent.description2?props.BackContent.description2:''  :  props.FrontContent.description2?props.FrontContent.description2:'' }
             </Typography>
           </div>
           <Button className={`description ${flipped ? 'back' : 'front'}`} sx={{

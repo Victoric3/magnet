@@ -28,4 +28,9 @@
     padding: 30px;
     object-fit: cover;
   }
-  
+  @media (max-width: 768px) {
+    img{
+      max-width: 100%;
+      height: auto;
+    }
+  }

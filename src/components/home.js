@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Typography,  } from "@mui/material";
-import { Link } from "react-router-dom";
 import RotatingCard from "./utilities/rotatingCard";
 import responsiveFlexStyle from "./utilities/flexContainerRotating.css";
 import responsiveFlexStyleSquare from "./utilities/flexContainerSquare.css";
@@ -20,7 +19,7 @@ import InvestmentProcess from '../img/Investment-process.png';
 import PromotersWorkFlow from '../img/process-flow-for-promoters.png'; 
 import FAQComponent from "./utilities/faqComp";
 import { styled } from '@mui/system';
-
+import ContactComponent from "./utilities/contact";
 
 
 
@@ -30,7 +29,8 @@ const Home = () => {
     title: `🛒P Shop`,
     imgString: shopImg,
     altString: 'shop image',
-    description: 'Open a physical store online',
+    description1: 'Open a physical store online',
+    description2: `click to view back`,
     titleColor: theme => theme.palette.background.default,
     titleBackground: theme=> theme.palette.secondary.main,
   }
@@ -42,7 +42,8 @@ const Home = () => {
     title: `🏪E Shop`,
     imgString: eShopImg,
     altString: 'e shop image',
-    description: 'Open an online store',
+    description1: 'Open an online store',
+    description2: 'click to view back',
     titleColor: theme => theme.palette.background.default,
     titleBackground: theme=> theme.palette.primary.main,
   }
@@ -54,7 +55,8 @@ const Home = () => {
     title: `💷Promote`,
     imgString: PromoteImg,
     altString: 'Promote image',
-    description: 'Become an affiliate',
+    description1: 'Become an affiliate',
+    description2: 'click to view back',
     titleColor: theme => theme.palette.background.default,
     titleBackground: theme=> theme.palette.tetiary.main,
   }
@@ -66,7 +68,8 @@ const Home = () => {
     title: `⚙Tools`,
     imgString: ToolsImg,
     altString: 'Tools image',
-    description: 'Tools to maximize sales',
+    description1: 'Tools to maximize sales',
+    description2: 'click to view back',
     titleColor: theme => theme.palette.background.default,
     titleBackground: theme=> theme.palette.text.primary,
   }
@@ -90,8 +93,8 @@ const faqData = [
   { question: "what is a magnet product?", answer: 'these are digital products sold by the official magnet primary shop, it is usually accompanied by special tools like: magnet mailer,used to send emails, WA.Magnet used for whatsapp marketting e.t.c' },
   { question: "what is the alpha E shop?", answer: 'it is a place where you can show case the digital products you create which may include:E courses, videos, Books, written movies, anime , comic books e.t.c' },
   { question: "what is the alpha P shop verification about?", answer: "it is an honourary tag sent based on the magnet's algorithm, this is to confirm users to identify user's legitmacy"},
-  { question: "why didn't i get 40% commision on sales?", answer: "Every user can promote a product as an affiliate while regular users get 20% commission on sale of magnet courses, affiliates get up to 40%, if you are an affiliate and didn't receive your 40% commision, then confirm that you are promoting a magnet course. other not products not directly owned/sponsored by magnet has its own commision on sale"},
-  { question: "do i get higher commision when promoting courses not owned by magnet?", answer: "yes"},
+  { question: "why didn't i get up to 40% commision on sales?", answer: "Every user can promote a product as an affiliate while regular users get 20% commission on sale of magnet courses, affiliates get up to 40%, if you are an affiliate and didn't receive your 40% commision, then confirm that you are promoting a magnet course. other products not directly owned/sponsored by magnet has its own commision on sale"},
+  { question: "do i get higher commision as an affiliate when promoting courses not owned by magnet?", answer: "yes"},
   { question: "what is the diffrence between an affiliate and an influencer?", answer: "they are both promoters but affiliates get paid when they make a sale while inflencers are paid immediately they are hired"},
 
   // Add more FAQ items as needed
@@ -103,7 +106,7 @@ const faqData = [
 
     
     return ( 
-      
+      <>
       <AppContainer>
        <Typography variant="h1" 
        sx={{ 
@@ -191,7 +194,8 @@ const faqData = [
        </div>
        <FAQComponent faqData={faqData} />
        </AppContainer>
-       
+       <ContactComponent />
+       </>
      );
 }
  
