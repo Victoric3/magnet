@@ -1,0 +1,25 @@
+.responsive-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 20px;
+  }
+  
+  .card {
+    flex: 1;
+    min-width: calc(50% - 20px); 
+    max-width: calc(50% - 20px); 
+
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 600px) {
+    .card {
+      min-width: 100%; 
+      max-width: 100%; 
+
+    }
+  }
+  
+  

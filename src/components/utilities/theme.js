@@ -5,6 +5,12 @@ const theme = createTheme({
     primary: {
       main: '#007bff',
     },
+    secondary: {
+      main: '#ff3811',
+    },
+    tetiary: {
+      main: '#00214d',
+    },
     text: {
       primary: '#333333',
     },
@@ -15,44 +21,59 @@ const theme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
-      sm: 930,
+      sm: 940,
       md: 1060,
       lg: 1280,
       xl: 1920,
     },
   },
   typography: {
-    fontFamily: 'Arial, sans-serif',
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
     fontSize: 16,
 
     // Define custom typography variants
     h1: {
-      fontSize: 36,
+      fontSize: 35,
       '@media (max-width: 600px)': {
-        fontSize: 31,
+        fontSize: 30,
       },
     },
     h2: {
-      fontSize: 28, 
+      fontSize: 30, 
       '@media (max-width: 600px)': {
-        fontSize: 23,
+        fontSize: 25,
       }, 
     },
     h3: {
+      fontSize: 25,
+      '@media (max-width: 600px)': {
+        fontSize: 20,
+      }, 
+    },
+    h4: {
       fontSize: 20,
       '@media (max-width: 600px)': {
-        fontSize: 15,
+        fontSize: 16,
       }, 
     },
     button: {
         textTransform: 'capitalize', 
-        fontSize: 18, 
+        fontSize: 20, 
         '@media (max-width: 600px)': {
-          fontSize: 13,
+          fontSize: 16,
         }, 
       },
-  },
-  // Other theme properties.
-});
+    }});
 
 export default theme;

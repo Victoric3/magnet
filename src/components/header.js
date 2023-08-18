@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import logo from '../img/magnet-full-logo.png';
+import logo from '../img/magnet-logo-org.png';
 import {
   AppBar,
   Toolbar,
@@ -12,7 +12,6 @@ import {
   CssBaseline,
   useMediaQuery,
   Button,
-  Typography,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -144,7 +143,6 @@ function Home() {
                   </ListItemIcon>
                   <ListItemText primary="Invest" />
                 </ListItem>
-                {/* Add more list items */}
               </List>
             </AccordionDetails>
           </Accordion>
@@ -219,7 +217,7 @@ function Home() {
       <AppBar
         position="fixed"
         sx={{
-          [isMobile ? 'width' : 'ml']: { sm: '100%', md: 240 },
+          [isMobile ? 'width' : 'ml']: { sm: '100%', md: '100' },
           transition: 'width 0.3s',
           backgroundColor: theme => theme.palette.background.default,
           boxShadow: 'none'
@@ -234,12 +232,11 @@ function Home() {
           padding: 3,
           '@media (max-width: 600px)': {
             width: '100%', 
+            margin: 0
           },
            }}>
             <div>
-            {/* {<img src={logo} alt='logo' style={{ width: '100px', height: 'auto'}}/>} */}
-            <Typography variant="h2" sx={{ color: theme => theme.palette.text.primary }}>alphaMagnet3.0</Typography>
-            </div>
+            <img src={logo} alt='logo' style={{ width: '100px', height: 'auto'}}/>            </div>
         <div>
             
           {isMobile ? (
