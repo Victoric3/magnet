@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required:[true, 'please provide your password'],
-        minLength: [7, 'password must not be less than 7 characters']
+        minLength: [7, 'password must not be less than 7 characters'],
+        select: false
     },
     passwordConfirm: {
         type: String,
@@ -30,7 +31,8 @@ const userSchema = new mongoose.Schema({
             },
             message: 'your passwords are not the same'
         }
-    }
+    },
+    passwordChangedAt: Date
 })
 userSchema.pre('save', async function(next){
     //firstly u check if there was a password change/update or creation(!isModified(password))
@@ -43,6 +45,18 @@ userSchema.pre('save', async function(next){
     next()
 
 })
-const UserModel = mongoose.model('UserModel', userSchema)
+userSchema.methods.correctPassword= async (attempt, realPassword) => {
+    return await bcrypt.compare(attempt, realPassword)
+}
+userSchema.methods.changedPasswordAfter = function(jwtTimeStamp){
+    if(this.passwordChangedAt){
+        
+        const changedAtTimeStamp = parseInt(this.passwordChangedAt.getTime()/1000, 10)
+        
+        return jwtTimeStamp < changedAtTimeStamp
+        }
+    return false
+}
+const User = mongoose.model('UserModel', userSchema)
 
-module.exports = UserModel
+module.exports = User

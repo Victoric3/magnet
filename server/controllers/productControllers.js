@@ -1,4 +1,4 @@
-const Product = require('../models/productModel');
+const Product = require('../models/productSchema');
 const APIFEATURES = require('./../utilities/apiFeatures')
 
 exports.createProduct = async (req, res) => {

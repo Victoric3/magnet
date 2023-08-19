@@ -1,6 +1,13 @@
 const express = require('express')
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+  }
+
+const AppError = require('./utilities/appError');
+const globalErrorHandler = require('./controllers/errorController');
 dotenv.config({ path: './config.env' });
 const mongoose = require('mongoose')
 const app = express()
@@ -25,4 +32,9 @@ const userRoute = require('./routes/userRoute')
 app.use('/api/v1/users', userRoute)
 const ProductRoute = require('./routes/productRoute')
 app.use('/api/v1/products', ProductRoute)
+app.all('*', (req, res, next) => {
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  });
+  
+app.use(globalErrorHandler)
 app.listen(3000, () => {console.log('aphaMagnet3Server is running on port 3000');})
