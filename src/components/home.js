@@ -110,7 +110,7 @@ const faqData = [
       <AppContainer>
        <Typography variant="h1" 
        sx={{ 
-        marginTop: '120px', 
+        marginTop: '130px', 
         textAlign: 'center',
         justifySelf: 'center',
         fontWeight: '500',
@@ -119,7 +119,8 @@ const faqData = [
        </Typography>
        <Typography variant="h1" 
        sx={{ 
-        margin: '5px', 
+        marginTop: '5px', 
+        marginBottom: '15px', 
         textAlign: 'center', 
         justifySelf: 'center',
         color: theme=> theme.palette.primary.main,

@@ -46,12 +46,20 @@
   .QuickLinks {
     margin-top: 20px;
     text-align: start;
+    display: flex;
+    flex-direction: column;
   }
   li{
-    list-style-type: none
+    list-style-type: none;
+  }
+  ul{
+    /* display: flex; */
+    text-align: start;
+    margin-left: -40px;
   }
   ul a{
-    display: flex
+    display: flex;
+    margin-left: -40px;
   }
   a:hover{
     color: #ff3811;
@@ -97,11 +105,12 @@
     width: auto;
   }
   
-@media (max-width: 768px) {
+@media (max-width: 820px) {
     .ContactContent{
         flex-direction: column;
         gap: 20px;
         justify-content: start;
+        margin: 0px;
     }
     .contactUs{
         margin: 0px;

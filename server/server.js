@@ -1,16 +1,15 @@
 const express = require('express')
+const cors = require('cors');
 const dotenv = require('dotenv');
-const morgan = require('morgan');
-
-if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
-  }
-
+const helmet = require('helmet')
 const AppError = require('./utilities/appError');
 const globalErrorHandler = require('./controllers/errorController');
-dotenv.config({ path: './config.env' });
 const mongoose = require('mongoose')
 const app = express()
+dotenv.config({ path: './config.env' });
+app.use(cors({
+  origin: 'http://localhost:3000'
+}))
 
 const magnetDb = 'mongodb://127.0.0.1/magnetdb';
 mongoose.connect(magnetDb, {
@@ -19,13 +18,13 @@ mongoose.connect(magnetDb, {
 })
 .then(console.log('server successfully running'))
 .catch(err => console.log(err))
-const productControllers = require('./controllers/productControllers')
-app.use(express.json())
+app.use(express.json({ limit: '10kb'}))
 //top level code above
+// 
+app.use(helmet())
 
 
-// app.post('/api/v1/products', productControllers.createProduct)
-// app.get('/api/v1/products', productControllers.getAllProducts)
+//dev logging
 
 
 const userRoute = require('./routes/userRoute')
@@ -37,4 +36,5 @@ app.all('*', (req, res, next) => {
   });
   
 app.use(globalErrorHandler)
-app.listen(3000, () => {console.log('aphaMagnet3Server is running on port 3000');})
+const port = process.env.PORT || 3000;
+app.listen(port, () => {console.log(`aphaMagnet3 server is running on port ${port}`);})

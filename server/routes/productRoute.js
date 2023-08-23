@@ -1,16 +1,19 @@
 const express = require('express')
 const productControllers = require('../controllers/productControllers')
+const authController = require('../controllers/authController')
 const router = express.Router()
 
 router
 .route('/')
-.get(productControllers.getAllProducts)
-.post(productControllers.createProduct)
+.get(authController.protect, productControllers.getAllProducts)
+.post(authController.protect, productControllers.createProduct)
 
 router
 .route('/:id')
-.get(productControllers.getProduct)
-.patch(productControllers.updateProduct)
-.delete(productControllers.deleteProduct)
+.get(authController.protect, productControllers.getProduct)
+.patch(authController.protect, productControllers.updateProduct)
+.delete(
+    authController.protect, 
+    productControllers.deleteProduct)
 
 module.exports = router

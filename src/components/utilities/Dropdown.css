@@ -1,0 +1,38 @@
+.country-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%; /* Make the selector cover the width of the form */
+  }
+  
+  .country-selector .MuiTypography-root {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 100%; /* Ensure the dropdown button spans the entire width */
+  }
+  
+  .country-selector .MuiTypography-root .MuiSvgIcon-root {
+    margin-left: auto; /* Move the expand icon to the right */
+  }
+  
+  .country-selector .MuiMenu-root {
+    width: 100%; /* Make the menu cover the width of the form */
+    max-height: 8 * 48px; /* Display only 8 menu items at a time */
+    overflow-y: auto; /* Add a scrollbar when needed */
+  }
+  
+  .country-selector .MuiMenuItem-root {
+    background-color: #007bff;
+    color: white;
+    width: 100%; /* Ensure menu items have equal width */
+  }
+  
+  .country-selector .country-code {
+    background-color: #007bff;
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    width: fit-content;
+  }
+  

@@ -24,9 +24,10 @@ exports.getAllUsers = async (req, res) => {
     )
   }
 }
-  exports.getUser = async (req, res) => {
+  exports.getCurrentUser = async (req, res) => {
     try{
-      const user = await User.findById(req.params.id)
+      //req.params.id
+      const user = await User.findById(req.user._id)
       
       res.status(201).json(
         {

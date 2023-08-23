@@ -42,7 +42,7 @@ const ContactComponent = () => {
     <Divider className='DividerHori2' orientation="Horizontal" flexItem />
     <Divider className='DividerHori' orientation="Horizontal" flexItem />
       <div className="CopyrightContainer">
-        <Typography variant="h4">&copy; {new Date().getFullYear()} Alphamagnet3. All rights reserved.</Typography>
+        <Typography variant="h4">&copy; {new Date().getFullYear()} alphamagnet3. All rights reserved.</Typography>
       </div>
     </div>
   );
