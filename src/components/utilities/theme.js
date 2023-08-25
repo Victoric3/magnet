@@ -73,6 +73,12 @@ const theme = createTheme({
         fontSize: 12,
       }, 
     },
+    h6: {
+      fontSize: 12,
+      '@media (max-width: 600px)': {
+        fontSize: 8,
+      }, 
+    },
     button: {
         textTransform: 'capitalize', 
         fontSize: 20, 

@@ -50,7 +50,6 @@ function Header() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const { isLoggedIn, logout, userData } = useAuth();
-  console.log(isLoggedIn, userData);
 
   const handleSidebarToggle = () => {
     setSidebarOpen(!sidebarOpen);
@@ -296,7 +295,7 @@ function Header() {
               <MenuIcon />
             </IconButton>
           ) : (
-              <div sx={{display: 'flex', alignItems: 'center'}}>
+              <div sx={{display: 'flex', alignItems: 'center', opacity: 0.2 }}>
               <Button sx={{ color: theme => theme.palette.text.primary }} onClick={() => {navigate('/')}}>Home</Button>
               <Button sx={{ color: theme => theme.palette.text.primary }}>about</Button>
               

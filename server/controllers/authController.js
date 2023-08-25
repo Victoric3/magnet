@@ -23,7 +23,8 @@ const signToken= id => {
 }
 exports.signUp = async(req, res)=>{
     const newUser = new User({
-        name: req.body.name,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         userName: req.body.userName,
         email: req.body.email,
         password: req.body.password,
@@ -115,7 +116,6 @@ exports.protect = async(req, res, next) => {
         }
         
         req.user = currentUser
-        console.log(req.user);
         next()
     
         //initial function wasnt woorking for some reason
@@ -176,7 +176,7 @@ exports.restrict = (...roles) => {
 exports.forgotPassword = catchAsync(async(req, res, next) => {
     const user = await User.findOne({ email: req.body.email })
     if(!user){
-        console.log(req.body.email);
+        // console.log(req.body.email);
         return next(new AppError('this email address does not belong to a user'))
     }
 

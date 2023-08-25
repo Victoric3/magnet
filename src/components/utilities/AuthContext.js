@@ -1,5 +1,3 @@
-// AuthContext.js
-
 import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
@@ -8,6 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
   const [token, setToken] = useState();
+  
 
   const updateAuth = (userData, isLoggedIn, newToken) => {
     setUserData(userData);

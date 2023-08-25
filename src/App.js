@@ -10,6 +10,10 @@ import MsgCard from './components/utilities/msgCard';
 import { useState } from 'react';
 import { AuthProvider } from './components/utilities/AuthContext';
 import Pshop from './components/pShop'
+import DashBoard from './components/DashBoard';
+import CreateShop from './components/createShop';
+import CreateProduct from './components/createProduct';
+import PshopPersonal from './components/pShopPersonal';
 
 
 function App() {
@@ -27,6 +31,8 @@ function App() {
   const handleOkClick = () => {
     setShowmsg(false)
   }
+
+
   return (
     <div className='app-container'>
     
@@ -46,8 +52,11 @@ function App() {
         messageShower={messageShower}/>} 
         />
         <Route path='/shop/Pshop' element={ <Pshop handleMsgCollector={handleMsgCollector} messageShower={messageShower}/>} />
-       
-      </Routes>
+        <Route path='/DashBoard' element= {<DashBoard />} />
+        <Route path='/CreateShop' element= {<CreateShop />} />
+        <Route path='/CreateProduct' element= {<CreateProduct />} />
+        <Route path='/PshopPersonal' element= {<PshopPersonal />} />
+       </Routes>
     </ThemeProvider>
     </AuthProvider>
     </div>

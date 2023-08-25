@@ -13,7 +13,8 @@ const SignupForm = ({ handleMsgCollector, messageShower }) => {
 
 //data sent to backend
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     userName: '',
     email: '',
     
@@ -160,9 +161,16 @@ const SignupForm = ({ handleMsgCollector, messageShower }) => {
         <h2>Create an account</h2>
         <form onSubmit={handleSubmit}>
           <TextField
-            label="Full name"
-            name="name"
-            value={formData.name}
+            label="Fisrt name"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            label="Last name"
+            name="lastName"
+            value={formData.lastName}
             onChange={handleChange}
             required
           />

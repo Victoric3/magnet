@@ -1,0 +1,43 @@
+.reusable-card {
+    width: 200px; 
+    height: 130px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+.color-identification{
+  width: 40px;
+  height: 40px;
+  border: 1px solid #33333354;
+  border-radius: 50%;
+  justify-self: start;
+  margin-left: -20%;
+  position: fixed;
+}
+.title-space{
+  width: 10%;
+}
+.title-cont{
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+  gap: 10px;
+}
+  @media (max-width: 1280px) {
+    .reusable-card{
+      width: 160px;
+      /* height: 10px; */
+    }
+  }
+  @media (max-width: 600px) {
+    .reusable-card{
+      width: 160px;
+      height: 150px;
+    }
+  }
+
+
+  
