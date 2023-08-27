@@ -15,4 +15,5 @@ routes
 routes
 .route('/currentUser')
 .get(authController.protect,userControllers.getCurrentUser)
+.patch(authController.protect,userControllers.updateCurrentUser)
 module.exports = routes

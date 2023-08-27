@@ -18,7 +18,8 @@ mongoose.connect(magnetDb, {
 })
 .then(console.log('server successfully running'))
 .catch(err => console.log(err))
-app.use(express.json({ limit: '10kb'}))
+app.use(express.json({ limit: '1000kb'}))
+
 //top level code above
 // 
 app.use(helmet())
@@ -29,6 +30,8 @@ app.use(helmet())
 
 const userRoute = require('./routes/userRoute')
 app.use('/api/v1/users', userRoute)
+const shopRoute = require('./routes/shopRoute')
+app.use('/api/v1/shops', shopRoute)
 const ProductRoute = require('./routes/productRoute')
 app.use('/api/v1/products', ProductRoute)
 app.all('*', (req, res, next) => {

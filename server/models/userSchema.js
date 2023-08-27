@@ -56,7 +56,24 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['affiliate', 'guest','influencer', 'EshopOwners', 'PshopOwners', 'admin' ],
         default: 'guest'
-    } 
+    },
+    Date: Date,
+    currency: {
+        type: String,
+        default: 'dollar'
+    },
+    currencySymbol: {
+        type: String,
+        default: '$'
+    },
+    transaction: {
+        type: [Number],
+        default: []
+    },
+    shops: {
+        type: [String],
+        default: []
+    },
 })
 userSchema.pre('save', async function(next){
     //firstly u check if there was a password change/update or creation(!isModified(password))

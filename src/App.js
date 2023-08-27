@@ -13,7 +13,7 @@ import Pshop from './components/pShop'
 import DashBoard from './components/DashBoard';
 import CreateShop from './components/createShop';
 import CreateProduct from './components/createProduct';
-import PshopPersonal from './components/pShopPersonal';
+// import PshopPersonal from './components/pShopPersonal';
 
 
 function App() {
@@ -53,9 +53,9 @@ function App() {
         />
         <Route path='/shop/Pshop' element={ <Pshop handleMsgCollector={handleMsgCollector} messageShower={messageShower}/>} />
         <Route path='/DashBoard' element= {<DashBoard />} />
-        <Route path='/CreateShop' element= {<CreateShop />} />
-        <Route path='/CreateProduct' element= {<CreateProduct />} />
-        <Route path='/PshopPersonal' element= {<PshopPersonal />} />
+        <Route path='/CreateShop' element= {<CreateShop messageShower={messageShower} handleMsgCollector={handleMsgCollector}/>} />
+        <Route path='/CreateProduct' element= {<CreateProduct />} messageShower={messageShower} handleMsgCollector={handleMsgCollector}/>
+        {/* <Route path='/PshopPersonal' element= {<PshopPersonal />} /> */}
        </Routes>
     </ThemeProvider>
     </AuthProvider>

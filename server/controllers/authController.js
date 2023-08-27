@@ -31,6 +31,9 @@ exports.signUp = async(req, res)=>{
         passwordConfirm: req.body.passwordConfirm,
         countryName: req.body.countryName,
         phoneNumber: req.body.phoneNumber,
+        currency: req.body.currency,
+        currencySymbol: req.body.currencySymbol,
+        Date: new Date(Date.now())
     })
     try{await newUser.save()
         const token = signToken(newUser._id)
@@ -47,9 +50,8 @@ exports.signUp = async(req, res)=>{
     })} catch(err){
         res.status(400).json({
             status: 'failed',
-            message: err.message
+            message: err.message,
         })
-        
     }
 }
 

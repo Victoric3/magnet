@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const ManageShop = ({ productCount, seenBy, MagnetsAttached, Delivered, Orders, Pending,type }) => {
-    const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    // const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
 
     return ( 
@@ -23,13 +23,13 @@ const ManageShop = ({ productCount, seenBy, MagnetsAttached, Delivered, Orders, 
         <div className="manage-shop-Banner">
         <img src={shopBanner} alt={'visit shop'} className="manage-shop-img" />
       <div className="manage-overlay">
-        <Link to={'/'} className="link">
+        <Link to={'/PshopPersonal'} className="link">
           Visit Link 
         </Link>
       </div>
 
         </div>
-        <AddIcon sx={{fontSize: '40px', cursor: 'pointer'}}  onClick={() => {navigate('/PshopPersonal')}}/>
+        <AddIcon sx={{fontSize: '40px', cursor: 'pointer'}}  onClick={() => {navigate('/CreateProduct')}}/>
         <div className="manage-shop-flex">
             <Typography variant="h3">All products</Typography>
             <Typography variant="h4">{productCount}</Typography>

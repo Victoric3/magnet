@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import FormList from "./utilities/list";
 import { TextField, Button } from "@mui/material";
 import './utilities/createShop.css';
+import { useNavigate } from "react-router-dom";
+import { useAuth } from './utilities/AuthContext';
+
 
 const CreateShop = ({ handleMsgCollector, messageShower }) => {
+  const { updateAuth, isLoggedIn, userData, token } = useAuth();
+
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
-        shopName: '',
+        name: '',
         email: '',
-        description: '',
-        tagline: '',
+        shopOverview: '',
+        shopCatchPhrase: '',
         linkedIn: '',
         twitter: '',
         instagram: '',
@@ -39,7 +45,7 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
           setDeliveryListValue(value)
       }
 
-      const shopTypeList = ['E-shop', 'P-shop'];
+      const shopTypeList = ['Eshop', 'Pshop'];
       const pShopCategoryList = [
         "Accessories & Jewelry",
         "Art & Craft Supplies",
@@ -110,7 +116,8 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
           'inter-state',
           'worldwide'
         ]
-      
+        
+            
        const categoryList = value===shopTypeList[0]?eShopCategoryList:pShopCategoryList
        const [selectedImgFile, setSelectedImgFile] = useState(null);
        const [selectedBannerFile, setSelectedBannerFile] = useState(null);
@@ -125,17 +132,74 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
          setSelectedBannerFile(file);
        };
        const formData2 = {
-          type: value,
+          shopType: value,
           category: categoryValue,
           shopImg: selectedImgFile,
-          shopBanner: selectedBannerFile
+          shopBanner: selectedBannerFile,
+          deliverableDistance: deliveryListValue
        }
-       const finalFormData = {...formData, ...formData2}
-       console.log(finalFormData);
-  
-      const handleSubmit = () => {
+      //  const final = { ...formData, ...formData2 }
+      //  console.log(final);
 
-      }
+
+       const handleSubmit = async (event) => {
+         event.preventDefault();
+        const form = new FormData();
+        form.append("name", formData.name);
+        form.append("email", formData.email);
+        form.append("shopOverview", formData.shopOverview);
+        form.append("shopCatchPhrase", formData.shopCatchPhrase);
+        form.append("linkedIn", formData.linkedIn);
+        form.append("twitter", formData.twitter);
+        form.append("instagram", formData.instagram);
+        form.append("facebook", formData.facebook);
+        form.append("location", formData.location);
+        form.append("closingHours", formData.closingHours);
+        form.append("openingHours", formData.openingHours);
+        form.append("shopType", value);
+        form.append("category", categoryValue);
+        form.append("deliverableDistance", deliveryListValue);
+
+        if (selectedImgFile) {
+          form.append("shopImg", selectedImgFile);
+        }
+        
+        if (selectedBannerFile) {
+          form.append("shopBanner", selectedBannerFile);
+        }
+
+        let response
+          try {
+              response = await fetch('http://localhost:8000/api/v1/shops/', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${token}`
+              },
+              body: form,
+            });
+      
+            if (response.ok) {
+              const data = await response.json();
+              console.log(userData);
+              updateAuth(userData, isLoggedIn, token, data.shop)
+              setError(null);
+              setSuccess('your shop was created successfully');  
+              setTimeout(() => {
+                navigate('/Myshop'); 
+              }, 2000); 
+  
+            }
+          } catch (error) {
+            console.log(error);
+            setError('something went wrong, refresh the page and try again')
+          }
+        
+        messageShower(true)
+       }
+       useEffect(() => {
+        handleMsgCollector(Error, Success);
+      }, [Error, Success]);
+      
   
     return ( 
     <>
@@ -145,8 +209,8 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
           <form onSubmit={handleSubmit}>
         <TextField
             label="Shop name"
-            name="shopName"
-            value={formData.shopName}
+            name="name"
+            value={formData.name}
             onChange={handleChange}
             required
           />
@@ -255,15 +319,15 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
         />
         <TextField
             label="your tagline"
-            name="tagline"
-            value={formData.tagline}
+            name="shopCatchPhrase"
+            value={formData.shopCatchPhrase}
             onChange={handleChange}
             required
         />
         <TextField
             label="describe your shop"
-            name="description"
-            value={formData.description}
+            name="shopOverview"
+            value={formData.shopOverview}
             onChange={handleChange}
             required
         />

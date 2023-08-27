@@ -5,6 +5,8 @@ import CountrySelector from './utilities/countrySelector'
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { useNavigate } from 'react-router-dom';
+import FormList from "./utilities/list";
+
 
 
 
@@ -95,6 +97,54 @@ const SignupForm = ({ handleMsgCollector, messageShower }) => {
     setPassword('');
     setPasswordConfirm('');
   };
+  const [selectedCurrency, setSelectedCurrency] = useState('')
+  const handleCurrencyList = (value) => {
+    setSelectedCurrency(value)
+}
+const currencyMapping = {
+  "Nigerian Naira": "₦",
+  "United States Dollar": "$",
+  "Euro": "€",
+  "British Pound Sterling": "£",
+  "South African Rand": "R",
+  "Kenyan Shilling": "KSh",
+  "Ghanaian Cedi": "₵",
+  "Ugandan Shilling": "UGX",
+  "Rwandan Franc": "FRw",
+  "Tanzanian Shilling": "TSh",
+  "Zambian Kwacha": "ZK",
+  "Mauritian Rupee": "Rs",
+  "Moroccan Dirham": "د.م.",
+  "Egyptian Pound": "ج.م.",
+  "Canadian Dollar": "$",
+  "Australian Dollar": "$",
+  "Indian Rupee": "₹",
+  "Chinese Yuan": "¥",
+  "Japanese Yen": "¥"
+};
+const currencies = [
+  "Nigerian Naira",
+  "United States Dollar",
+  "Euro",
+  "British Pound Sterling",
+  "South African Rand",
+  "Kenyan Shilling",
+  "Ghanaian Cedi",
+  "Ugandan Shilling",
+  "Rwandan Franc",
+  "Tanzanian Shilling",
+  "Zambian Kwacha",
+  "Mauritian Rupee",
+  "Moroccan Dirham",
+  "Egyptian Pound",
+  "Canadian Dollar",
+  "Australian Dollar",
+  "Indian Rupee",
+  "Chinese Yuan",
+  "Japanese Yen"
+];
+const selectedCurrencySymbol = currencyMapping[selectedCurrency];
+
 
 
   //merging formData
@@ -102,10 +152,11 @@ const SignupForm = ({ handleMsgCollector, messageShower }) => {
     countryName : selectedCountry,
     phoneNumber: phoneNumber,
     password: Password,
-    passwordConfirm: PasswordConfirm
+    passwordConfirm: PasswordConfirm,
+    currency: selectedCurrency,
+    currencySymbol: selectedCurrencySymbol
   }
   const finalFormData = {...formData, ...formData2}
-
 
   ///handle submit
   // Logic to handle signup 
@@ -210,10 +261,14 @@ const SignupForm = ({ handleMsgCollector, messageShower }) => {
                 fontSize: '16px',
                 width: '92%',
                 marginLeft: '8%'
-                /* Add any other custom styles you need */
               },
             }}
            />
+          <FormList 
+          items={currencies} 
+          listCaption= 'select your currency' 
+          handleListValue={handleCurrencyList}/>
+
           <TextField
             label="Password"
             type="password"
