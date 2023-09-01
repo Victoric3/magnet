@@ -39,6 +39,8 @@ const shopSchema = new mongoose.Schema({
     email: String,
     image: String,
     imageCover: String,
+    shopImgUrl: String,
+    shopBannerUrl: String,
     rating: {
         type: Number, 
         default: 0
@@ -61,14 +63,6 @@ const shopSchema = new mongoose.Schema({
         type: String,
         default: 'none'
     },
-    currency: {
-        type: String, 
-        default: 'dollar'
-    },
-    currencySymbol: {
-        type: String, 
-        default: '$'
-    },
     
     shopOverview: {
         type: String, 
@@ -80,6 +74,31 @@ const shopSchema = new mongoose.Schema({
         enum: ['Eshop', 'Pshop'],
         required: [true, 'please specify the type of shop you sell']
     },
+    Orders: {
+        type: [Number],
+        default: []
+    },
+    Delivered: {
+        type: [Number],
+        default: []
+    },
+    MagnetsAttached: {
+        type: [Number],
+        default: []
+    },
+    seenBy: {
+        type: [Number],
+        default: []
+    },
+    productCount: {
+        type: [Number],
+        default: []
+    },
+    pending: {
+        type: [Number],
+        default: []
+    },
+    
     score: {
         type: Number, 
         default: 1

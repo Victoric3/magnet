@@ -1,11 +1,12 @@
 const express = require('express')
 const shopControllers = require('../controllers/shopControllers')
 const authController = require('../controllers/authController')
-const upload = require('../middlewares/uploadFile')
+const upload = require('../uploadFile')
 const router = express.Router()
 
 router
 .route('/')
+.get(authController.protect, shopControllers.getShopDataForUser)
 .post(
     authController.protect, 
     upload.fields([
@@ -13,10 +14,15 @@ router
         { name: 'shopBanner', maxCount: 1 }
       ]),
     shopControllers.createShop)
+router
+.route('/All')
+.get(authController.protect, shopControllers.getAllShops)
+
 // .get(authController.protect, shopControllers.getAllProducts)
 
-// router
-// .route('/:id')
+router
+.route('/:id')
+.get(authController.protect, shopControllers.getShopById)
 // .get(authController.protect, shopControllers.getProduct)
 // .patch(authController.protect, shopControllers.updateProduct)
 // .delete(

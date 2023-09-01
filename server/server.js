@@ -6,6 +6,9 @@ const AppError = require('./utilities/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const mongoose = require('mongoose')
 const app = express()
+const path = require('path');
+
+app.use('/images', express.static(path.join(__dirname,'..', 'public/images')));
 dotenv.config({ path: './config.env' });
 app.use(cors({
   origin: 'http://localhost:3000'
@@ -23,6 +26,7 @@ app.use(express.json({ limit: '1000kb'}))
 //top level code above
 // 
 app.use(helmet())
+
 
 
 //dev logging

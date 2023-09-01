@@ -68,7 +68,11 @@ const userSchema = new mongoose.Schema({
     },
     transaction: {
         type: [Number],
-        default: []
+        default: [0]
+    },
+    pendingBalance: {
+        type: [Number],
+        default: [0]
     },
     shops: {
         type: [String],

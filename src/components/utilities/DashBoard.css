@@ -15,8 +15,15 @@
     gap: 5px;
     justify-content: space-between;
 }
-.top-nav-gap{
-    width: 80%;
+.top-nav-one{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.top-nav-two{
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 .dashBoard{
     display: flex;
@@ -40,7 +47,11 @@
    margin-right: 30px;
 
 }
-
+.manage-shop-container{
+    border: 2px solid #333333a7;
+    padding: 30px 0px;
+    border-radius: 5px;
+}
 
 
 
@@ -55,9 +66,6 @@
         width: 95%;
         
     }
-    .top-nav-gap{
-        width: 73%;
-    }
 }
 @media (max-width: 912px) {
     .dashBoard-wrapper{
@@ -70,9 +78,6 @@
         justify-content: start;
         margin-left: 20px;
         gap: 15px;
-    }
-    .top-nav-gap{
-        width: 53%;
     }
 
 }

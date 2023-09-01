@@ -280,14 +280,14 @@ function Header() {
           width: '85%',
           margin: '0px auto',
           textAlign: 'center',
-          padding: 3,
+          padding: '15px 5px',
           '@media (max-width: 600px)': {
             width: '100%', 
             margin: 0
           },
            }}>
             <div>
-            <img src={logo} alt='logo' style={{ width: '100px', height: 'auto'}}/></div>
+            <img src={logo} alt='logo' style={{ width: '75px', height: 'auto'}}/></div>
         <div>
             
           {isMobile ? (
@@ -295,7 +295,7 @@ function Header() {
               <MenuIcon />
             </IconButton>
           ) : (
-              <div sx={{display: 'flex', alignItems: 'center', opacity: 0.2 }}>
+              <div sx={{display: 'flex', alignItems: 'center',}}>
               <Button sx={{ color: theme => theme.palette.text.primary }} onClick={() => {navigate('/')}}>Home</Button>
               <Button sx={{ color: theme => theme.palette.text.primary }}>about</Button>
               

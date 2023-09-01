@@ -1,16 +1,9 @@
-.manage-shop-wrapper{
-    border: 5px inset #ffffff72;
-    padding: 20px;
-    margin: 10px;
-    border-radius: 5px;
-}
+
 .manage-shop-items{
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #33333377;
-    border-radius: 5px;
     padding: 2px 20px;
 }
 .manage-shop-Banner{
@@ -30,8 +23,9 @@
 }
 .manage-shop-img{
     /* display: block; */
-    width: 200px;
-    height: 200px;
+    padding: 5px;
+    width: 250px;
+    height: auto;
     transition: transform 0.3s ease-in-out;
 }
 .manage-overlay{
@@ -57,12 +51,21 @@
     gap: 15px;
     align-items: center;
 }
-
+.manage-icon-div{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
 @media (max-width : 1040px) {
     .manage-shop-items{
         padding: 0px;
         border: none;
+    }
+    .manage-icon-div{
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
     }
 }
 @media (max-width : 912px) {

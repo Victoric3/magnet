@@ -4,6 +4,7 @@ import { TextField, Button } from "@mui/material";
 import './utilities/createShop.css';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from './utilities/AuthContext';
+import PlacesAutocomplete from './utilities/locationAutocomplete'
 
 
 const CreateShop = ({ handleMsgCollector, messageShower }) => {
@@ -131,15 +132,6 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
          const file = event.target.files[0];
          setSelectedBannerFile(file);
        };
-       const formData2 = {
-          shopType: value,
-          category: categoryValue,
-          shopImg: selectedImgFile,
-          shopBanner: selectedBannerFile,
-          deliverableDistance: deliveryListValue
-       }
-      //  const final = { ...formData, ...formData2 }
-      //  console.log(final);
 
 
        const handleSubmit = async (event) => {
@@ -163,9 +155,11 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
         if (selectedImgFile) {
           form.append("shopImg", selectedImgFile);
         }
-        
-        if (selectedBannerFile) {
+         if (selectedBannerFile) {
           form.append("shopBanner", selectedBannerFile);
+        }
+        if(!selectedImgFile && !selectedBannerFile){
+          setError('your shop img is required')
         }
 
         let response
@@ -179,9 +173,7 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
             });
       
             if (response.ok) {
-              const data = await response.json();
-              console.log(userData);
-              updateAuth(userData, isLoggedIn, token, data.shop)
+              updateAuth(userData, isLoggedIn, token)
               setError(null);
               setSuccess('your shop was created successfully');  
               setTimeout(() => {
@@ -255,6 +247,7 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
             onChange={handleChange}
             required
         />
+        <PlacesAutocomplete />
         <button style={{ 
           border: '1px solid #333333b0', 
           background: '#fff', 

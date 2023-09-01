@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     setUserData(null)
   };
 
-  const value = { isLoggedIn, userData,token, updateAuth, logout };
+  const value = { isLoggedIn, userData,token, updateAuth,shopData, logout };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
