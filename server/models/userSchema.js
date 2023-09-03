@@ -57,7 +57,10 @@ const userSchema = new mongoose.Schema({
         enum: ['affiliate', 'guest','influencer', 'EshopOwners', 'PshopOwners', 'admin' ],
         default: 'guest'
     },
-    Date: Date,
+    Date: {
+        type: Date,
+        default: new Date()
+    },
     currency: {
         type: String,
         default: 'dollar'

@@ -21,7 +21,7 @@ mongoose.connect(magnetDb, {
 })
 .then(console.log('server successfully running'))
 .catch(err => console.log(err))
-app.use(express.json({ limit: '1000kb'}))
+app.use(express.json({ limit: '1000000kb'}))
 
 //top level code above
 // 

@@ -7,7 +7,7 @@ const shopSchema = new mongoose.Schema({
     },
     Date: {
         type: Date, 
-        default: Date.now(),
+        default: new Date(),
     },
     category: {
         type: String, 
@@ -90,10 +90,6 @@ const shopSchema = new mongoose.Schema({
         type: [Number],
         default: []
     },
-    productCount: {
-        type: [Number],
-        default: []
-    },
     pending: {
         type: [Number],
         default: []
@@ -102,7 +98,13 @@ const shopSchema = new mongoose.Schema({
     score: {
         type: Number, 
         default: 1
+    },
+    products: {
+        type: [String],
+        default: []
     }
+
+
     
 
 

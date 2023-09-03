@@ -5,14 +5,24 @@ import './ManageShop.css';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from './AuthContext';
-// import EditIcon from '@mui/icons-material/Edit';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 
 
-const ManageShop = ({ productCount, seenBy, MagnetsAttached, Delivered, Orders, Pending,type, image, shopId }) => {
+const ManageShop = ({ 
+  productCount,
+  seenBy, 
+  MagnetsAttached, 
+  Delivered, 
+  Orders, 
+  Pending,
+  type, 
+  image, 
+  shopId,
+  shopData
+}) => {
     const navigate = useNavigate()
     
-    const { updateAuth, userData, token, isLoggedIn } = useAuth();
+    const { updateAuth, userData, token, isLoggedIn, updateCurrentShopData, currentShopData} = useAuth();
     const handleShopClick = async (shopId) => {
         try {
           const response = await fetch(
@@ -33,7 +43,10 @@ const ManageShop = ({ productCount, seenBy, MagnetsAttached, Delivered, Orders, 
         }
     
       };
-
+      const handleAdd = (shopData) => {
+        updateCurrentShopData(shopData)
+          navigate('/CreateProduct')
+      }
     return ( 
     <>
         <div className="manage-shop-wrapper">
@@ -47,7 +60,9 @@ const ManageShop = ({ productCount, seenBy, MagnetsAttached, Delivered, Orders, 
         </div>
          </div>
         <div className="manage-icon-div">
-        <AddIcon sx={{fontSize: '40px', cursor: 'pointer'}}  onClick={() => {navigate('/CreateProduct')}}/>
+        <AddIcon sx={{fontSize: '40px', cursor: 'pointer'}}  onClick={() => {
+          handleAdd(shopData)
+          }}/>
         <EditCalendarIcon sx={{fontSize: '40px', cursor: 'pointer'}} />
         </div>
         <div className="manage-shop-flex">

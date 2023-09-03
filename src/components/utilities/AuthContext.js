@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const [token, setToken] = useState();
   const [shopData, setShopData] = useState();
+  const [currentShopData, setCurrentShopData] = useState();
   
 
   const updateAuth = (userData, isLoggedIn, newToken, shopData) => {
@@ -15,6 +16,9 @@ export const AuthProvider = ({ children }) => {
     setToken(newToken)
     setShopData(shopData)
   };
+  const updateCurrentShopData = (shopData) => {
+    setCurrentShopData(shopData)
+  }
 
   const logout = () => {
     setToken(null);
@@ -22,7 +26,16 @@ export const AuthProvider = ({ children }) => {
     setUserData(null)
   };
 
-  const value = { isLoggedIn, userData,token, updateAuth,shopData, logout };
+  const value = { 
+    isLoggedIn, 
+    userData, 
+    token, 
+    updateAuth, 
+    shopData, 
+    currentShopData,
+    updateCurrentShopData,
+    logout, 
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

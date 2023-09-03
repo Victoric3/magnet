@@ -53,8 +53,8 @@ function App() {
         />
         <Route path='/shop/Pshop' element={ <Pshop handleMsgCollector={handleMsgCollector} messageShower={messageShower}/>} />
         <Route path='/DashBoard' element= {<DashBoard />} />
-        <Route path='/CreateShop' element= {<CreateShop messageShower={messageShower} handleMsgCollector={handleMsgCollector}/>} />
-        <Route path='/CreateProduct' element= {<CreateProduct />} messageShower={messageShower} handleMsgCollector={handleMsgCollector}/>
+        <Route path='/CreateShop' element= {<CreateShop handleMsgCollector={handleMsgCollector} messageShower={messageShower}/>} />
+        <Route path='/CreateProduct' element= {<CreateProduct messageShower={messageShower} handleMsgCollector={handleMsgCollector}/>} />
         <Route path='/myPshop' element= {<MyPshop />} />
        </Routes>
     </ThemeProvider>

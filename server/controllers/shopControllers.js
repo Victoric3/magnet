@@ -73,8 +73,6 @@ exports.createShop = async (req, res) => {
     const shopBannerFile = req.files['shopBanner'][0];
     const shopImgUrl = `http://localhost:8000/images/${shopImgFile.filename}`
     const shopBannerUrl = `http://localhost:8000/images/${shopBannerFile.filename}`
-    // const shopImgPath = path.join(__dirname, 'images', shopImgFile.filename);
-    // const shopBannerPath = path.join(__dirname, 'images', shopBannerFile.filename);
 
     const shop = new Shop({
         shopType: req.body.shopType,
@@ -104,7 +102,7 @@ exports.createShop = async (req, res) => {
     });
     try{
     await shop.save()
-    const updatedUser = await updateCurrentUserShop( req.user.id, shop.name );
+    await updateCurrentUserShop( req.user.id, shop.name );
 
     res.status(201).json({
         status: 'success',
@@ -116,3 +114,17 @@ exports.createShop = async (req, res) => {
     })
   }
 }
+exports.updateCurrentShopProducts = async (shopId, newProductId) => {
+  try {
+  const updatedShop = await Shop.findByIdAndUpdate(
+    shopId,
+    { $push: { products: newProductId } },
+    { new: true, runValidators: true }
+    );
+  
+
+    return updatedShop;
+  } catch (err) {
+    throw err;
+  }
+};

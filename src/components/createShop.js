@@ -4,12 +4,10 @@ import { TextField, Button } from "@mui/material";
 import './utilities/createShop.css';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from './utilities/AuthContext';
-import PlacesAutocomplete from './utilities/locationAutocomplete'
 
 
 const CreateShop = ({ handleMsgCollector, messageShower }) => {
   const { updateAuth, isLoggedIn, userData, token } = useAuth();
-
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: '',
@@ -173,16 +171,16 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
             });
       
             if (response.ok) {
-              updateAuth(userData, isLoggedIn, token)
+              const data = await response.json()
+              updateAuth(userData, isLoggedIn, token, data.shop)
               setError(null);
               setSuccess('your shop was created successfully');  
               setTimeout(() => {
-                navigate('/Myshop'); 
+                navigate('/MyPshop'); 
               }, 2000); 
   
             }
           } catch (error) {
-            console.log(error);
             setError('something went wrong, refresh the page and try again')
           }
         
@@ -247,7 +245,6 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
             onChange={handleChange}
             required
         />
-        <PlacesAutocomplete />
         <button style={{ 
           border: '1px solid #333333b0', 
           background: '#fff', 
@@ -258,7 +255,7 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
           }}>
         <label htmlFor="Img-file-input" className="m-0 w-100">
             <input
-              accept={'img/*'}
+              accept={'image/*'}
               style={{ display: 'none' }}
               id="Img-file-input"
               type="file"
@@ -277,7 +274,7 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
           }}>
         <label htmlFor="banner-file-input" className="m-0 w-100">
             <input
-              accept={'img/*'}
+              accept={'image/*'}
               style={{ display: 'none' }}
               id="banner-file-input"
               type="file"

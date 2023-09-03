@@ -1,5 +1,3 @@
-// useFetchUserData.js
-
 import { useState, useEffect } from 'react';
 
 const useFetchUserData = (token) => {

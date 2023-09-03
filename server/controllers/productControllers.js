@@ -1,40 +1,44 @@
 const Product = require('../models/productSchema');
+const { updateCurrentShopProducts } = require('./shopControllers');
 const APIFEATURES = require('./../utilities/apiFeatures')
 
 exports.createProduct = async (req, res) => {
-  const product = new Product(req.body);
+  const imagefile = req.file
+  const imageUrl = `http://localhost:8000/images/${imagefile.filename}`
+
+  const product = new Product({productType: req.body.productType,
+    productOverview: req.body.productOverview,
+    discount: req.body.discount,
+    currency: req.user.currency,
+    image: imagefile.filename,
+    imageUrl: imageUrl,
+    email: req.body.email,
+    category: req.body.category,
+    deliveryFee: req.body.deliveryFee,
+    location: req.body.location,
+    returnPolicy: req.body.returnPolicy,
+    quantity: req.body.quantity,
+    price: req.body.price,
+    name: req.body.name,
+    date: Date.now(),
+    shopName: req.body.shopName,
+    shopId: req.body.shopId,
+    commision: req.body.commision,
+    owner: req.user.userName,
+  });
   try{
-  await product.save()
+    await product.save()
+    await updateCurrentShopProducts(product.shopId, product._id)
   res.status(201).json({
-      status: 'success',
-      product: product
+    status: 'success',
+    product: product,
+
   })
 } catch(err){
   res.status(400).json({
       erorrMessage: err.message
   })
 }
-//    try{
-//     const newProduct = await Product.create(req.body);
-//     res.status(201).json(
-//         {
-//             status : 'success',
-//             data : {
-//                 product: newProduct
-//             }
-//         })
-
-//    } catch(err) {
-//     res.status(400).json(
-//      {
-//          status: 'failed',
-//          Message: err
-//      }
-//     )
-// }
-
-
-// }
 }
 
 exports.getAllProducts = async (req, res) => {

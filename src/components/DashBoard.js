@@ -18,7 +18,6 @@ import ManageShop from "./utilities/ManageShop";
 
 const DashBoard = () => {
   const { updateAuth, userData, token, isLoggedIn, shopData } = useAuth();
-  // const [shopData, setShopData] = useState([])
   const navigate = useNavigate()
   const numbers1 = userData?.transaction;
   const numbers2 = userData?.pendingBalance;
@@ -28,7 +27,6 @@ const DashBoard = () => {
     return array?.reduce((total, value) => total + value, 0);
   };
   useEffect(() => {
-    // Fetch user's shop data using an API call
     fetch(`http://localhost:8000/api/v1/shops/`, {
       method: 'GET',
       headers: {
@@ -38,13 +36,12 @@ const DashBoard = () => {
     .then(response => response.json())
     .then(data => {
       updateAuth(userData, isLoggedIn, token, data.shopData)
-
+      console.log(shopData);
     })
     .catch(error => {
-      console.error('Error fetching shop data:', error);
+      console.error('Error fetching shop data, please login or reload the page')
     });
   }, [userData?._id]);
-   
     const currentBalance = totalBalance; // Example value
     const pendingBalance = totalPending; 
     const currency = userData?.currencySymbol
@@ -100,7 +97,7 @@ const DashBoard = () => {
       {shopData?.length > 0  ? shopData?.map(shop => (
         <ManageShop
           key={shop?._id}
-          productCount={calculateTotal(shop?.productCount)}
+          productCount={shop?.products.length}
           seenBy={calculateTotal(shop?.seenBy)}
           MagnetsAttached={calculateTotal(shop?.MagnetsAttached)}
           Delivered={calculateTotal(shop?.Delivered)}
@@ -108,7 +105,8 @@ const DashBoard = () => {
           Pending={calculateTotal(shop?.pending)}
           type={shop?.shopType}
           image={shop.shopImgUrl}
-          shopId = {shop._id}
+          shopId = {shop?._id}
+          shopData = {shop}
         />
       )) :
         <Typography variant="h4" sx={{
