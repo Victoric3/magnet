@@ -1,0 +1,72 @@
+.glassy-card {
+    perspective: 1000px;
+    width: 500px;
+    height: 600px;
+    display: inline-block;
+    cursor: pointer;
+    transition: transform 0.5s;
+    max-width: 100%;
+  }
+  
+  .glassy-card.flipped {
+    transform: rotateY(180deg);
+  }
+  
+  .card-child {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    border-radius: 15px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  .card-child:hover{
+    background: rgb(228, 228, 247);
+  }
+  
+  .card-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    backface-visibility: hidden;
+    transform: rotateY(0deg);
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  .card-content.flipped {
+    transform: rotateY(180deg);
+  }
+  
+  .content-title {
+    font-size: 1.5rem;
+    margin : 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .content-title.flipped {
+    transform: rotateY(180deg)
+  }
+  
+  .content-icons {
+    display: block;
+    gap: 8px;
+    justify-content: center;
+  }
+  .description.back{
+    transform: rotateY(180deg);
+    box-sizing: border-box;
+    font-size: clamp(14px, 3.5vw, 24px)
+  }
+  
+  

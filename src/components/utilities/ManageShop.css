@@ -1,0 +1,85 @@
+
+.manage-shop-items{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 20px;
+}
+.manage-shop-Banner{
+    position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.manage-shop-Banner a{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+.manage-shop-Banner a:hover{
+    color: #ff3811;
+}
+.manage-shop-img{
+    /* display: block; */
+    padding: 5px;
+    width: 250px;
+    height: auto;
+    transition: transform 0.3s ease-in-out;
+}
+.manage-overlay{
+    position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease-in-out;
+}
+.manage-overlay:hover {
+    opacity: 1;
+  }
+.manage-shop-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+.manage-icon-div{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+@media (max-width : 1040px) {
+    .manage-shop-items{
+        padding: 0px;
+        border: none;
+    }
+    .manage-icon-div{
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+    }
+}
+@media (max-width : 912px) {
+    .manage-shop-items{
+        border: 1px solid #33333377;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .manage-shop-img{
+        width: 100%;
+        height: auto;
+    }
+}
+
+

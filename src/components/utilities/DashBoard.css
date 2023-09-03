@@ -1,0 +1,109 @@
+.dashBoard-wrapper{
+        width: 85%;
+        height: 100vh;
+        margin: 110px auto;
+        padding: 3px;
+        background: white;
+        display: block;
+}
+.topNav{
+    display: flex;
+    align-items: center;
+    border: 0.5px solid #33333345;
+    border-radius: 5px;
+    padding: 15px;
+    gap: 5px;
+    justify-content: space-between;
+}
+.top-nav-one{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.top-nav-two{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.dashBoard{
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    gap: 10px; 
+    margin-bottom: 100px;
+}
+.balance{
+    flex: 1; 
+
+}
+.dash-square-card{
+   display: flex;
+   gap: 8px;
+   flex-wrap: wrap;
+   flex: 10%;
+   align-self: center;
+   justify-self: end;
+   justify-content: end;
+   margin-right: 30px;
+
+}
+.manage-shop-container{
+    border: 2px solid #333333a7;
+    padding: 30px 0px;
+    border-radius: 5px;
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 1040px) {
+    .dashBoard-wrapper{
+        width: 95%;
+        
+    }
+}
+@media (max-width: 912px) {
+    .dashBoard-wrapper{
+        width: 80%;
+    }
+    .dashBoard{
+        display: block;
+    }
+    .dash-square-card{
+        justify-content: start;
+        margin-left: 20px;
+        gap: 15px;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .dashBoard-wrapper{
+        width: 100%;
+        margin-top: 110px
+    }
+    .dashBoard{
+        display: block;
+    }
+    .dash-square-card{
+        flex-wrap: 50%;
+        margin: 5px auto;
+        justify-content: center;
+        gap: 2px;
+    }
+    .balance{
+        align-self: center;
+    }
+    /* .topNav{
+        margin-top: 50px;
+    } */
+    .top-nav-gap{
+        width: 23%;
+    }
+
+  }

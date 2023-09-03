@@ -1,23 +1,47 @@
 const express = require('express')
-const fs = require('fs')
+const cors = require('cors');
+const dotenv = require('dotenv');
+const helmet = require('helmet')
+const AppError = require('./utilities/appError');
+const globalErrorHandler = require('./controllers/errorController');
 const mongoose = require('mongoose')
 const app = express()
-const magnetDb = 'mongodb://localhost/magnetdb';
-mongoose.connect(magnetDb)
+const path = require('path');
+
+app.use('/images', express.static(path.join(__dirname,'..', 'public/images')));
+dotenv.config({ path: './config.env' });
+app.use(cors({
+  origin: 'http://localhost:3000'
+}))
+
+const magnetDb = 'mongodb://127.0.0.1/magnetdb';
+mongoose.connect(magnetDb, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
 .then(console.log('server successfully running'))
 .catch(err => console.log(err))
-const Product = require('./models/productModel')
-const products = JSON.parse(fs.readFileSync(`${__dirname}/../src/data/products.json`))
+app.use(express.json({ limit: '1000000kb'}))
 
-app.get('/api/v1/products', (req, res) => 
-{ res.status(200).json({
-    status: 'success',
-    data: { products },
-    number: products.length,
-    origin: 'dummy products'
-})}
-)
+//top level code above
+// 
+app.use(helmet())
 
-const userRoute = require('./routes/user')
-app.use('/users', userRoute)
-app.listen(3000, () => {console.log('aphaMagnet3Server is running on ports 3000');})
+
+
+//dev logging
+
+
+const userRoute = require('./routes/userRoute')
+app.use('/api/v1/users', userRoute)
+const shopRoute = require('./routes/shopRoute')
+app.use('/api/v1/shops', shopRoute)
+const ProductRoute = require('./routes/productRoute')
+app.use('/api/v1/products', ProductRoute)
+app.all('*', (req, res, next) => {
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  });
+  
+app.use(globalErrorHandler)
+const port = process.env.PORT || 3000;
+app.listen(port, () => {console.log(`aphaMagnet3 server is running on port ${port}`);})

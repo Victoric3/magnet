@@ -5,25 +5,44 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.14.0",
+    "@mui/icons-material": "^5.14.3",
+    "@mui/material": "^5.14.6",
     "@mui/styled-engine-sc": "^5.12.0",
+    "@mui/system": "^5.14.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.4.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^7.0.0",
     "git": "^0.1.5",
+    "helmet": "^7.0.0",
+    "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.1",
+    "libphonenumber-js": "^1.10.41",
     "mongoose": "^7.4.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.4",
     "nodemon": "^3.0.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.14.1",
+    "react-dom": "^18.0.0",
+    "react-phone-input-2": "^2.15.1",
+    "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
-    "styled-components": "^5.3.11"
+    "react-select": "^5.7.4",
+    "styled-components": "^5.3.11",
+    "swiper": "^10.2.0",
+    "validator": "^13.11.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "devStart": "nodemon server/server.js",
+    "debug": "ndb server/server.js",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -43,5 +62,18 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-react": "^7.22.5",
+    "babel-loader": "^9.1.3",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "description": "the alphaMagnet3 web app",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
