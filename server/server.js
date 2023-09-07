@@ -10,7 +10,7 @@ const path = require('path');
 
 app.use('/images', express.static(path.join(__dirname,'..', 'public/images')));
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'confirmation.html'));
+  res.send('server succesfully running')
 });
 dotenv.config({ path: './config.env' });
 const allowedOrigins = ['https://alphamagnet3.onrender.com'];
@@ -30,7 +30,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
-const magnetDb = `mongodb+srv://chukwujiobivictoric:<${process.env.PASSWORD}>@cluster0.y1idong.mongodb.net/`;
+const magnetDb = `mongodb+srv://chukwujiobivictoric:${process.env.PASSWORD}@cluster0.y1idong.mongodb.net/`;
 mongoose.connect(magnetDb, {
     useNewUrlParser: true,
     useUnifiedTopology: true
