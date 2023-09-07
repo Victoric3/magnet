@@ -1,39 +1,56 @@
-import React from "react";
-import shoe from '../../img/shoe.png'
-import { Typography } from "@mui/material";
+import React, { useEffect } from "react";
+import { Hidden, Typography } from "@mui/material";
+import './productSquareCard.css';
+import { useAuth } from './AuthContext'
 
-const ProductCard = ({ imageUrl, name, price }) => {
-    const imgStyle = {
-        width: '180px',
-        height: 'auto'
-    }
-    const cardStyle = {
-        width: '190px',
-        height: '230px',
-        borderRaduis: '10px',
-        backgroundColor: '#e0e0e0',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '5px',
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
+const ProductCard = ({ imageUrl, name, orgPrice, discountPrice, productData }) => {
+    const {
+        updateShowPopUp, 
+        showPopUp, 
+        updateProductData, 
+        currentProductData, 
+        shopProductData, 
+        allProductData,
+        token
+    } = useAuth()
 
+    const handleClick = (productData => {
+        updateProductData(allProductData, shopProductData, productData)
+        updateShowPopUp(!showPopUp)
+      }
+    )
     return ( 
     <>
-    <div style={cardStyle}>
-        <img src={shoe} alt="product" style={imgStyle}></img>
-        <Typography variant="h3" sx={{color: '#333', fontWeight: '400'}}> {name} </Typography>
+    <div className="card-style"
+       onClick={() => {
+        handleClick(productData)
+    }}
+    >
+        <img src={imageUrl} alt="product" className="img-style"></img>
+        <Typography variant="h3" sx={{
+            color: '#333', 
+            fontWeight: '400', 
+            whiteSpace: 'nowrap', 
+            overflow: 'hidden', 
+            textOverflow: 'ellipsis',
+            width: '90%'
+            }}> {name} </Typography>
+
         <div style={{
-            background: '#ff3811', 
-            width: '90%', 
-            height: '40px',
+            height: '80px',
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            margin: '0px auto'
+            flexDirection: 'column',
+            marginLeft: '8px',
+            alignSelf: 'start',
+            textOverflow: 'hidden',
             }}>
-        <Typography variant="h3" sx={{color: 'white', fontWeight: '400'}}> {price} </Typography>
+        <Typography variant="h3" sx={{color: '#333', fontWeight: '400'}}> {discountPrice} </Typography>
+        <Typography variant="h4" sx={{
+            color: '#333', 
+            fontWeight: '400', 
+            textDecoration: 'line-through', 
+            textDecorationThickness: '1px'
+            }}> {orgPrice} </Typography>
 
         </div>
     </div>

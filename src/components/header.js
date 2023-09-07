@@ -49,7 +49,7 @@ function Header() {
   const navigate = useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-  const { isLoggedIn, logout, userData } = useAuth();
+  const { logout, userData } = useAuth();
 
   const handleSidebarToggle = () => {
     setSidebarOpen(!sidebarOpen);
@@ -67,10 +67,9 @@ function Header() {
   };
 
   const handleConfirmLogout = () => {
-    // Perform logout action here
     logout();
     navigate('/')
-    setShowLogoutModal(false); // Close the modal after logout
+    setShowLogoutModal(false); 
   };
   const handleAccordionChange = (El, setEl) => {
     setEl(!El);
@@ -215,7 +214,7 @@ function Header() {
           <ListItemText primary="Contact" />
         </ListItem> 
         
-        {isLoggedIn ? <ListItem button>
+        {userData ? <ListItem button>
           <ListItemIcon>
             <PersonOutlineIcon />
           </ListItemIcon>
@@ -230,7 +229,7 @@ function Header() {
           <ListItemText primary="Login"
           onClick={() => {navigate('/signIn')}}/>
         </ListItem>}
-        {isLoggedIn? 
+        {userData? 
           <>
           <ListItem button sx={{border: '1px solid black'}}>
           <ListItemIcon>
@@ -350,7 +349,7 @@ function Header() {
                 </MenuItem>
             </Menu>
            <Button sx={{ color: theme => theme.palette.text.primary }}>Contact</Button>
-              {isLoggedIn ?<><Button
+              {userData ?<><Button
               onClick={() => navigate('/DashBoard')}
               ><PersonOutlineIcon sx={{ 
                 border: '1px solid black',
@@ -367,7 +366,7 @@ function Header() {
               onClick={() => {navigate('/signIn')}}
               >Login</Button>}
               
-              {isLoggedIn? 
+              {userData? 
               <>
               <Button 
               style={buttonStyle}

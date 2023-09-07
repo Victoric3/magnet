@@ -6,12 +6,14 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { useNavigate } from 'react-router-dom';
 import FormList from "./utilities/list";
+import { useAuth } from './utilities/AuthContext'
 
 
 
 
 
-const SignupForm = ({ handleMsgCollector, messageShower }) => {
+const SignupForm = () => {
+const { messageShower, handleMsgCollector, baseUrl } = useAuth()
 
 //data sent to backend
   const [formData, setFormData] = useState({
@@ -176,7 +178,7 @@ const selectedCurrencySymbol = currencyMapping[selectedCurrency];
         clearPassword();
       }else {
         try {
-            response = await fetch('http://localhost:8000/api/v1/users/signUp', {
+            response = await fetch(baseUrl('users/signUp'), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

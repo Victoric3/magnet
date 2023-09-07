@@ -1,0 +1,44 @@
+.overlay{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dim shade color */
+    z-index: 500;
+}
+.product-pop-up-container{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 55%;
+    width: 40%;
+    height: 70%;
+    margin-left: 35%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.923);
+    z-index: 5000;
+    overflow: auto;
+}
+.product-pop-up-buttons{
+    display: flex;
+    justify-content: start;
+
+}
+.product-pop-up-content{
+    display: flex;
+    justify-content: start;
+    margin: 2px 15px
+}
+
+@media (max-width: 912px) {
+    .product-pop-up-container{
+        width: 80%;
+        height: 80%;
+        margin-left: 80%;
+
+    }  
+}

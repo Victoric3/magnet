@@ -30,7 +30,10 @@ const productSchema = new mongoose.Schema({
     },
     category: String,
     email: String,
-    image: String,
+    image: {
+        type: String,
+        default: ''
+    },
     rating: {
         type: [Number], 
         default: []
@@ -49,6 +52,10 @@ const productSchema = new mongoose.Schema({
         default: 'none'
     },
     currency: {
+        type: String, 
+        required: [true, 'please state the currency your accept']
+    },
+    currencySymbol: {
         type: String, 
         required: [true, 'please state the currency your accept']
     },
@@ -74,7 +81,10 @@ const productSchema = new mongoose.Schema({
     },
     shopId: String,
     commision: String,
-    imageUrl: String
+    imageUrl: {
+        type: String,
+        default: ''
+    }
     
 
 

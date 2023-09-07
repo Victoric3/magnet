@@ -21,7 +21,6 @@ const BalanceCard = ({ currentBalance, pendingBalance, currency }) => {
   const toggleBalances = () => {
     setShowBalances(!showBalances);
   };
-  // const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   return (
     <Card sx={{ maxWidth: 400, margin: '20px'}}>
@@ -34,7 +33,7 @@ const BalanceCard = ({ currentBalance, pendingBalance, currency }) => {
         }}>
           Account Balance 
         </Typography >
-      <Typography  color="primary" 
+      <Typography  variant='h5' color="primary" 
       sx={{ 
         marginLeft: '19%',
         marginTop: '-25px',

@@ -1,0 +1,48 @@
+.edit-shop-wrrapper{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 150px auto;
+    gap: 10px;
+}
+.edit-shop-items{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background-color: #fff;
+}
+.edit-shop-content{
+    display: flex;
+    justify-content: space-between;  
+    flex-wrap: noWrap;
+    align-items: end;
+    padding: 5px;
+}
+.edit-shop-details{
+    display: flex;
+    flex-wrap: noWrap;
+    gap: 50px;
+    align-items: end;
+}
+.edit-shop-button-wrrapper{
+    display: flex;
+    align-self: end;
+    margin-right: 5px;
+    gap: 5px;
+}
+.save-button{
+    font-size: 16px;
+    text-transform: capitalize;
+    padding: 8px;
+    background-color: #007bff;
+    border-radius: 5px;
+    color: #fff;
+    box-shadow: none;
+    border: 0px;
+    cursor: pointer;
+  }
+  .save-button:hover{
+    color: #ffffffbb;
+  }
+  

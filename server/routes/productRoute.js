@@ -8,14 +8,15 @@ const upload = require('../uploadFile')
 router
 .route('/')
 .get(authController.protect, productControllers.getAllProducts)
-.post(authController.protect,
-    upload.single("image"),
-    productControllers.createProduct)
+.post(authController.protect, productControllers.createProduct)
 
+router
+.route('/shop/:id')
+.get(authController.protect, productControllers.getProductDataForShop)
 router
 .route('/:id')
 .get(authController.protect, productControllers.getProduct)
-.patch(authController.protect, productControllers.updateProduct)
+.patch(authController.protect, upload.single('image'), productControllers.updateProduct)
 .delete(
     authController.protect, 
     productControllers.deleteProduct)

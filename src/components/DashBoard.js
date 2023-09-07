@@ -11,14 +11,14 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import AddIcon from '@mui/icons-material/Add';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import ManageShop from "./utilities/ManageShop";
-
-
-
+import  useFetchUserData  from './utilities/useFetchData'
 
 
 const DashBoard = () => {
-  const { updateAuth, userData, token, isLoggedIn, shopData } = useAuth();
+  const { updateAuth, token, shopData, baseUrl, userData } = useAuth();
   const navigate = useNavigate()
+    useFetchUserData(token)
+  updateAuth( shopData)
   const numbers1 = userData?.transaction;
   const numbers2 = userData?.pendingBalance;
   const totalBalance = numbers1?.reduce((acc, current) => acc + current, 0);
@@ -27,7 +27,7 @@ const DashBoard = () => {
     return array?.reduce((total, value) => total + value, 0);
   };
   useEffect(() => {
-    fetch(`http://localhost:8000/api/v1/shops/`, {
+    fetch(baseUrl(`shops/`), {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -35,17 +35,15 @@ const DashBoard = () => {
     })
     .then(response => response.json())
     .then(data => {
-      updateAuth(userData, isLoggedIn, token, data.shopData)
-      console.log(shopData);
+      updateAuth( data.shopData)
     })
     .catch(error => {
       console.error('Error fetching shop data, please login or reload the page')
     });
-  }, [userData?._id]);
-    const currentBalance = totalBalance; // Example value
+  }, []);
+    const currentBalance = totalBalance;
     const pendingBalance = totalPending; 
     const currency = userData?.currencySymbol
-    //productCount, seenBy, MagnetsAttached, Delivered, Orders, Pending
    
     const SquareCardData = [
      {title: '10', content: 'Daily visits', color: '#66ff66'},
@@ -93,7 +91,7 @@ const DashBoard = () => {
           Manage your shops here
       </Typography>
       
-      
+      <div className="dash-manage-wrapper">
       {shopData?.length > 0  ? shopData?.map(shop => (
         <ManageShop
           key={shop?._id}
@@ -105,20 +103,18 @@ const DashBoard = () => {
           Pending={calculateTotal(shop?.pending)}
           type={shop?.shopType}
           image={shop.shopImgUrl}
-          shopId = {shop?._id}
           shopData = {shop}
+          totalShopData={shopData}
         />
       )) :
-        <Typography variant="h4" sx={{
-          fontWeight: '500',
-          color: '#333',
-          textAlign: 'center',
-          marginTop: '100px'
-        }}> you don't have any shop at the moment <span style={{display: 'block'}}><Link to='/CreateShop'>
+        <div className="dash-manage-text">
+        <Typography variant="h4"> you don't have any shop at the moment <span style={{display: 'block'}}><Link to='/CreateShop'>
           create shop here
           </Link></span></Typography>
+        </div>
 
       }
+      </div>
 
       </div>
 
@@ -127,6 +123,5 @@ const DashBoard = () => {
     </div> 
     )
 }
- //    //productCount, seenBy, MagnetsAttached, Delivered, Orders, Pending
 
 export default DashBoard;

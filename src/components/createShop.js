@@ -6,8 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from './utilities/AuthContext';
 
 
-const CreateShop = ({ handleMsgCollector, messageShower }) => {
-  const { updateAuth, isLoggedIn, userData, token } = useAuth();
+const CreateShop = () => {
+  const { 
+    updateAuth, 
+    isLoggedIn, 
+    userData, 
+    token, 
+    updateCurrentShopData, 
+    messageShower, 
+    handleMsgCollector,
+    baseUrl
+  } = useAuth();
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: '',
@@ -134,21 +143,8 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
 
        const handleSubmit = async (event) => {
          event.preventDefault();
+         messageShower(true)
         const form = new FormData();
-        form.append("name", formData.name);
-        form.append("email", formData.email);
-        form.append("shopOverview", formData.shopOverview);
-        form.append("shopCatchPhrase", formData.shopCatchPhrase);
-        form.append("linkedIn", formData.linkedIn);
-        form.append("twitter", formData.twitter);
-        form.append("instagram", formData.instagram);
-        form.append("facebook", formData.facebook);
-        form.append("location", formData.location);
-        form.append("closingHours", formData.closingHours);
-        form.append("openingHours", formData.openingHours);
-        form.append("shopType", value);
-        form.append("category", categoryValue);
-        form.append("deliverableDistance", deliveryListValue);
 
         if (selectedImgFile) {
           form.append("shopImg", selectedImgFile);
@@ -159,32 +155,72 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
         if(!selectedImgFile && !selectedBannerFile){
           setError('your shop img is required')
         }
+        
+      const nonImageFields = {
+        ...formData,
+        shopType: value,
+        category: categoryValue,
+        deliverableDistance: deliveryListValue,
+      };
 
-        let response
-          try {
-              response = await fetch('http://localhost:8000/api/v1/shops/', {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer ${token}`
-              },
-              body: form,
-            });
-      
-            if (response.ok) {
-              const data = await response.json()
-              updateAuth(userData, isLoggedIn, token, data.shop)
+
+        if(!selectedImgFile){
+            setError('please select an image for your shop')
+        }else if(!selectedBannerFile){
+            setError("please select an image for your shop's banner")
+        }else if(!value){
+            setError('what type of shop is this')
+        }else if(!categoryValue){
+            setError('please select your shop category')
+        }else if(!deliveryListValue){
+            setError('please select a how far you can deliver services')
+        }else{
+
+          let response
+        try {
+          response = await fetch(baseUrl('shops/'), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(nonImageFields),
+        });
+            
+        if (response.ok) {
+          const data = await response.json()
+       try{
+        const responseImg = await fetch(baseUrl(`shops/${data.shop._id}`), {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: form,
+      });
+      if(responseImg.ok){
+        const shopData  = await responseImg.json()
+        localStorage.setItem("currentShopData", JSON.stringify(shopData.shopData)) 
               setError(null);
               setSuccess('your shop was created successfully');  
-              setTimeout(() => {
-                navigate('/MyPshop'); 
-              }, 2000); 
-  
-            }
-          } catch (error) {
-            setError('something went wrong, refresh the page and try again')
-          }
+              setTimeout(() => {navigate('/MyPshop')}, 2000)
+              
+      }
+      else{
+        setError('there was an issue uploading your image, please do that by updating your shop with your desired image')
+        navigate('/MyPshop');
+      }} catch(err){
+        setError(err.message)
+        }
+                
+      }
+      else{
+        setError('pick annother name, this name has already been used')
+      }
+    } catch (error) {
+      setError(await response?.json()?.errormessage)
+    }
+    }
         
-        messageShower(true)
        }
        useEffect(() => {
         handleMsgCollector(Error, Success);
@@ -252,7 +288,7 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
           textAlign: 'left',
           padding: '20px 10px',
 
-          }}>
+          }} type="button">
         <label htmlFor="Img-file-input" className="m-0 w-100">
             <input
               accept={'image/*'}
@@ -271,7 +307,7 @@ const CreateShop = ({ handleMsgCollector, messageShower }) => {
           textAlign: 'left',
           padding: '20px 10px',
 
-          }}>
+          }} type="button">
         <label htmlFor="banner-file-input" className="m-0 w-100">
             <input
               accept={'image/*'}

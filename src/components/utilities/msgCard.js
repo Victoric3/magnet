@@ -3,9 +3,11 @@ import { Card, CardContent, Typography, Button } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import './msgCard.css'
+import { useAuth } from './AuthContext';
 
 
-const MsgCard = ({ errorMessage, success, handleOkClick, showmsg }) => {  
+const MsgCard = () => {  
+  const { handleOkClick, showmsg, success, error } = useAuth()
  
   const StatusIcon = ({ isSuccess }) => {
     return isSuccess ? <CheckCircleOutlineIcon color="green" /> : <ErrorOutlineIcon color="red" />;
@@ -32,8 +34,8 @@ const MsgCard = ({ errorMessage, success, handleOkClick, showmsg }) => {
         alignItems: 'center',
       }}
       >
-        <Typography variant="h3" sx = {{ color: errorMessage ? 'red' : 'green', padding: '25px'}}>
-          {errorMessage || success} <StatusIcon isSuccess={success}/>
+        <Typography variant="h3" sx = {{ color: error ? 'red' : 'green', padding: '25px'}}>
+          { success || error } <StatusIcon isSuccess={success}/>
         </Typography>
         <Button variant="contained" color="primary" onClick={handleOkClick} >
             OK

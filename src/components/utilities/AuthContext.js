@@ -1,40 +1,77 @@
 import React, { createContext, useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(null);
-  const [token, setToken] = useState();
+  const navigate = useNavigate()
+  const userData = JSON.parse(localStorage.getItem("userData"))
+  const token = localStorage.getItem("token")
   const [shopData, setShopData] = useState();
-  const [currentShopData, setCurrentShopData] = useState();
+  const currentShopData = JSON.parse(localStorage.getItem("currentShopData"))
+  const [shopProductData, setShopProductData] = useState();
+  const [allProductData, setAllProductData] = useState();
+  const [currentProductData, setCurrentProductData] = useState();
+  const [showPopUp, setShowPopUp] = useState(false)
+  const [error, setError] = useState()
+  const [success, setSuccess] = useState()
+  const [showmsg, setShowmsg] = useState(false)
+  const baseUrl = (finalEndPoint) => {
+    return `https://alphamagnet3-api.onrender.com/${finalEndPoint}`
+  }
+
+  const handleMsgCollector = (error, success) => {
+    setError(error);
+    setSuccess(success);
+  };
+  const messageShower = (boolean) => {
+      setShowmsg(boolean)
+  }
+  const handleOkClick = () => {
+    setShowmsg(false);
+  }
+
   
 
-  const updateAuth = (userData, isLoggedIn, newToken, shopData) => {
-    setUserData(userData);
-    setIsLoggedIn(isLoggedIn)
-    setToken(newToken)
+  const updateAuth = ( shopData) => {
     setShopData(shopData)
   };
-  const updateCurrentShopData = (shopData) => {
-    setCurrentShopData(shopData)
+  
+  const updateProductData = (allProductData, shopProductData, currentProductData) => {
+    setAllProductData(allProductData)
+    setShopProductData(shopProductData)
+    setCurrentProductData(currentProductData)
   }
 
   const logout = () => {
-    setToken(null);
-    setIsLoggedIn(false);
-    setUserData(null)
+    localStorage.removeItem("token")
+    localStorage.removeItem('userData')
+    navigate('/signIn')
   };
+  const updateShowPopUp = (Boolean) => {
+    setShowPopUp(Boolean)
+  }
 
   const value = { 
-    isLoggedIn, 
     userData, 
     token, 
     updateAuth, 
     shopData, 
     currentShopData,
-    updateCurrentShopData,
     logout, 
+    updateProductData,
+    currentProductData,
+    shopProductData,
+    allProductData,
+    showPopUp,
+    updateShowPopUp,
+    handleOkClick,
+    messageShower,
+    handleMsgCollector,
+    showmsg,
+    success,
+    error,
+    baseUrl
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -7,9 +7,19 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const CreateProduct = ({ handleMsgCollector, messageShower }) => {
+const CreateProduct = () => {
   const navigate = useNavigate()
-  const { currentShopData, token, isLoggedIn,shopData, updateAuth, userData } = useAuth()
+  const { 
+    currentShopData, 
+    token, 
+    isLoggedIn,
+    shopData, 
+    updateAuth, 
+    userData,
+    handleMsgCollector, 
+    messageShower,
+    baseUrl
+  } = useAuth()
     const [formData, setFormData] = useState({
         name: '',
         productOverview: '',
@@ -55,6 +65,7 @@ const CreateProduct = ({ handleMsgCollector, messageShower }) => {
 
     
     const handleImgFileChange = (event) => {
+      event.preventDefault()
       const file = event.target.files[0];
       setImage(file);
     };
@@ -64,55 +75,60 @@ const CreateProduct = ({ handleMsgCollector, messageShower }) => {
     
     const handleSubmit = async (event) => {
         event.preventDefault();
+        messageShower(true)
         const form = new FormData();
-        form.append("name", formData.name);
-        form.append("productOverview", formData.productOverview);
-        form.append("productType", productType);
-        form.append("deliveryFee", formData.deliveryFee);
-        form.append("returnPolicy", returnPolicy);
-        form.append("commision", formData.commision);
-        form.append("price", formData.price);
-        form.append("quantity", formData.quantity);
-        form.append("shopId", currentShopData._id);
-        form.append("discount", formData.discount);
-        form.append("location", currentShopData.location);
-        form.append("email", currentShopData.email);
-        form.append("shopName", currentShopData.name);
+        const finalFormData = {
+          ...formData,
+          returnPolicy: returnPolicy,
+          productType: productType,
+          shopId: currentShopData._id,
+          
+        }
+
         form.append("image", image);
         if(!image){
           setError('please select a good image to display your product')
-        }
-        if(!returnPolicy){
-          setError('please specify a return policy for your products')
-        }
-        if(!productType){
-          setError('please specify a your product type')
-        }
-        let response
-        try {
-          response = await fetch("http://localhost:8000/api/v1/products/", {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-          body: form,
-        });
-  
-        if (response.ok) {
-          setError(null);
-          setSuccess('your product was added successfully');  
-          const data = await response.json();
-          updateAuth(userData, isLoggedIn, token, currentShopData)
-          setTimeout(() => {
-            navigate('/MyPshop'); 
-          }, 2000); 
-
-        }
-      } catch (error) {
-        setError('something went wrong, refresh the page and try again')
-      }
+        }else if(!returnPolicy){
+          setError('please specify a policy for your products')
+        }else if(!productType){
+          setError('please specify your product type')
+        }else{
+          
+          let response
+          try {
+            response = await fetch(baseUrl('products'), {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(finalFormData),
+          });
     
-    messageShower(true)
+          if (response.ok) {
+            const data = await response.json()
+            try{
+              const responseImg = await fetch(baseUrl(`products/${data.product._id}`), {
+              method: 'PATCH',
+              headers: {
+                'Authorization': `Bearer ${token}`
+              },
+              body: form,
+            })
+            if(responseImg.ok){
+              setError(null);
+              setSuccess('your product was added successfully');
+              navigate('/MyPshop'); 
+            }
+          } catch(err){
+              setError(err.message)
+            }
+          }
+        } catch (error) {
+          setError('something went wrong, refresh the page and try again')
+        }
+      }
+      
    }
    useEffect(() => {
     handleMsgCollector(Error, Success);
@@ -179,7 +195,7 @@ const CreateProduct = ({ handleMsgCollector, messageShower }) => {
           textAlign: 'left',
           padding: '20px 10px',
 
-          }}>
+          }} type='button'>
         <label htmlFor="image" className="m-0 w-100">
             <input
               accept={'img/*'}
