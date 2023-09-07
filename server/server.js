@@ -10,7 +10,7 @@ const path = require('path');
 
 app.use('/images', express.static(path.join(__dirname,'..', 'public/images')));
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'confirmation.html'));
+  res.sendFile(path.join(__dirname, '..', 'public', 'confirmation.html'));
 });
 dotenv.config({ path: './config.env' });
 const allowedOrigins = ['https://alphamagnet3.onrender.com'];
