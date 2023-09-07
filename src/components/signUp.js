@@ -178,7 +178,7 @@ const selectedCurrencySymbol = currencyMapping[selectedCurrency];
         clearPassword();
       }else {
         try {
-            response = await fetch(baseUrl('users/signUp'), {
+            response = await fetch('https://alphamagnet3-api.onrender.com/api/v1/users/signUp', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
