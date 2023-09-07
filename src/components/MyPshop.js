@@ -21,10 +21,11 @@ const MyPshop = () => {
         currentProductData, 
         shopProductData, 
         allProductData,
-        showPopUp
+        showPopUp,
+        baseUrl
     } = useAuth();
     useEffect(() => {
-        fetch(`http://localhost:8000/api/v1/products/shop/${currentShopData._id}`, {
+        fetch(baseUrl(`products/shop/${currentShopData._id}`), {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`

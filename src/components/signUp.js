@@ -13,7 +13,7 @@ import { useAuth } from './utilities/AuthContext'
 
 
 const SignupForm = () => {
-const { messageShower, handleMsgCollector } = useAuth()
+const { messageShower, handleMsgCollector, baseUrl } = useAuth()
 
 //data sent to backend
   const [formData, setFormData] = useState({
@@ -178,7 +178,7 @@ const selectedCurrencySymbol = currencyMapping[selectedCurrency];
         clearPassword();
       }else {
         try {
-            response = await fetch('http://localhost:8000/api/v1/users/signUp', {
+            response = await fetch(baseUrl('users/signUp'), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

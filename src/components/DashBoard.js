@@ -15,10 +15,10 @@ import  useFetchUserData  from './utilities/useFetchData'
 
 
 const DashBoard = () => {
-  const { updateAuth, token, shopData } = useAuth();
+  const { updateAuth, token, shopData, baseUrl, userData } = useAuth();
   const navigate = useNavigate()
-  const userData = useFetchUserData(token)
-  updateAuth(userData, shopData)
+    useFetchUserData(token)
+  updateAuth( shopData)
   const numbers1 = userData?.transaction;
   const numbers2 = userData?.pendingBalance;
   const totalBalance = numbers1?.reduce((acc, current) => acc + current, 0);
@@ -27,7 +27,7 @@ const DashBoard = () => {
     return array?.reduce((total, value) => total + value, 0);
   };
   useEffect(() => {
-    fetch(`http://localhost:8000/api/v1/shops/`, {
+    fetch(baseUrl(`shops/`), {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -35,7 +35,7 @@ const DashBoard = () => {
     })
     .then(response => response.json())
     .then(data => {
-      updateAuth(userData, data.shopData)
+      updateAuth( data.shopData)
     })
     .catch(error => {
       console.error('Error fetching shop data, please login or reload the page')

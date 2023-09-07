@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from './AuthContext';
 
 const useFetchUserData = (token) => {
-  const [userData, setUserData] = useState(null);
+  const { baseUrl } = useAuth()
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/v1/users/currentUser', {
+        const response = await fetch(baseUrl('users/currentUser'), {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -16,20 +17,18 @@ const useFetchUserData = (token) => {
 
         if (response.ok) {
           const user = await response.json({});
-          const userData = user.user
-          setUserData(userData);
+          localStorage.setItem('userData', JSON.stringify(user.user))
         } else {
-          // console.log('There was an error fetching user data');
+          console.log('There was an error fetching user data');
         }
       } catch (error) {
-        // console.log(error);
+        console.log(error);
       }
     };
 
     fetchUserData();
   }, []);
 
-  return userData;
 };
 
 export default useFetchUserData;

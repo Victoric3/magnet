@@ -15,6 +15,7 @@ const CreateShop = () => {
     updateCurrentShopData, 
     messageShower, 
     handleMsgCollector,
+    baseUrl
   } = useAuth();
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
@@ -177,7 +178,7 @@ const CreateShop = () => {
 
           let response
         try {
-          response = await fetch('http://localhost:8000/api/v1/shops/', {
+          response = await fetch(baseUrl('shops/'), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -189,7 +190,7 @@ const CreateShop = () => {
         if (response.ok) {
           const data = await response.json()
        try{
-        const responseImg = await fetch(`http://localhost:8000/api/v1/shops/${data.shop._id}`, {
+        const responseImg = await fetch(baseUrl(`shops/${data.shop._id}`), {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`

@@ -17,7 +17,8 @@ const CreateProduct = () => {
     updateAuth, 
     userData,
     handleMsgCollector, 
-    messageShower 
+    messageShower,
+    baseUrl
   } = useAuth()
     const [formData, setFormData] = useState({
         name: '',
@@ -95,7 +96,7 @@ const CreateProduct = () => {
           
           let response
           try {
-            response = await fetch("http://localhost:8000/api/v1/products/", {
+            response = await fetch(baseUrl('products'), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -107,7 +108,7 @@ const CreateProduct = () => {
           if (response.ok) {
             const data = await response.json()
             try{
-              const responseImg = await fetch(`http://localhost:8000/api/v1/products/${data.product._id}`, {
+              const responseImg = await fetch(baseUrl(`products/${data.product._id}`), {
               method: 'PATCH',
               headers: {
                 'Authorization': `Bearer ${token}`

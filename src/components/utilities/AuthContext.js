@@ -5,7 +5,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate()
-  const [userData, setUserData] = useState(null);
+  const userData = JSON.parse(localStorage.getItem("userData"))
   const token = localStorage.getItem("token")
   const [shopData, setShopData] = useState();
   const currentShopData = JSON.parse(localStorage.getItem("currentShopData"))
@@ -16,6 +16,9 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState()
   const [success, setSuccess] = useState()
   const [showmsg, setShowmsg] = useState(false)
+  const baseUrl = (finalEndPoint) => {
+    return `https://alphamagnet3-api.onrender.com/${finalEndPoint}`
+  }
 
   const handleMsgCollector = (error, success) => {
     setError(error);
@@ -30,8 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   
 
-  const updateAuth = (userData, shopData) => {
-    setUserData(userData);
+  const updateAuth = ( shopData) => {
     setShopData(shopData)
   };
   
@@ -43,7 +45,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("token")
-    setUserData(null)
+    localStorage.removeItem('userData')
     navigate('/signIn')
   };
   const updateShowPopUp = (Boolean) => {
@@ -68,7 +70,8 @@ export const AuthProvider = ({ children }) => {
     handleMsgCollector,
     showmsg,
     success,
-    error
+    error,
+    baseUrl
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

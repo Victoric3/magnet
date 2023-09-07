@@ -9,7 +9,7 @@ const SignInForm = () => {
     const [identity, setIdentity] = useState('')
     const [password, setPassword] = useState('');
     const navigate = useNavigate()
-    const { messageShower, handleMsgCollector, updateAuth, token } = useAuth()
+    const { messageShower, handleMsgCollector, updateAuth, token, baseUrl } = useAuth()
 
 
 
@@ -18,9 +18,8 @@ const SignInForm = () => {
       //sign in logic
       const handleSubmit = async (event) => {
         event.preventDefault();
-    
         try {
-          const response = await fetch('http://localhost:8000/api/v1/users/signIn', {
+          const response = await fetch(baseUrl('users/signIn'), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
