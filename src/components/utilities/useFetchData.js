@@ -27,7 +27,7 @@ const useFetchUserData = (token) => {
     };
 
     fetchUserData();
-  }, [token]);
+  }, []);
 
   return userData;
 };

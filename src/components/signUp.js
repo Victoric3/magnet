@@ -6,12 +6,14 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { useNavigate } from 'react-router-dom';
 import FormList from "./utilities/list";
+import { useAuth } from './utilities/AuthContext'
 
 
 
 
 
-const SignupForm = ({ handleMsgCollector, messageShower }) => {
+const SignupForm = () => {
+const { messageShower, handleMsgCollector } = useAuth()
 
 //data sent to backend
   const [formData, setFormData] = useState({

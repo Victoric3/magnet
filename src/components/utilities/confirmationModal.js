@@ -4,7 +4,7 @@ import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, B
 const ConfirmationModal = ({ open, onClose, onConfirm, message }) => {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Confirm Action</DialogTitle>
+      <DialogTitle sx={{fontSize: '20px'}}>Confirm Action</DialogTitle>
       <DialogContent>
         <DialogContentText>{message}</DialogContentText>
       </DialogContent>

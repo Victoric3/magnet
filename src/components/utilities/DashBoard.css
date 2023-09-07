@@ -1,6 +1,5 @@
 .dashBoard-wrapper{
         width: 85%;
-        height: 100vh;
         margin: 110px auto;
         padding: 3px;
         background: white;
@@ -48,16 +47,22 @@
 
 }
 .manage-shop-container{
-    border: 2px solid #333333a7;
+    border: 2px solid #33333328;
     padding: 30px 0px;
     border-radius: 5px;
 }
-
-
-
-
-
-
+.dash-manage-wrapper{
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+.dash-manage-text{
+    font-weight: 500;
+    color: #333;
+    text-align: center;
+    margin-top: 100px;
+    margin-left: 30%
+}
 
 
 
@@ -69,7 +74,7 @@
 }
 @media (max-width: 912px) {
     .dashBoard-wrapper{
-        width: 80%;
+        width: 95%;
     }
     .dashBoard{
         display: block;
@@ -78,6 +83,10 @@
         justify-content: start;
         margin-left: 20px;
         gap: 15px;
+    }
+    .dash-manage-text{
+        margin-left: 10%;
+        
     }
 
 }
@@ -99,11 +108,11 @@
     .balance{
         align-self: center;
     }
-    /* .topNav{
-        margin-top: 50px;
-    } */
     .top-nav-gap{
         width: 23%;
     }
-
+    .dash-manage-text{
+        margin-left: 10%;
+        
+    }
   }

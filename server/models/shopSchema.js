@@ -37,10 +37,22 @@ const shopSchema = new mongoose.Schema({
     linkedIn: String,
     twitter: String,
     email: String,
-    image: String,
-    imageCover: String,
-    shopImgUrl: String,
-    shopBannerUrl: String,
+    image: {
+        type: String,
+        default: ''
+    },
+    imageCover: {
+        type: String,
+        default: ''
+    },
+    shopImgUrl: {
+        type: String,
+        default: ''
+    },
+    shopBannerUrl: {
+        type: String,
+        default: ''
+    },
     rating: {
         type: Number, 
         default: 0
@@ -102,6 +114,10 @@ const shopSchema = new mongoose.Schema({
     products: {
         type: [String],
         default: []
+    },
+    currencySymbol: {
+        type: String,
+        default: '$'
     }
 
 

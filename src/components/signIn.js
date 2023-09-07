@@ -2,20 +2,17 @@ import { TextField, Button, Link, Typography, FormControlLabel, Checkbox } from 
 import { React, useState, useEffect } from 'react';
 import style from './utilities/signUpForm.css'; 
 import { useNavigate } from 'react-router-dom';
-import  useFetchUserData  from './utilities/useFetchData'
 import { useAuth } from './utilities/AuthContext';
 
 
-const SignInForm = ({ handleMsgCollector, messageShower }) => {
+const SignInForm = () => {
     const [identity, setIdentity] = useState('')
     const [password, setPassword] = useState('');
     const navigate = useNavigate()
-    const [token, setToken] = useState('')
-    const [isLoggedIn, setIsLoggedin] = useState('')
-    const { updateAuth } = useAuth();
+    const { messageShower, handleMsgCollector, updateAuth, token } = useAuth()
 
 
-      //save error state and move up the tray for display
+
       const [Error, setError] = useState(null)
       const [Success, setSuccess] = useState(null)
       //sign in logic
@@ -32,16 +29,15 @@ const SignInForm = ({ handleMsgCollector, messageShower }) => {
           });
     
           if (response.ok) {
+            setError(null)
             const data = await response.json();
-            setToken(data.token)
-            setIsLoggedin(true)
+            localStorage.setItem("token", data.token)
             setSuccess('successfully signed in')
             setTimeout(() => {
               navigate('/DashBoard'); 
             }, 2000); 
           } else {
             setError('invalid email or password')
-            // Handle unsuccessful login (e.g., show error message)
           }
         } catch (error) {
           setError('something went wrong, try again later')
@@ -49,12 +45,10 @@ const SignInForm = ({ handleMsgCollector, messageShower }) => {
         messageShower(true)
       };
     
-    const userData = useFetchUserData(token)
-    updateAuth(userData, isLoggedIn, token)
     //move it up to parent
     useEffect(() => {
           handleMsgCollector(Error, Success);
-      }, [Error, Success]);
+      }, [Error, Success])
     return ( 
         <div className="signin-container" style={style}>
       <div className="signup-form">

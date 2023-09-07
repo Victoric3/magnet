@@ -8,25 +8,21 @@ router
 .route('/')
 .get(authController.protect, shopControllers.getShopDataForUser)
 .post(
-    authController.protect, 
-    upload.fields([
-        { name: 'shopImg', maxCount: 1 },
-        { name: 'shopBanner', maxCount: 1 }
-      ]),
-    shopControllers.createShop)
+    authController.protect, shopControllers.createShop)
 router
 .route('/All')
 .get(authController.protect, shopControllers.getAllShops)
 
-// .get(authController.protect, shopControllers.getAllProducts)
 
 router
 .route('/:id')
+.patch(authController.protect,
+  upload.fields([
+    { name: 'shopImg', maxCount: 1 },
+    { name: 'shopBanner', maxCount: 1 },
+  ]),
+  shopControllers.updateShopImage)
 .get(authController.protect, shopControllers.getShopById)
-// .get(authController.protect, shopControllers.getProduct)
-// .patch(authController.protect, shopControllers.updateProduct)
-// .delete(
-//     authController.protect, 
-//     shopControllers.deleteProduct)
+.delete(authController.protect, shopControllers.deleteShop)
 
 module.exports = router

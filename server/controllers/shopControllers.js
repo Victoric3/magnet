@@ -2,12 +2,12 @@ const Shop = require('../models/shopSchema')
 const path = require('path')
 const { updateCurrentUserShop } = require('../controllers/userControllers')
 const User = require('../models/userSchema');
+const Product = require('../models/productSchema')
 
 exports.getShopDataForUser = async (req, res) => {
   try {
-    const userId = req.user._id; // Get the user ID from the request parameters
+    const userId = req.user._id;
 
-    // Find the user by ID
     const user = await User.findById(userId);
 
     if (!user) {
@@ -69,22 +69,16 @@ exports.getAllShops= async(req, res) => {
 
 
 exports.createShop = async (req, res) => {
-    const shopImgFile = req.files['shopImg'][0];
-    const shopBannerFile = req.files['shopBanner'][0];
-    const shopImgUrl = `http://localhost:8000/images/${shopImgFile.filename}`
-    const shopBannerUrl = `http://localhost:8000/images/${shopBannerFile.filename}`
-
-    const shop = new Shop({
+    
+  const shop = new Shop({
         shopType: req.body.shopType,
         shopOverview: req.body.shopOverview,
         currencySymbol: req.body.currencySymbol,
         currency: req.body.currency,
         shopCatchPhrase: req.body.shopCatchPhrase,
-        rating: req.body.rating,
-        ratingQuantity: req.body.ratingQuantity,
-        ratingAvearage: req.body.ratingAvearage,
-        imageCover: shopBannerFile.filename,
-        image: shopImgFile.filename,
+        rating: 0,
+        ratingQuantity: 0,
+        ratingAvearage: 0,
         email: req.body.email,
         twitter: req.body.twitter,
         linkedIn: req.body.linkedIn,
@@ -97,12 +91,12 @@ exports.createShop = async (req, res) => {
         location: req.body.location,
         category: req.body.category,
         name: req.body.name,
-        shopBannerUrl: shopBannerUrl,
-        shopImgUrl: shopImgUrl,
+        currencySymbol: req.user.currencySymbol,
     });
     try{
     await shop.save()
     await updateCurrentUserShop( req.user.id, shop.name );
+    
 
     res.status(201).json({
         status: 'success',
@@ -114,6 +108,38 @@ exports.createShop = async (req, res) => {
     })
   }
 }
+exports.updateShopImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updateFields = {};
+
+    if (req.files.shopImg) {
+      updateFields.image = req.files.shopImg[0].path;
+      updateFields.shopImgUrl = `http://localhost:8000/images/${req.files.shopImg[0].filename}`;
+    }
+
+    if (req.files.shopBanner) {
+      updateFields.imageCover = req.files.shopBanner[0].path;
+      updateFields.shopBannerUrl = `http://localhost:8000/images/${req.files.shopBanner[0].filename}`;
+    }
+
+    const shop = await Shop.findByIdAndUpdate(id, { $set: updateFields }, { new: true });
+
+    if (!shop) {
+      return res.status(404).json({ error: 'Shop not found' });
+    }
+    res.status(200).json({
+      status: 'successfully uploaded image',
+      shopData: shop
+    })
+
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal server error', message: error.message });
+  }
+};
+
+
 exports.updateCurrentShopProducts = async (shopId, newProductId) => {
   try {
   const updatedShop = await Shop.findByIdAndUpdate(
@@ -128,3 +154,58 @@ exports.updateCurrentShopProducts = async (shopId, newProductId) => {
     throw err;
   }
 };
+
+exports.deleteShop = async (req, res) => {
+  try {
+    //1 find the shop from my request parameters
+    const shop = await Shop.findById(req.params.id);
+
+    if (!shop) {
+      return res.status(404).json({
+        status: 'failed',
+        errorMessage: 'Shop not found',
+      });
+    }
+    // turned off validation because password confirm is not available
+    User.schema.set('validateBeforeSave', false);
+
+
+    // 2 Find the owner of the shop by their username 
+    const owner = await User.findOne({ userName: shop.owner });
+
+    if (!owner) {
+      return res.status(404).json({
+        status: 'failed',
+        errorMessage: 'Owner not found',
+      });
+    }else if(req.user.userName !== owner.userName ){
+      return res.status(401).json({
+        status: 'failed',
+        errorMessage: 'you can only delete your shop',
+      });
+    }
+
+
+    // 3 Remove the shop name from the owner's shops array
+    owner.shops.pull(shop.name);
+    await owner.save();
+
+    //4 Delete all shop products 
+    await Product.deleteMany({ _id: { $in: shop.products } });
+
+    //5 Delete the shop
+    await Shop.deleteOne({ _id: shop._id });
+
+    res.status(204).json({
+      status: 'success',
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: 'failed',
+      errorMessage: err.message,
+    });
+  }finally {
+    User.schema.set('validateBeforeSave', true);
+  }
+};
+

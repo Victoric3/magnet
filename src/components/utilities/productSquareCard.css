@@ -1,0 +1,33 @@
+.card-style{
+    width: 15%;
+    height: auto;
+    border-radius: 10px;
+    background-color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+.img-style{
+    width: 95%;
+    height: auto
+}
+@media (max-width: 1280px) {
+    .card-style{
+        width: 23%;
+        height: auto;
+    }
+}
+@media (max-width: 912px) {
+    .card-style{
+        width: 30%;
+        height: auto;
+    }
+}
+@media (max-width: 600px) {
+    .card-style{
+        width: 49%;
+        height: auto;
+    }
+}
