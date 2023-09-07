@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [success, setSuccess] = useState()
   const [showmsg, setShowmsg] = useState(false)
   const baseUrl = (finalEndPoint) => {
-    return `https://alphamagnet3-api.onrender.com/${finalEndPoint}`
+    return `https://alphamagnet3-api.onrender.com/api/v1/${finalEndPoint}`
   }
 
   const handleMsgCollector = (error, success) => {
