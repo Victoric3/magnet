@@ -9,10 +9,26 @@ const app = express()
 const path = require('path');
 
 app.use('/images', express.static(path.join(__dirname,'..', 'public/images')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'confirmation.html'));
+});
 dotenv.config({ path: './config.env' });
-app.use(cors({
-  origin: 'https://alphamagnet3-api.onrender.com'
-}))
+const allowedOrigins = ['https://alphamagnet3.onrender.com'];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+  allowedHeaders: 'Content-Type,Authorization',
+};
+
+app.use(cors(corsOptions))
 
 const magnetDb = 'mongodb://127.0.0.1/magnetdb';
 mongoose.connect(magnetDb, {
