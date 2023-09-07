@@ -9,7 +9,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'center',
   width: '300px',
-  height: '250',
+  height: '2o0px',
   padding: '20px',
   borderRadius: theme.spacing(1),
   boxShadow: '0 5px 15px rgba(0, 0, 0, 0.2)',
@@ -39,15 +39,13 @@ const SquareCard = (props) => {
   return (
     <StyledCard>
       <IconWrapper className="iconButton" sx={{ fontSize: '35px' }}>
-        {/* <ShoppingCartCheckoutOutlinedIcon  sx={{fontSize: '35px'}} /> */}
         {React.createElement(props.icon)}
       </IconWrapper>
       <CardContent>
-        {/* <p>Your content here...</p> */}
-        <Typography variant='h2'  sx={{ textAlign: 'center', fontWeight: '500'}}>
+        <Typography variant='h3'  sx={{ textAlign: 'center', fontWeight: '500'}}>
           {props.title}
         </Typography>
-        <Typography variant='h3' sx={{ 
+        <Typography variant='h4' sx={{ 
           textAlign: 'center', 
           marginTop: '10px',
           fontWeight: '400'

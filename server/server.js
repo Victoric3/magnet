@@ -11,7 +11,7 @@ const path = require('path');
 app.use('/images', express.static(path.join(__dirname,'..', 'public/images')));
 dotenv.config({ path: './config.env' });
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: 'https://alphamagnet3-api.onrender.com'
 }))
 
 const magnetDb = 'mongodb://127.0.0.1/magnetdb';
