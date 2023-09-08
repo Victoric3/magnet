@@ -74,8 +74,8 @@ const SignInForm = () => {
             Log In
           </Button>
         </form>
-        <Typography variant="h4" align="center" sx={{ padding: '20px', color: '#333'}} >
-        don't have an account? <Link onclick={() => {navigate('/signUp')}}>sign up</Link>
+        <Typography variant="h4" align="center" sx={{ padding: '20px', color: '#333', cursor: 'pointer'}} >
+        don't have an account? <Link onClick={() => {navigate('/signUp')}}>sign up</Link>
       </Typography>
      </div>
     </div>
