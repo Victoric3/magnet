@@ -75,7 +75,7 @@ const SignInForm = () => {
           </Button>
         </form>
         <Typography variant="h4" align="center" sx={{ padding: '20px', color: '#333'}} >
-        don't have an account? <Link to='/signUp'>sign up</Link>
+        don't have an account? <Link onclick={() => {navigate('/signUp')}}>sign up</Link>
       </Typography>
      </div>
     </div>
