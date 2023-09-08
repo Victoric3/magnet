@@ -207,7 +207,15 @@ const selectedCurrencySymbol = currencyMapping[selectedCurrency];
     useEffect(() => {
       handleMsgCollector(Error, Success);
     }, [Error, Success]);
- 
+    const [passwordError, setPasswordError] = useState('')
+    useEffect( () => {
+      if (Password.split('').length<8) {
+        setPasswordError('Password must be at least 8 characters long.');
+      } else {
+        setPasswordError('');
+      }
+
+    }, [Password])
   return (
     <div className="signup-container" style={style}>
       <div className="signup-form">
@@ -277,6 +285,14 @@ const selectedCurrencySymbol = currencyMapping[selectedCurrency];
             name="password"
             value={Password}
             onChange={(e) => setPassword(e.target.value)}
+            InputProps={{
+              inputProps: {
+                minLength: 8,
+                maxLength: 20,
+              },
+            }}
+            error={passwordError !== ''}
+            helperText={passwordError}
             required
           />
           <TextField
