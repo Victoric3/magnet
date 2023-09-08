@@ -30,7 +30,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
-const magnetDb = `mongodb+srv://chukwujiobivictoric:Nneomavi%401@cluster0.y1idong.mongodb.net/`;
+const magnetDb = `mongodb+srv://chukwujiobivictoric:${process.env.PASSWORD}@cluster0.y1idong.mongodb.net/`;
 mongoose.connect(magnetDb, {
     useNewUrlParser: true,
     useUnifiedTopology: true
