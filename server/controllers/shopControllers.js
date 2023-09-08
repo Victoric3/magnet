@@ -116,12 +116,12 @@ exports.updateShopImage = async (req, res) => {
 
     if (req.files.shopImg) {
       updateFields.image = req.files.shopImg[0].path;
-      updateFields.shopImgUrl = `http://localhost:8000/images/${req.files.shopImg[0].filename}`;
+      updateFields.shopImgUrl = `https://alphamagnet3-api.onrender.com/images/${req.files.shopImg[0].filename}`;
     }
 
     if (req.files.shopBanner) {
       updateFields.imageCover = req.files.shopBanner[0].path;
-      updateFields.shopBannerUrl = `http://localhost:8000/images/${req.files.shopBanner[0].filename}`;
+      updateFields.shopBannerUrl = `https://alphamagnet3-api.onrender.com/images/${req.files.shopBanner[0].filename}`;
     }
 
     const shop = await Shop.findByIdAndUpdate(id, { $set: updateFields }, { new: true });
