@@ -53,7 +53,7 @@ exports.updateProduct = async (req, res) => {
     const product = await Product.findByIdAndUpdate(id, { 
       $set:{
         image: req.file.path,
-        imageUrl: `https://alphamagnet3-api.onrender.com/${req.file.filename}`,
+        imageUrl: `https://alphamagnet3-api.onrender.com/images/${req.file.filename}`,
       }
     }, { new: true });
 
