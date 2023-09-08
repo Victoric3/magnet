@@ -305,7 +305,7 @@ const selectedCurrencySymbol = currencyMapping[selectedCurrency];
           </Button>
         </form>
       <Typography variant="h4" align="center" sx={{ padding: '20px', color: '#333'}} >
-        Already have an account? <Link to="/signIn">sign In</Link>
+        Already have an account? <Link onClick={() => {navigate('/signIn')}}>sign in</Link>
       </Typography>
       </div>
     </div>
