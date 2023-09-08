@@ -31,7 +31,8 @@ const ManageShop = ({
       token, 
       currentShopData, 
       handleMsgCollector,
-      messageShower
+      messageShower,
+      baseUrl
     } = useAuth();
     const [error, setError] = useState()
     const [success, setSuccess] = useState()
@@ -49,7 +50,7 @@ const ManageShop = ({
       localStorage.setItem("currentShopData",  JSON.stringify(shopData))
      
         try{
-          const response = await fetch(`http://localhost:8000/api/v1/shops/${currentShopData._id}`,{
+          const response = await fetch(baseUrl(`/shops/${currentShopData._id}`),{
             method: 'DELETE',
             headers: {
               'Authorization': `Bearer ${token}`
