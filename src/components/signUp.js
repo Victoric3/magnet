@@ -320,7 +320,7 @@ const selectedCurrencySymbol = currencyMapping[selectedCurrency];
             Sign Up
           </Button>
         </form>
-      <Typography variant="h4" align="center" sx={{ padding: '20px', color: '#333'}} >
+      <Typography variant="h4" align="center" sx={{ padding: '20px', color: '#333', cursor: 'pointer'}} >
         Already have an account? <Link onClick={() => {navigate('/signIn')}}>sign in</Link>
       </Typography>
       </div>
