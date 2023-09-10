@@ -9,8 +9,12 @@ import { useAuth } from './AuthContext';
 const MsgCard = () => {  
   const { handleOkClick, showmsg, success, error } = useAuth()
  
-  const StatusIcon = ({ isSuccess }) => {
-    return isSuccess ? <CheckCircleOutlineIcon color="green" /> : <ErrorOutlineIcon color="red" />;
+  const StatusIcon = ({success}) => {
+     if(success){
+      return <CheckCircleOutlineIcon color="green" />
+    }else{ 
+      return <ErrorOutlineIcon color="red" />
+    }
   };
 
   
@@ -34,8 +38,8 @@ const MsgCard = () => {
         alignItems: 'center',
       }}
       >
-        <Typography variant="h3" sx = {{ color: error ? 'red' : 'green', padding: '25px'}}>
-          { success || error } <StatusIcon isSuccess={success}/>
+        <Typography variant="h3" sx = {{ color: success ? 'green' : 'red', padding: '25px'}}>
+          { success || error } <StatusIcon success={success}/>
         </Typography>
         <Button variant="contained" color="primary" onClick={handleOkClick} >
             OK

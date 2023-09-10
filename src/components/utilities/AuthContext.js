@@ -11,13 +11,19 @@ export const AuthProvider = ({ children }) => {
   const currentShopData = JSON.parse(localStorage.getItem("currentShopData"))
   const [shopProductData, setShopProductData] = useState();
   const [allProductData, setAllProductData] = useState();
-  const [currentProductData, setCurrentProductData] = useState();
+  const currentProductData = JSON.parse(localStorage.getItem("currentProductData"))
   const [showPopUp, setShowPopUp] = useState(false)
   const [error, setError] = useState()
   const [success, setSuccess] = useState()
   const [showmsg, setShowmsg] = useState(false)
+  const development = true
   const baseUrl = (finalEndPoint) => {
-    return `https://alphamagnet3-api.onrender.com/api/v1/${finalEndPoint}`
+    if(development){
+      return `http://localhost:8000/api/v1/${finalEndPoint}`
+    }else{
+      return `https://alphamagnet3-api.onrender.com/api/v1/${finalEndPoint}`
+
+    }
   }
 
   const handleMsgCollector = (error, success) => {
@@ -37,10 +43,9 @@ export const AuthProvider = ({ children }) => {
     setShopData(shopData)
   };
   
-  const updateProductData = (allProductData, shopProductData, currentProductData) => {
+  const updateProductData = (allProductData, shopProductData) => {
     setAllProductData(allProductData)
     setShopProductData(shopProductData)
-    setCurrentProductData(currentProductData)
   }
 
   const logout = () => {

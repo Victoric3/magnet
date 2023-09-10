@@ -1,5 +1,5 @@
 .card-style{
-    width: 15%;
+    width: 200px;
     height: auto;
     border-radius: 10px;
     background-color: #e0e0e0;
@@ -10,24 +10,21 @@
     justify-content: center;
 }
 .img-style{
+    padding-top: 10px;
     width: 95%;
-    height: auto
+    height: auto;
+    border-radius: 5px;
 }
-@media (max-width: 1280px) {
+
+@media (max-width: 768px) {
     .card-style{
-        width: 23%;
+        width: 190px;
         height: auto;
     }
 }
-@media (max-width: 912px) {
+@media (max-width: 540px) {
     .card-style{
-        width: 30%;
-        height: auto;
-    }
-}
-@media (max-width: 600px) {
-    .card-style{
-        width: 49%;
+        width: 165px;
         height: auto;
     }
 }

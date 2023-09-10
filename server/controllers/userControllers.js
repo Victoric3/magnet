@@ -85,11 +85,11 @@ exports.getAllUsers = async (req, res) => {
       message: 'This route is not yet defined!'
     });
   };
-  exports.updateCurrentUserShop = async (userId, newShopName) => {
+  exports.updateCurrentUserShop = async (userId, newShopId) => {
     try {
       const updatedUser = await User.findByIdAndUpdate(
         userId,
-        { $push: { shops: newShopName } },
+        { $push: { shops: newShopId } },
         { new: true, runValidators: true }
       );
   
