@@ -15,7 +15,8 @@ import CreateShop from './components/createShop';
 import CreateProduct from './components/createProduct';
 import MyPshop from './components/MyPshop';
 import EditMyShop from './components/editShop'
-
+import DeleteProduct from './components/deleteProduct';
+import EditProduct from './components/editProduct';
 
 function App() {
   const { error, success } = useAuth();
@@ -37,6 +38,8 @@ function App() {
             <Route path='/CreateProduct' element={<CreateProduct />} />
             <Route path='/myPshop' element={<MyPshop />} />
             <Route path='/editShop' element={<EditMyShop />} />
+            <Route path='/editProduct' element={<EditProduct />} />
+            <Route path='/deleteProduct' element={<DeleteProduct />} />
           </Routes>
         </ThemeProvider>
     </div>

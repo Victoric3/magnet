@@ -1,5 +1,6 @@
 const Product = require('../models/productSchema');
 const Shop = require('../models/shopSchema')
+const User = require('../models/userSchema')
 const { updateCurrentShopProducts } = require('./shopControllers');
 const APIFEATURES = require('./../utilities/apiFeatures')
 const path = require('path')
@@ -7,8 +8,8 @@ const path = require('path')
 
 exports.createProduct = async (req, res) => {
   const shop = await Shop.findById(req.body.shopId)
-if(!req.user.shops.includes(shop.name)){
-  res.status(401).json({
+if(!req.user.shops.includes(shop._id)){
+  return res.status(401).json({
     status:'failed',
     message: 'you can only add a product to your shop'
   })
@@ -53,7 +54,7 @@ exports.updateProduct = async (req, res) => {
     const product = await Product.findByIdAndUpdate(id, { 
       $set:{
         image: req.file.path,
-        imageUrl: `https://alphamagnet3-api.onrender.com/images/${req.file.filename}`,
+        imageUrl: `${process.env.BASEURL}/images/${req.file.filename}`,
       }
     }, { new: true });
 
@@ -74,6 +75,60 @@ exports.updateProduct = async (req, res) => {
       });
   }
 };
+exports.updateOtherProductDetails = async(req, res) => {
+  const { id } = req.params
+  const updateFields = {}
+  const returnPolicy = [
+    'No guarantee',
+    '5-day guarantee',
+    '10-day guarantee',
+    '15-day guarantee',
+    '30-day guarantee',
+    '2months guarantee',
+    '3months guarantee',
+    '6months guarantee',
+    '1-year guarantee',
+    '2-year guarantee',
+    '5-year guarantee',
+  ]
+  if(req.body.name){
+    updateFields.name = req.body.name
+  }
+  if(req.body.quantity){
+    updateFields.quantity = req.body.quantity
+  }
+  if(req.body.deliveryFee){
+    updateFields.deliveryFee = req.body.deliveryFee
+  }
+  if(req.body.discount){
+    updateFields.discount = req.body.discount
+  }
+  if(req.body.productOverview){
+    updateFields.productOverview = req.body.productOverview
+  }
+  if(req.body.commision){
+    updateFields.commision = req.body.commision
+  }
+  if(req.body.price){
+    updateFields.price = req.body.price
+  }
+  if(returnPolicy.includes(req.body.returnPolicy)){
+      updateFields.returnPolicy = req.body.returnPolicy
+  }
+  try{
+    const updatedProduct = await Product.findByIdAndUpdate(id, { $set: updateFields })
+    res.status(200).json({
+      status: 'success',
+      message: 'this shop has been successfully updated',
+      productData: updatedProduct
+    })
+  }catch(err){
+    res.status(400).json({
+      status: 'failed',
+      message: err.message
+    })
+  }
+}
 exports.getProductDataForShop = async (req, res) => {
   try {
     const shopId = req.params.id;
@@ -145,35 +200,34 @@ exports.getProduct = async (req, res) => {
     )
   }
 }
-// exports.updateProduct = async (req, res) => {
-//   try{
-//     const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-//         new: true,
-//         runValidators: true
-//     })
-    
-//     res.status(201).json(
-//       {
-//     status: 'success',
-//     products: product
-//       }
-//     )}catch(err){
-//     res.status(404).json(
-//       {
-//         status: 'failed',
-//         errorMessage: err.message
-//       }
-//     )
-//   }
-// }
+
 exports.deleteProduct = async (req, res) => {
   try{
     const product = await Product.findByIdAndDelete(req.params.id)
+    const owner = await User.findOne({ userName: product.owner });
+    const shop = await Shop.findOne({ _id: product.shopId });
+
+
+    Shop.schema.set('validateBeforeSave', false);
+    if (!shop) {
+      return res.status(404).json({
+        status: 'failed',
+        errorMessage: 'shop not found',
+      });
+    }else if(req.user.userName !== owner.userName ){
+      return res.status(401).json({
+        status: 'failed',
+        errorMessage: 'you can only delete your product',
+      });
+    }
+
+    shop.products.pull(product._id);
+    await shop.save();
     
-    res.status(204).json(
+    res.status(200).json(
       {
     status: 'success'
-  }
+    }
     )}catch(err){
     res.status(404).json(
       {
@@ -181,5 +235,7 @@ exports.deleteProduct = async (req, res) => {
         errorMessage: err.message
       }
     )
+  }finally {
+    Shop.schema.set('validateBeforeSave', true);
   }
 }

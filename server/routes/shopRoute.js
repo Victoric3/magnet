@@ -24,5 +24,7 @@ router
   shopControllers.updateShopImage)
 .get(authController.protect, shopControllers.getShopById)
 .delete(authController.protect, shopControllers.deleteShop)
-
+router
+.route('/details/:id')
+.patch(authController.protect, shopControllers.updateOtherShopDetails)
 module.exports = router

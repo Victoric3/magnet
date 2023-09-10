@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 
 const useFetchUserData = (token) => {
-  const { baseUrl } = useAuth()
+  const { baseUrl, userData } = useAuth()
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -19,16 +19,16 @@ const useFetchUserData = (token) => {
           const user = await response.json({});
           localStorage.setItem('userData', JSON.stringify(user.user))
         } else {
-          console.log('There was an error fetching user data');
+          console.error('There was an error fetching user data');
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
     fetchUserData();
-  }, []);
-
+  }, [token]);
+  return userData
 };
 
 export default useFetchUserData;

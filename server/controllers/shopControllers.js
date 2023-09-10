@@ -17,11 +17,11 @@ exports.getShopDataForUser = async (req, res) => {
       });
     }
 
-    // Retrieve unique shop names from the user's 'shops' array
-    const uniqueShopNames = [...new Set(user.shops)];
+    // Retrieve unique shop ids from the user's 'shops' array
+    const shopIds = [...new Set(user.shops)];
 
     // Find the shop data based on the unique shop names
-    const shopData = await Shop.find({ name: { $in: uniqueShopNames } });
+    const shopData = await Shop.find({ _id: { $in: shopIds } });
 
     res.status(200).json({
       status: 'success',
@@ -95,7 +95,7 @@ exports.createShop = async (req, res) => {
     });
     try{
     await shop.save()
-    await updateCurrentUserShop( req.user.id, shop.name );
+    await updateCurrentUserShop( req.user.id, shop._id );
     
 
     res.status(201).json({
@@ -116,12 +116,12 @@ exports.updateShopImage = async (req, res) => {
 
     if (req.files.shopImg) {
       updateFields.image = req.files.shopImg[0].path;
-      updateFields.shopImgUrl = `https://alphamagnet3-api.onrender.com/images/${req.files.shopImg[0].filename}`;
+      updateFields.shopImgUrl = `${process.env.BASEURL}/images/${req.files.shopImg[0].filename}`;
     }
 
     if (req.files.shopBanner) {
       updateFields.imageCover = req.files.shopBanner[0].path;
-      updateFields.shopBannerUrl = `https://alphamagnet3-api.onrender.com/images/${req.files.shopBanner[0].filename}`;
+      updateFields.shopBannerUrl = `${process.env.BASEURL}/images/${req.files.shopBanner[0].filename}`;
     }
 
     const shop = await Shop.findByIdAndUpdate(id, { $set: updateFields }, { new: true });
@@ -138,6 +138,64 @@ exports.updateShopImage = async (req, res) => {
     return res.status(500).json({ error: 'Internal server error', message: error.message });
   }
 };
+exports.updateOtherShopDetails = async(req, res) => {
+  const { id } = req.params
+  const updateFields = {}
+  const deliveryList = [
+    'intra-state',
+    'inter-state',
+    'worldwide'
+  ]
+  if(req.body.name){
+    updateFields.name = req.body.name
+  }
+  if(req.body.email){
+    updateFields.email = req.body.email
+  }
+  if(req.body.shopOverview){
+    updateFields.shopOverview = req.body.shopOverview
+  }
+  if(req.body.shopCatchPhrase){
+    updateFields.shopCatchPhrase = req.body.shopCatchPhrase
+  }
+  if(req.body.linkedIn){
+    updateFields.linkedIn = req.body.linkedIn
+  }
+  if(req.body.twitter){
+    updateFields.twitter = req.body.twitter
+  }
+  if(req.body.instagram){
+    updateFields.instagram = req.body.instagram
+  }
+  if(req.body.facebook){
+    updateFields.facebook = req.body.facebook
+  }
+  if(req.body.location){
+    updateFields.location = req.body.location
+  }
+  if(req.body.closingHours){
+    updateFields.closingHours = req.body.closingHours
+  }
+  if(req.body.openingHours){
+    updateFields.openingHours = req.body.openingHours
+  }
+  if(deliveryList.includes(req.body.deliverableDistance)){
+      updateFields.deliverableDistance = req.body.deliverableDistance
+  }
+  try{
+    const updatedShop = await Shop.findByIdAndUpdate(id, { $set: updateFields })
+    res.status(200).json({
+      status: 'success',
+      message: 'this shop has been successfully updated',
+      shopData: updatedShop
+    })
+  }catch(err){
+    res.status(400).json({
+      status: 'failed',
+      message: err.message
+    })
+  }
+}
 
 
 exports.updateCurrentShopProducts = async (shopId, newProductId) => {
@@ -187,7 +245,7 @@ exports.deleteShop = async (req, res) => {
 
 
     // 3 Remove the shop name from the owner's shops array
-    owner.shops.pull(shop.name);
+    owner.shops.pull(shop._id);
     await owner.save();
 
     //4 Delete all shop products 

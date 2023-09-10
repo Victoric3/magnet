@@ -1,18 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "./utilities/AuthContext";
 import { useNavigate } from "react-router-dom";
 import './utilities/editShop.css'
-import { Button, TextField, Typography } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
+import { TextField, Typography } from "@mui/material";
+
 
 const EditShop = () => {
-    const { currentShopData } = useAuth()
+    const { currentShopData, token, baseUrl, messageShower, handleMsgCollector } = useAuth()
     const navigate = useNavigate()
-    const handleUpdate = (event, currentShopData) => {
-        event.preventDefault()
-    }
+    const deliveryList = [
+      'intra-state',
+      'inter-state',
+      'worldwide'
+    ]
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        shopOverview: '',
+        shopCatchPhrase: '',
+        linkedIn: '',
+        twitter: '',
+        instagram: '',
+        facebook: '',
+        location: '',
+        closingHours: '',
+        openingHours: '',
+        deliverableDistance: ''
+      });
+      
+      const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+      };
+      const [error, setError] = useState('')
+      const [success, setSuccess] = useState('')
+      const [isEditing, setIsEditing] = useState(false)
     const [selectedImgFile, setSelectedImgFile] = useState(null);
-       const [selectedBannerFile, setSelectedBannerFile] = useState(null);
+    const [selectedBannerFile, setSelectedBannerFile] = useState(null);
 
        
        const handleImgFileChange = (event) => {
@@ -23,180 +50,267 @@ const EditShop = () => {
          const file = event.target.files[0];
          setSelectedBannerFile(file);
        };
+    const handleUpdate = async(event) => {
+        event.preventDefault()
+        messageShower(true)
+        const form = new FormData();
+
+        if (selectedImgFile) {
+          form.append("shopImg", selectedImgFile);
+        }
+         if (selectedBannerFile) {
+          form.append("shopBanner", selectedBannerFile);
+        }
+        if(formData.deliverableDistance && !deliveryList.includes(formData.deliverableDistance)){
+          setSuccess(null)
+          setError('allowed values for deliverableDistance are "inter-state, worldwide, intra-state"')
+          return;
+        }
+      const nonImageFields = {
+        ...formData,
+      };
+          let response
+        try {
+          response = await fetch(baseUrl(`shops/details/${currentShopData._id}`), {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(nonImageFields),
+        });
+            
+        if (response.ok) {
+            setSuccess('your shop has been successfully updated, changes will take effect when u navigate to dashboard')
+        const data = await response.json()
+        localStorage.setItem('currentShopData', JSON.stringify(data.shopData))
+        setIsEditing(!isEditing)
+        if(selectedImgFile || selectedBannerFile){
+       try{
+        const responseImg = await fetch(baseUrl(`shops/${currentShopData._id}`), {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: form,
+      });
+      if(responseImg.ok){
+              setError(null);
+              setSuccess('your shop was updated successfully, changes will take effect when u navigate to dashboard');  
+              
+      }} catch(err){
+        setError(err.message)
+        }
+        }          
+      }
+    } catch (error) {
+      setError(await response?.json()?.errormessage)
+    }
+        
+    }
+    useEffect(() => {
+        handleMsgCollector(error, success);
+      }, [error, success]);
+      
     return ( 
     <>
     <div className="edit-shop-wrrapper">
+        <div className="edit-shop-button-wrrapper">
+            <Typography variant="h3">Manage {currentShopData.name}</Typography>
+            <div className="edit-buttons">
+            <button 
+            type="button" 
+            onClick={() => {navigate('/deleteProduct')}}
+            className="save-button"
+            >Manage product</button>
+            {!isEditing ? <button 
+            type="button" 
+            onClick={() => {
+                setIsEditing(!isEditing)
+            }}
+            className="save-button"
+            >edit shop </button>
+            :
+            <button 
+            type="button" 
+            onClick={(event) => {
+                handleUpdate(event)
+            }}
+            className="save-button"
+            >save changes</button>
+        }
+            </div>
+        </div>
     <div className="edit-shop-items">
         <div className="edit-shop-content">
             <div className="edit-shop-caption">
                 <Typography variant="h4">Shop Name</Typography>
             </div >
-            <div className="edit-shop-details">
-            <TextField 
-            variant="standard"
-            label="New Shop Name"
+            { isEditing ? <div className="edit-shop-details">
+            <TextField
+            onChange={handleChange}
+            value={formData.name} 
+            label={`${currentShopData.name || 'Non specified'}`}
             name="name"
             />
-            <EditIcon />
-            </div>
+            </div> : <Typography variant="h4">{currentShopData.name || 'Non specified'}</Typography> }
         </div>
         <div className="edit-shop-content">
             <div className="edit-shop-caption">
                 <Typography variant="h4">Tag Line</Typography>
             </div >
-            <div className="edit-shop-details">
-            <TextField 
-            variant="standard"
-            label="New Tag Line"
-            name="tagLine"
+            { isEditing ? <div className="edit-shop-details">
+            <TextField
+            onChange={handleChange}
+            value={formData.shopCatchPhrase} 
+            label= {`${currentShopData.shopCatchPhrase || 'Non specified'}`}
+            name="shopCatchPhrase"
             />
-            <EditIcon />
-            </div>
+            </div> : <Typography variant="h4">{currentShopData.shopCatchPhrase || 'Non specified'}</Typography> }
         </div>
         <div className="edit-shop-content">
             <div className="edit-shop-caption">
                 <Typography variant="h4">Catch Pharase</Typography>
             </div >
-            <div className="edit-shop-details">
-            <TextField 
-            variant="standard"
-            label="New Catch Pharase"
-            name="catchPhrase"
+            { isEditing ? <div className="edit-shop-details">
+            <TextField
+            onChange={handleChange}
+            value={formData.shopOverview} 
+            label={`${currentShopData.shopOverview || 'Non specified'}`}
+            name="shopOverview"
             />
-            <EditIcon />
-            </div>
+            </div> : <Typography variant="h4">{currentShopData.shopOverview || 'Non specified'}</Typography> }
         </div>
         <div className="edit-shop-content">
             <div className="edit-shop-caption">
                 <Typography variant="h4">Location</Typography>
             </div >
-            <div className="edit-shop-details">
-            <TextField 
-            variant="standard"
-            label="New Location"
+            { isEditing ? <div className="edit-shop-details">
+            <TextField
+            onChange={handleChange}
+            value={formData.location} 
+            label={`${currentShopData.location || 'Non specified'}`}
             name="location"
             />
-            <EditIcon />
-            </div>
+            </div> : <Typography variant="h4">{currentShopData.location || 'Non specified'}</Typography> }
         </div>
         <div className="edit-shop-content">
             <div className="edit-shop-caption">
-                <Typography variant="h4">Delivery Distance</Typography>
+                <Typography variant="h4">Deliverable distance</Typography>
             </div >
-            <div className="edit-shop-details">
-            <TextField 
-            variant="standard"
-            label="New Delivery Distance"
-            name="name"
+            { isEditing ? <div className="edit-shop-details">
+            <TextField
+            onChange={handleChange}
+            value={formData.deliverableDistance} 
+            label={`${currentShopData.deliverableDistance || 'Non specified'}`}
+            name="deliverableDistance"
             />
-            <EditIcon />
-            </div>
+            </div> : <Typography variant="h4">{currentShopData.deliverableDistance || 'Non specified'}</Typography> }
         </div>
         <div className="edit-shop-content">
             <div className="edit-shop-caption">
                 <Typography variant="h4">Opening Hours</Typography>
             </div >
-            <div className="edit-shop-details">
-            <TextField 
-            variant="standard"
-            label="New openingHours"
-            name="name"
+            { isEditing ? <div className="edit-shop-details">
+            <TextField
+            onChange={handleChange}
+            value={formData.openingHours} 
+            label={`${currentShopData.openingHours || 'Non specified'}`}
+            name="openingHours"
             />
-            <EditIcon />
-            </div>
+            </div> : <Typography variant="h4">{currentShopData.openingHours || 'Non specified'}</Typography> }
         </div>
         <div className="edit-shop-content">
             <div className="edit-shop-caption">
                 <Typography variant="h4">Closing Hours</Typography>
             </div >
-            <div className="edit-shop-details">
-            <TextField 
-            variant="standard"
-            label="New Closing Hours"
-            name="name"
+            { isEditing ? <div className="edit-shop-details">
+            <TextField
+            onChange={handleChange}
+            value={formData.closingHours} 
+            label={`${currentShopData.closingHours || 'Non specified'}`}
+            name="closingHours"
             />
-            <EditIcon />
-            </div>
+            </div> : <Typography variant="h4">{currentShopData.closingHours || 'Non specified'}</Typography> }
         </div>
         <div className="edit-shop-content">
             <div className="edit-shop-caption">
                 <Typography variant="h4">Email</Typography>
             </div >
-            <div className="edit-shop-details">
-            <TextField 
-            variant="standard"
-            label="New Email"
-            name="name"
+            { isEditing ? <div className="edit-shop-details">
+            <TextField
+            onChange={handleChange}
+            value={formData.email} 
+            label={`${currentShopData.email || 'Non specified'}`}
+            name="email"
             />
-            <EditIcon />
-            </div>
+            </div> : <Typography variant="h4">{currentShopData.email || 'Non specified'}</Typography> }
         </div>
         <div className="edit-shop-content">
             <div className="edit-shop-caption">
                 <Typography variant="h4">Facebook</Typography>
             </div >
-            <div className="edit-shop-details">
-            <TextField 
-            variant="standard"
-            label="New Facebook"
-            name="name"
+            { isEditing ? <div className="edit-shop-details">
+            <TextField
+            onChange={handleChange}
+            value={formData.faceBook} 
+            label={`${currentShopData.faceBook || 'Non specified'}`}
+            name="faceBook"
             />
-            <EditIcon />
-            </div>
+            </div> : <Typography variant="h4">{currentShopData.faceBook || 'Non specified'}</Typography> }
         </div>
         <div className="edit-shop-content">
             <div className="edit-shop-caption">
                 <Typography variant="h4">Instagram</Typography>
             </div >
-            <div className="edit-shop-details">
-            <TextField 
-            variant="standard"
-            label="New Instagram"
-            name="name"
+            { isEditing ? <div className="edit-shop-details">
+            <TextField
+            onChange={handleChange}
+            value={formData.instagram} 
+            label={`${currentShopData.instagram || 'Non specified'}`}
+            name="instagram"
             />
-            <EditIcon />
-            </div>
+            </div> : <Typography variant="h4">{currentShopData.instagram || 'Non specified'}</Typography> }
         </div>
         <div className="edit-shop-content">
             <div className="edit-shop-caption">
                 <Typography variant="h4">Twitter</Typography>
             </div >
-            <div className="edit-shop-details">
-            <TextField 
-            variant="standard"
-            label="New Twitter"
-            name="name"
+            { isEditing ? <div className="edit-shop-details">
+            <TextField
+            onChange={handleChange}
+            value={formData.twitter} 
+            label={`${currentShopData.twitter || 'Non specified'}`}
+            name="twitter"
             />
-            <EditIcon />
-            </div>
+            </div> : <Typography variant="h4">{currentShopData.twitter || 'Non specified'}</Typography> }
         </div>
         <div className="edit-shop-content">
             <div className="edit-shop-caption">
                 <Typography variant="h4">LinkedIn</Typography>
             </div >
-            <div className="edit-shop-details">
-            <TextField 
-            variant="standard"
-            label="New LinkedIn"
-            name="name"
+            { isEditing ? <div className="edit-shop-details">
+            <TextField
+            onChange={handleChange}
+            value={formData.linkedIn} 
+            label={`${currentShopData.linkedIn || 'Non specified'}`}
+            name="linkedIn"
             />
-            <EditIcon />
-            </div>
+            </div> : <Typography variant="h4">{currentShopData.linkedIn || 'Non specified'}</Typography> }
         </div>
-        <div className="edit-shop-content">
+        {isEditing ? <div className="edit-shop-content">
             <div className="edit-shop-caption">
                 <Typography variant="h4">Shop Banner</Typography>
             </div >
-            <div className="edit-shop-details">
+             <div className="edit-shop-details">
             <button style={{ 
-          border: '1px solid #333333b0', 
-          background: '#fff', 
-          color: '#333333b0',
-          textAlign: 'left',
-          padding: '10px 14px',
-
+                border: '1px solid #333333b0', 
+                background: '#fff', 
+                color: '#333333b0',
+                textAlign: 'left',
+                padding: '10px  14px',
           }} type="button">
-        <label htmlFor="banner-file-input" className="m-0 w-100">
+        <label htmlFor="banner-file-input">
             <input
               accept={'image/*'}
               style={{ display: 'none' }}
@@ -206,24 +320,23 @@ const EditShop = () => {
             />
             {!selectedBannerFile ? 'select your shop profile banner' : `${selectedBannerFile.name} selected`}
           </label>
-        </button>
-            <EditIcon />
+        </button> 
             </div>
-        </div>
-        <div className="edit-shop-content">
-            <div className="edit-shop-caption">
+        </div> : ''}
+        {isEditing ? <div className="edit-shop-content">
+         <div className="edit-shop-caption">
                 <Typography variant="h4">Shop Image</Typography>
             </div >
-            <div className="edit-shop-details">
+             <div className="edit-shop-details">
             <button style={{ 
-          border: '1px solid #333333b0', 
-          background: '#fff', 
-          color: '#333333b0',
-          textAlign: 'left',
-          padding: '10px 14px',
+            border: '1px solid #333333b0', 
+            background: '#fff', 
+            color: '#333333b0',
+            textAlign: 'left',
+            padding: '10px 14px',
 
           }} type="button">
-        <label htmlFor="Img-file-input" className="m-0 w-100">
+        <label htmlFor="Img-file-input">
             <input
               accept={'image/*'}
               style={{ display: 'none' }}
@@ -234,23 +347,10 @@ const EditShop = () => {
              {!selectedImgFile ? 'select your shop profile image' : `${selectedImgFile.name} selected`}
           </label>
         </button>
-            <EditIcon />
-            </div>
-        </div>
-      
+            </div> 
+        </div> : '' }
     </div>
-    <div className="edit-shop-button-wrrapper">
-    <button 
-    type="button" 
-    onClick={() => {navigate('/editProduct')}}
-    className="save-button"
-    >edit product</button>
-    <button 
-    type="button" 
-    onClick={(event) => {handleUpdate(event, currentShopData)}}
-    className="save-button"
-    >save changes</button>
-    </div>
+    
     
     </div>
     

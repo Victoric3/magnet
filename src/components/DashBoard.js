@@ -17,8 +17,8 @@ import  useFetchUserData  from './utilities/useFetchData'
 const DashBoard = () => {
   const { updateAuth, token, shopData, baseUrl, userData } = useAuth();
   const navigate = useNavigate()
-    useFetchUserData(token)
-  updateAuth( shopData)
+  useFetchUserData(token)
+  updateAuth(shopData)
   const numbers1 = userData?.transaction;
   const numbers2 = userData?.pendingBalance;
   const totalBalance = numbers1?.reduce((acc, current) => acc + current, 0);
@@ -92,7 +92,7 @@ const DashBoard = () => {
       </Typography>
       
       <div className="dash-manage-wrapper">
-      {shopData?.length > 0  ? shopData?.map(shop => (
+      {userData?.shops?.length > 0  ? shopData?.map(shop => (
         <ManageShop
           key={shop?._id}
           productCount={shop?.products.length}

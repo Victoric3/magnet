@@ -20,5 +20,7 @@ router
 .delete(
     authController.protect, 
     productControllers.deleteProduct)
-    
+router
+.route('/details/:id')   
+.patch(authController.protect, productControllers.updateOtherProductDetails)
 module.exports = router

@@ -134,6 +134,7 @@ const ManageShop = ({
           openconfirmModal()
           localStorage.setItem("currentShopData",  JSON.stringify(shopData))
         }} />
+
         <ConfirmationModal 
         open={showconfirmModal}
         onClose={closeconfirmModal}
