@@ -45,52 +45,7 @@ const ManageShop = ({
       }
       
     //confirmation modal
-    const [showconfirmModal, setShowconfirmModal] = useState(false);
-    const handleDeleteShop = async (shopData) => {
-      localStorage.setItem("currentShopData",  JSON.stringify(shopData))
-     
-        try{
-          const response = await fetch(baseUrl(`/shops/${currentShopData._id}`),{
-            method: 'DELETE',
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          })
-          if(response.ok){
-            setError(null)
-            setSuccess(
-              `you have successfully deleted ${currentShopData?.name}, do well to inform your customers that you are no longer in business`
-              )
-          }else if(currentShopData?.Pending !== 0){
-            setError('please ensure you have completed all pending offers before closing this shop')
-          }else if(userData.userName !== currentShopData?.owner){
-            setError('you can only delete your shop')
-          } else{
-            setError('there was a problem deleting shop please try again')
-          }
-          
-        }catch(e){
-          setError(`something went wrong`)
-        }
-        setShowconfirmModal(false);
-        messageShower(true)
-        const indexOfCurrentshop = totalShopData.indexOf(currentShopData)
-        totalShopData.splice(indexOfCurrentshop, 1)
-        updateAuth(userData, totalShopData)
-      
-      
-    }
-  const openconfirmModal = () => {
-    setShowconfirmModal(true);
-  };
-
-  const closeconfirmModal = () => {
-    setShowconfirmModal(false);
-  };
-  useEffect(() => {
-    handleMsgCollector(error, success)
-  }, [error, success]
-  )
+    
   const handleEditShop =(shopData) => {
     localStorage.setItem("currentShopData",  JSON.stringify(shopData))
     navigate('/editShop')    
@@ -135,12 +90,7 @@ const ManageShop = ({
           localStorage.setItem("currentShopData",  JSON.stringify(shopData))
         }} />
 
-        <ConfirmationModal 
-        open={showconfirmModal}
-        onClose={closeconfirmModal}
-        onConfirm={() => {handleDeleteShop(shopData)}}
-        message={`are you sure you want to delete ${currentShopData?.name}`}
-        />
+        
         
         </div>
     </div>

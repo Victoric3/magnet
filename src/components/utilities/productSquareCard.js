@@ -3,7 +3,7 @@ import { Hidden, Typography } from "@mui/material";
 import './productSquareCard.css';
 import { useAuth } from './AuthContext'
 
-const ProductCard = ({ imageUrl, name, orgPrice, discountPrice, productData }) => {
+const ProductCard = ({ imageUrl1, name, orgPrice, discountPrice, productData }) => {
     const {
         updateShowPopUp, 
         showPopUp, 
@@ -26,7 +26,7 @@ const ProductCard = ({ imageUrl, name, orgPrice, discountPrice, productData }) =
         handleClick(productData)
     }}
     >
-        <img src={imageUrl} alt="product" className="img-style"></img>
+        <img src={imageUrl1} alt="product" className="img-style"></img>
         <Typography variant="h3" sx={{
             color: '#333', 
             fontWeight: '400', 

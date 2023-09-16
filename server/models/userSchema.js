@@ -48,12 +48,32 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'please tell us your country'],
     },
+    state: {
+        type: String,
+        required: [true, 'please tell us your state'],
+    },
+    city: {
+        type: String,
+        required: [true, 'please tell us your city'],
+    },
+    addressLine1: {
+        type: String,
+        required: [true, 'please tell us your addressLine1'],
+    },
+    addressLine2: {
+        type: String,
+        required: [true, 'please tell us your addressLine2'],
+    },
+    addressCode: {
+        type: String,
+        required: [true, 'please tell us your addressCode'],
+    },
     phoneNumber: {
         type: String,
         required: [true, 'please provide a phone number'],
     },
     role: {
-        type: String,
+        type: [String],
         enum: ['affiliate', 'guest','influencer', 'EshopOwners', 'PshopOwners', 'admin' ],
         default: 'guest'
     },
@@ -64,6 +84,15 @@ const userSchema = new mongoose.Schema({
     currency: {
         type: String,
         default: 'dollar'
+    },
+    rated: {
+        type: [String]
+    },
+    reviews: {
+        type: [String]
+    },
+    ratings: {
+        type: [String]
     },
     currencySymbol: {
         type: String,
@@ -86,13 +115,19 @@ userSchema.pre('save', async function(next){
     //firstly u check if there was a password change/update or creation(!isModified(password))
     //isModified is a built in mongoose function
     if(!this.isModified('password')) return next()
-    //asynchronous bcrypt hash function to encrypt the password in dataBase where 12 is the cost-how hard the encryption should be
+    //asynchronous bcrypt hash function to encrypt the password in dataBase where 12 is the cost- how hard the encryption should be
     this.password= await bcrypt.hash(this.password, 12)
     //u ensure the passwordConfirm is not persistant in the db
     this.passwordConfirm = undefined
     next()
 
 })
+userSchema.pre('save', async function(next){
+    if(!this.isModified('password') || this.isNew) return next();
+    this.passwordChangedAt = Date.now() - 1000;
+    next()
+})
+
 userSchema.methods.correctPassword= async (attempt, realPassword) => {
     return await bcrypt.compare(attempt, realPassword)
 }
@@ -110,7 +145,6 @@ userSchema.methods.createPasswordResetToken = function(){
 
     this.passwordResetToken = crypto.createHash('shake256').update(resetToken).digest('hex')
     this.passwordResetTokenExpires = Date.now() + 10 * 60 * 1000;
-    // console.log(this.passwordResetToken, resetToken);
     return resetToken
 }
 const User = mongoose.model('UserModel', userSchema)

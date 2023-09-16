@@ -11,7 +11,7 @@ const ContactComponent = () => {
             <Divider className='DividerHori2' orientation="Horizontal" flexItem />
       <div className="ContactContent">
           <div className="QuickLinks">
-            <Typography variant="h3">Quick Links</Typography>
+            <Typography variant="h5">Quick Links</Typography>
             <ul>
               <li>
                 <Link sx={{textDecoration: 'none', color: 'white'}} href="/about">Terms & conditions</Link>
@@ -30,7 +30,7 @@ const ContactComponent = () => {
         </div>
         <Divider className='Divider' orientation="vertical" flexItem />
         <div className='contactUs'>
-          <Typography variant="h3">Contact Us</Typography>
+          <Typography variant="h5">Contact Us</Typography>
         <div className="SocialMediaContainer">
           <Facebook />
           <Twitter />
@@ -42,7 +42,7 @@ const ContactComponent = () => {
     <Divider className='DividerHori2' orientation="Horizontal" flexItem />
     <Divider className='DividerHori' orientation="Horizontal" flexItem />
       <div className="CopyrightContainer">
-        <Typography variant="h4">&copy; {new Date().getFullYear()} alphamagnet3. All rights reserved.</Typography>
+        <Typography variant="body1">&copy; {new Date().getFullYear()} alphamagnet3. All rights reserved.</Typography>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ const RotatingCard = (props) => {
       <Card className={`card-child ${flipped ? 'flipped' : ''}`}>
         <CardContent className= "card-content">
           <Typography 
-          variant="h1" 
+          variant="h5" 
           className={`content-title ${flipped ? 'flipped' : ''}`}
           sx={{
             color: props.FrontContent.titleColor,
@@ -35,10 +35,10 @@ const RotatingCard = (props) => {
            }}/>
           }
             
-            <Typography variant="h3" className={`description ${flipped ? 'back' : 'front'}`} sx={{textAlign:  'start'}}>
+            <Typography variant="h5" className={`description ${flipped ? 'back' : 'front'}`} sx={{textAlign:  'start'}}>
             {flipped ?  props.BackContent.description1  :  props.FrontContent.description1 }
             </Typography>
-            <Typography variant="h4" className={`description ${flipped ? 'back' : 'front'}`} 
+            <Typography variant={flipped? "h5" : "h6"} className={`description ${flipped ? 'back' : 'front'}`} 
             sx={{
               color:  !flipped ? props.FrontContent.titleBackground :'',
               textAlign: 'start', 
@@ -46,12 +46,12 @@ const RotatingCard = (props) => {
             {flipped ?  props.BackContent.description2?props.BackContent.description2:''  :  props.FrontContent.description2?props.FrontContent.description2:'' }
             </Typography>
           </div>
-          <Button className={`description ${flipped ? 'back' : 'front'}`} sx={{
+          <Typography variant='button' className={`description ${flipped ? 'back' : 'front'}`} sx={{
             color: props.FrontContent.titleBackground,
-            fontSize: 25, 
+            cursor: 'pointer'
             }} onClick={props.FrontContent.ExploreFunction? props.FrontContent.ExploreFunction : () => {}}> 
-            Explore Now <TrendingFlatIcon sx={{marginTop: '5px', fontSize: '50px'}}/>
-          </Button>
+            Explore Now <TrendingFlatIcon sx={{marginTop: '5px', fontSize: 'small'}}/>
+          </Typography>
         </CardContent>
       </Card>
     </div>

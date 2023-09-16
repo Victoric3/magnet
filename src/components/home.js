@@ -107,8 +107,12 @@ const faqData = [
     
     return ( 
       <>
-      <AppContainer>
-       <Typography variant="h1" 
+      <div style={{
+        width: '80%',
+        margin: '0px auto'
+      }}>
+    
+       <Typography variant="h4" 
        sx={{ 
         marginTop: '130px', 
         textAlign: 'center',
@@ -117,7 +121,7 @@ const faqData = [
         }}>
         Just like a magnet,
        </Typography>
-       <Typography variant="h1" 
+       <Typography variant="h4" 
        sx={{ 
         marginTop: '5px', 
         marginBottom: '15px', 
@@ -156,7 +160,7 @@ const faqData = [
        </div>
 
        {/* //squareCard */}
-       <Typography variant="h1" sx={{ 
+       <Typography variant="h4" sx={{ 
         marginTop: '100px', 
         marginBottom: '50px', 
         fontWeight: '600',
@@ -191,10 +195,11 @@ const faqData = [
        />
        </div>
        <div>
-       <ReviewCarousel images={Images} />
+       {/* <ReviewCarousel images={Images} /> */}
        </div>
        <FAQComponent faqData={faqData} />
-       </AppContainer>
+       
+       </div>
        <ContactComponent />
        </>
      );

@@ -5,9 +5,9 @@ const routes = express.Router()
 
 routes.post('/signUp', authController.signUp)
 routes.post('/signIn', authController.signIn)
+routes.post('/forgotPassword', authController.forgotPassword)
+routes.patch('/resetPassword/:token', authController.resetPassword)
 
-// routes.post('/forgotPassword', authController.forgotPassword)
-// routes.patch('/resetPassword/:token', authController.resetPassword)
 
 routes
 .route('/')

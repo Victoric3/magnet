@@ -4,14 +4,26 @@ import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate("currentProductData")
+  // let userData
+  // let currentShopData
+  // let currentProductData
+//   if(localStorage.getItem("userData") === undefined){
+//     localStorage.removeItem("userData")
+//   }
+//   if(localStorage.getItem("currentShopData") === undefined){
+//     localStorage.removeItem("currentShopData")
+//   }
+//   if(localStorage.getItem("currentProductData" === undefined)){
+//     localStorage.removeItem("currentProductData")
+// }
   const userData = JSON.parse(localStorage.getItem("userData"))
+  const currentShopData = JSON.parse(localStorage.getItem("currentShopData"))
+  const currentProductData = JSON.parse(localStorage.getItem("currentProductData"))
   const token = localStorage.getItem("token")
   const [shopData, setShopData] = useState();
-  const currentShopData = JSON.parse(localStorage.getItem("currentShopData"))
   const [shopProductData, setShopProductData] = useState();
   const [allProductData, setAllProductData] = useState();
-  const currentProductData = JSON.parse(localStorage.getItem("currentProductData"))
   const [showPopUp, setShowPopUp] = useState(false)
   const [error, setError] = useState()
   const [success, setSuccess] = useState()

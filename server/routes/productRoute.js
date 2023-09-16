@@ -16,7 +16,14 @@ router
 router
 .route('/:id')
 .get(authController.protect, productControllers.getProduct)
-.patch(authController.protect, upload.single('image'), productControllers.updateProduct)
+.patch(authController.protect, 
+    upload.fields([
+        { name: 'image1', maxCount: 1 },
+        { name: 'image2', maxCount: 1 },
+        { name: 'image3', maxCount: 1 },
+        { name: 'image4', maxCount: 1 },
+      ]),
+      productControllers.updateProduct)
 .delete(
     authController.protect, 
     productControllers.deleteProduct)

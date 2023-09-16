@@ -87,13 +87,16 @@ exports.createShop = async (req, res) => {
         closingHours: req.body.closingHours,
         openingHours: req.body.openingHours,
         owner: req.user.userName,
-        deliverableDistance: req.body.deliverableDistance,
-        location: req.body.location,
         category: req.body.category,
         name: req.body.name,
         currencySymbol: req.user.currencySymbol,
-    });
-    try{
+        currency: req.user.currency,
+        deliveryLocations: req.body.deliveryLocations,
+        homeDeliveryFee: req.body.homeDeliveryFee,
+        homeDeliverySpeed: req.body.homeDeliverySpeed,
+        homeDeliveryDistance: req.body.homeDeliveryDistance
+      });
+      try{
     await shop.save()
     await updateCurrentUserShop( req.user.id, shop._id );
     

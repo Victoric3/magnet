@@ -3,7 +3,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-    gap: 10px;
+    gap: 5px;
     margin-bottom: 100px;
 
   }
@@ -14,9 +14,6 @@
     max-width: calc(25%);
   }
   @media (max-width: 850px) {
-    /* .responsive-flex-square-container {
-        flex-wrap: wrap;
-      } */
     .square-card {
       min-width: calc(50%);
       max-width: calc(50%);
@@ -25,12 +22,8 @@
     }
   
   }
-  
-  /* Media query for smaller screens */
+
   @media (max-width: 600px) {
-    /* .responsive-flex-square-container {
-        flex-wrap: wrap;
-      } */
     .square-card {
       min-width: 100%; 
       max-width: 100%; 

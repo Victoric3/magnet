@@ -1,28 +1,9 @@
 .dashBoard-wrapper{
         width: 85%;
-        margin: 110px auto;
+        margin: 0px;
         padding: 3px;
         background: white;
         display: block;
-}
-.topNav{
-    display: flex;
-    align-items: center;
-    border: 0.5px solid #33333345;
-    border-radius: 5px;
-    padding: 15px;
-    gap: 5px;
-    justify-content: space-between;
-}
-.top-nav-one{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.top-nav-two{
-    display: flex;
-    align-items: center;
-    gap: 5px;
 }
 .dashBoard{
     display: flex;

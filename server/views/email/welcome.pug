@@ -1,0 +1,36 @@
+extends baseEmail
+block content
+  p(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;") Dear #{firstName},
+  p(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;") Welcome to AlphaMagnet, where your online shopping journey begins! We are thrilled to have you join our community of talented entrepreneurs and shop owners. Congratulations on taking the first step toward showcasing your physical products to the world.
+  table.btn.btn-primary(role="presentation", border="0", cellpadding="0", cellspacing="0", style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; box-sizing: border-box; width: 100%;", width="100%")
+    tbody
+      tr
+        td(align="left", style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;", valign="top")
+          table(role="presentation", border="0", cellpadding="0", cellspacing="0", style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;")
+            tbody
+              tr
+                td(style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px; text-align: center; background-color: #ff3811;", valign="top", align="center", bgcolor="#ff3811")
+                  a(href=`${process.env.FRONTEND_BASEURL}/createShop`, target="_blank", style="border: solid 1px #ff3811; border-radius: 5px; box-sizing: border-box; cursor: pointer; display: inline-block; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-decoration: none; text-transform: capitalize; background-color: #ff3811; border-color: #ff3811; color: #ffffff;")
+                    | Create Shop
+  p(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;") At AlphaMagnet, we understand that every shop is unique, just like the products you create and sell. Our platform is designed to empower you to create a personalized and visually stunning online store that truly reflects your brand identity. Whether you're a seasoned seller or just starting out, we're here to support you every step of the way.
+  p(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;") Here's what you can expect from your AlphaMagnet experience:
+  ul(style="list-style-type: disc; margin: 0 0 0 20px;")
+    li(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 10px;") Easy Setup: We've made it incredibly simple for you to set up your online shop. With our user-friendly interface, you can have your store up and running in no time.
+    li(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 10px;") Customization: Personalize your shop to match your brand's style and personality. Choose from a variety of templates, color schemes, and fonts to create a one-of-a-kind shopping destination(version 2 release).
+    li(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 10px;") Product Management: Add, edit, and organize your products with ease. Showcase your physical creations in the best possible light with high-quality images and detailed descriptions.
+    li(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 10px;") Payment Processing: Securely accept payments from customers worldwide. We offer a range of payment options to make transactions convenient for you and your buyers, along with easy withdrawal.
+    li(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 10px;") Marketing Tools: Promote your shop and products with built-in marketing features. From SEO optimization to social media integration, we'll help you get the word out.
+    li(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 10px;") Customer Support: Our dedicated support team is always here to assist you. If you ever have questions or need assistance, don't hesitate to reach out.
+  p(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;") 
+  | To get started, simply  
+  a(href=`${process.env.FRONTEND_BASEURL}/signIn`, style="text-decoration: none; color: #ff3811;")
+    | login
+  |  to your AlphaMagnet account where you'll find step-by-step guides and tutorials to help you navigate our platform. We're confident that you'll find everything you need to build a successful online shop. 
+  p(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;") Thank you for choosing AlphaMagnet to be a part of your entrepreneurial journey. We can't wait to see the amazing products you'll share with the world. If you have any questions or need assistance, please don't hesitate to contact us at.
+  a(href="mailto:support@alphamagnet.mail", style="text-decoration: none; color: #ff3811;") support@alphamagnet.mail
+  p(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;") Once again, welcome to AlphaMagnet! We're excited to have you on board and look forward to helping you turn your passion into a thriving online business.
+  p(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;") Best regards,
+  p(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;") Chukwujiobi victor ifeanyi
+  p(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;") CEO, AlphaMagnet
+  p(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;") alphamagnet3.io
+  p(style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;") support@alphamagnet.mail
