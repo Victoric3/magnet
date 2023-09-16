@@ -21,8 +21,10 @@ if(!req.user.shops.includes(shop._id)){
     currency: req.user.currency,
     email: shop.email,
     category: shop.category,
-    deliveryFee: req.body.deliveryFee,
-    location: shop.location,
+    deliveryLocations: req.body.deliveryLocations,
+    homeDeliveryFee: req.body.homeDeliveryFee,
+    homeDeliverySpeed: req.body.homeDeliverySpeed,
+    homeDeliveryDistance: shop.homeDeliveryDistance,
     returnPolicy: req.body.returnPolicy,
     quantity: req.body.quantity,
     price: req.body.price,
@@ -32,7 +34,8 @@ if(!req.user.shops.includes(shop._id)){
     shopId: req.body.shopId,
     commision: req.body.commision,
     owner: req.user.userName,
-    currencySymbol: req.user.currencySymbol
+    currencySymbol: req.user.currencySymbol,
+    productSpecifications: req.body.productSpecifications
   });
   try{
     await product.save()
@@ -51,29 +54,47 @@ if(!req.user.shops.includes(shop._id)){
 exports.updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await Product.findByIdAndUpdate(id, { 
-      $set:{
-        image: req.file.path,
-        imageUrl: `${process.env.BASEURL}/images/${req.file.filename}`,
-      }
-    }, { new: true });
-
+    const product = await Product.findById(id);
+  
     if (!product) {
-      return res.status(404).json({ error: 'product not found' });
+      return res.status(404).json({ error: 'Product not found' });
     }
-    // await product.save()
+  
+    if (req.files.image1) {
+      product.image1 = req.files.image1[0].path;
+      product.imageUrl1 = `${process.env.BASEURL}/images/${req.files.image1[0].filename}`;
+    }
+  
+    if (req.files.image2) {
+      product.image2 = req.files.image2[0].path;
+      product.imageUrl2 = `${process.env.BASEURL}/images/${req.files.image2[0].filename}`;
+    }
+  
+    if (req.files.image3) {
+      product.image3 = req.files.image3[0].path;
+      product.imageUrl3 = `${process.env.BASEURL}/images/${req.files.image3[0].filename}`;
+    }
+  
+    if (req.files.image4) {
+      product.image4 = req.files.image4[0].path;
+      product.imageUrl4 = `${process.env.BASEURL}/images/${req.files.image4[0].filename}`;
+    }
+  
+    // Save the updated product
+    await product.save();
+  
     res.status(200).json({
-      status: 'successfully uploaded image',
+      status: 'Successfully uploaded images',
       productData: product
-    })
-
+    });
+  
   } catch (error) {
-    return res.status(500).json(
-      { 
-        error: 'Internal server error', 
-        message: error.message 
-      });
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: error.message
+    });
   }
+  
 };
 exports.updateOtherProductDetails = async(req, res) => {
   const { id } = req.params

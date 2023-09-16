@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from './utilities/AuthContext';
 import SquareCard from "./utilities/dashBoardSalesCard";
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import './utilities/DashBoard.css'
 import { Link, useNavigate } from "react-router-dom";
 import BalanceCard from './utilities/balanceCard'; 
 import { Typography } from "@mui/material";
-import SettingsIcon from '@mui/icons-material/Settings';
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
-import AddIcon from '@mui/icons-material/Add';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import ManageShop from "./utilities/ManageShop";
-import  useFetchUserData  from './utilities/useFetchData'
-
+import  useFetchUserData  from './hooks/useFetchData';
+import { TopNav } from '../components/utilities/topnav'
 
 const DashBoard = () => {
   const { updateAuth, token, shopData, baseUrl, userData } = useAuth();
@@ -26,21 +21,7 @@ const DashBoard = () => {
   const calculateTotal = array => {
     return array?.reduce((total, value) => total + value, 0);
   };
-  useEffect(() => {
-    fetch(baseUrl(`shops/`), {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      updateAuth( data.shopData)
-    })
-    .catch(error => {
-      console.error('Error fetching shop data, please login or reload the page')
-    });
-  }, []);
+  
     const currentBalance = totalBalance;
     const pendingBalance = totalPending; 
     const currency = userData?.currencySymbol
@@ -53,26 +34,10 @@ const DashBoard = () => {
      {title: '100k', content: 'Total sales', color: '#e600e6'},
      {title: '100k', content: 'Raters', color: '#007bff'}
   
-                            ]
+      ]
     return ( 
     <div className="dashBoard-wrapper">
-      <div className="topNav">
-        <div className="top-nav-one">
-        <PersonOutlineIcon sx={{ 
-          fontSize: '35px', 
-          border: '1px solid #333', 
-          borderRadius: '50%', 
-          padding: '5px',
-          }}/>
-          <Typography>Hi, {userData?.firstName}</Typography>
-          </div>
-          <div className="top-nav-two">
-          <SupportAgentIcon sx={{cursor: 'pointer'}} />
-          <NotificationsNoneIcon sx={{cursor: 'pointer'}}/>
-          <AddIcon sx={{cursor: 'pointer'}} onClick={() => {navigate('/CreateShop')}}/>
-          <SettingsIcon sx={{cursor: 'pointer'}}/>
-          </div>
-      </div>
+      <TopNav />
       <div className="dashBoard">
         <div className= 'balance'>
         <BalanceCard currentBalance={currentBalance} pendingBalance={pendingBalance} currency={currency} />

@@ -5,15 +5,12 @@ const AppError = require('../utilities/appError');
 const catchAsync = require('../utilities/catchAsync');
 require('dotenv').config()
 const secretKey = process.env.MY_SECRET_KEY;
-const sendEmail = require('../utilities/email')
+const Email = require('../utilities/email')
+const crypto = require('crypto')
 
 if (!secretKey) {
-//   console.error('Secret key is missing in environment variables.');
-  process.exit(1); // Exit the application
+  process.exit(1);
 }
-
-// Now you can use 'secretKey' in your application logic
-// console.log('Secret key:', secretKey);
 
 
 const signToken= id => {
@@ -30,6 +27,11 @@ exports.signUp = async(req, res)=>{
         password: req.body.password,
         passwordConfirm: req.body.passwordConfirm,
         countryName: req.body.countryName,
+        state: req.body.state,
+        city: req.body.city,
+        addressLine1: req.body.addressLine1,
+        addressLine2: req.body.addressLine2,
+        addressCode: req.body.addressCode,
         phoneNumber: req.body.phoneNumber,
         currency: req.body.currency,
         currencySymbol: req.body.currencySymbol,
@@ -43,6 +45,7 @@ exports.signUp = async(req, res)=>{
         httpOnly: true
     })
     newUser.password = undefined
+    new Email(newUser, `${process.env.FRONTEND_BASEURL}/createShop`).sendWelcome()
     res.status(201).json({
         message: 'success',
         token,
@@ -110,6 +113,7 @@ exports.protect = async(req, res, next) => {
             return next( new AppError(err) )
         }
         const currentUser = await User.findById(decoded.id)
+    //3 check if account still exists
         if(!currentUser){
             return next(new AppError("this user no longer exists", 401))
         }
@@ -120,40 +124,6 @@ exports.protect = async(req, res, next) => {
         req.user = currentUser
         next()
     
-        //initial function wasnt woorking for some reason
-        // User.findById(decoded.id, (err, user) => {
-        //     if(err){
-        //         return next(new AppError(err))
-        //     }
-        //     else if(!user){
-        //         return next(new AppError("this user no longer exists", 401))
-        //     }
-        //     else if(user.changedPasswordAfter(decoded.iat)){
-        //         return next(new AppError("user password was changed", 401))
-        //     }
-        //     else if(user){
-        //         return req.user = user
-        //         next()
-        //     }
-
-        // })
-        //3 check if the user acct still exists
-        // if(decoded){
-        //      const currentUser = User.findById(decoded.id)
-        //      req.user = currentUser;
-        //      next()
-        // }
-        // else if(!currentUser){
-        //     return next(new AppError("this user no longer exists", 401))
-        // }
-         
-        //4 confirm the user hasnt changed its password
-        //iat and passwordChangedAt if iat < passwordChangedAt
-        // currentUser.changedPasswordAfter(decoded.iat)
-        // if(currentUser.changedPasswordAfter(decoded.iat)){
-        //     console.log(currentUser.passwordChangedAt, decoded.iat)
-            // return next(new AppError("user password was changed", 401))
-        // }
     })
         
 
@@ -172,29 +142,17 @@ exports.restrict = (...roles) => {
 }
 
 
-
-
-///not yet working
 exports.forgotPassword = catchAsync(async(req, res, next) => {
     const user = await User.findOne({ email: req.body.email })
     if(!user){
-        // console.log(req.body.email);
         return next(new AppError('this email address does not belong to a user'))
     }
 
     const resetToken = user.createPasswordResetToken()
     await user.save({ validateBeforeSave: false })
-    //send mail
-    const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`
-    const message = `forgot your password? follow this link to reset it now!! ${resetUrl}, link expires in 10mins.\n if you didn't request this email please ignore this message` 
-//    console.log(resetUrl, message);
-   
+
     try{
-        await sendEmail({
-            email: user.email,
-            subject: 'password reset email from alphamagnet🧲',
-            message: message
-        })
+        await new Email(user, resetToken).sendPasswordReset()
         res.status(200).json({
             status: 'success',
             message: 'mail successfully sent'
@@ -205,18 +163,45 @@ exports.forgotPassword = catchAsync(async(req, res, next) => {
         await user.save({ validateBeforeSave: false });
 
     return next(
-      new AppError('There was an error sending the email. Try again later!'),
+      new AppError(e.message),
       500)
 }
 })
 
-exports.resetPassword = async(req, res, next) => {
+exports.resetPassword = catchAsync(async(req, res, next) => {
    try{
-    ///
+    const hashedToken = crypto.createHash('shake256').update(req.params.token).digest('hex')
+    //1  get user based on token
+
+    const user = await User.findOne({ 
+        passwordResetToken: hashedToken,
+        passwordResetTokenExpires: { $gt: Date.now() }
+    })
+    if(!user){
+        return next(new AppError('this token is invalid or has expired'))
+    }
+    //2 set new password if token is valid and user 
+    user.password = req.body.password
+    user.passwordConfirm = req.body.passwordConfirm
+    user.passwordResetToken = undefined
+    user.passwordResetTokenExpires = undefined
+    await user.save()
+        
+    //4 sign a token for user
+    const token = signToken(user._id)
+    res.cookie('jwt', token, {
+        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRATION_DATE * 24 * 60 * 60 * 1000),
+        secure: false,
+        httpOnly: true
+    })
+    res.status(200).json({
+        message: 'success',
+        token
+    })
    }catch(e){
         res.status(404).json({
             status: 'failed',
             message: e.message
         })
 
-}}
+}})

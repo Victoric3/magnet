@@ -38,17 +38,16 @@ const IconWrapper = styled(IconButton)(({ theme }) => ({
 const SquareCard = (props) => {
   return (
     <StyledCard>
-      <IconWrapper className="iconButton" sx={{ fontSize: '35px' }}>
-        {React.createElement(props.icon)}
+      <IconWrapper className="iconButton">
+        {React.createElement(props.icon, {style: {fontSize: '38px'}})}
       </IconWrapper>
       <CardContent>
-        <Typography variant='h3'  sx={{ textAlign: 'center', fontWeight: '500'}}>
+        <Typography variant='h5'  sx={{ textAlign: 'center' }}>
           {props.title}
         </Typography>
-        <Typography variant='h4' sx={{ 
+        <Typography variant='h6' sx={{ 
           textAlign: 'center', 
           marginTop: '10px',
-          fontWeight: '400'
           }}>
           {props.content}
         </Typography>

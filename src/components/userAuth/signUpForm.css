@@ -1,0 +1,43 @@
+/* SigninForm.css */
+.signin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto auto;
+  height: 100vh;
+  gap: 10px;
+  width: 30%;
+}
+
+
+/* SignupForm.css */
+
+.signup-container {
+    display: flex;
+    width: 60%;
+    margin: 10% auto;
+  }
+  
+  /* Media query for responsiveness */
+  @media (max-width: 768px) {
+    .signup-container {
+      width: 95%;
+    }
+    .signin-container {
+      width: 90%;
+    }
+  
+  }
+  @media (max-width: 600px) {
+    .signup-container {
+      margin-top: 100px;
+      
+    }
+    .signin-container {
+      width: 95%;
+    }
+   
+
+  }
+  

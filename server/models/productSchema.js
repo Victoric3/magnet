@@ -1,4 +1,36 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+
+const locationSchema = new mongoose.Schema({
+    countryName: {
+        type: String,
+        required: [true, 'provide the country'],
+    },
+    state: {
+        type: String,
+        required: [true, 'provide the state'],
+    },
+    city: {
+        type: String,
+        required: [true, 'provide the city'],
+    },
+    addressLine1: {
+        type: String,
+        required: [true, 'provide the addressLine1'],
+    },
+    addressLine2: {
+        type: String,
+        required: [true, 'provide the addressLine2'],
+    },
+    deliveryDuration: {
+        type: String,
+        required: [true, 'provide how long it takes to deliver this item'],
+    },
+    fee: {
+        type: Number,
+        required: [true, 'how much do you charge to deliver to this location']
+    }
+
+});
 const productSchema = new mongoose.Schema({
     name: {
         type: String,  
@@ -20,17 +52,29 @@ const productSchema = new mongoose.Schema({
         type: String,  
         default: 'no return policy was indicated for this item'
     },
-    location: {
-        type: String, 
-        required: [true, 'please state the location of this item']
-    },
-    deliveryFee: {
-        type: String,
-        default: 0
-    },
+    deliveryLocations:[locationSchema],
+    homeDeliveryFee: Number,
+    homeDeliverySpeed: Number,
+    homeDeliveryDistance: String,
     category: String,
     email: String,
-    image: {
+    productSpecifications: {
+        type: [Object],
+        default: [{caption: 'no data', description: 'no data'}]
+    },
+    image1: {
+        type: String,
+        default: ''
+    },
+    image2: {
+        type: String,
+        default: ''
+    },
+    image3: {
+        type: String,
+        default: ''
+    },
+    image4: {
         type: String,
         default: ''
     },
@@ -81,7 +125,19 @@ const productSchema = new mongoose.Schema({
     },
     shopId: String,
     commision: String,
-    imageUrl: {
+    imageUrl1: {
+        type: String,
+        default: ''
+    },
+    imageUrl2: {
+        type: String,
+        default: ''
+    },
+    imageUrl3: {
+        type: String,
+        default: ''
+    },
+    imageUrl4: {
         type: String,
         default: ''
     }

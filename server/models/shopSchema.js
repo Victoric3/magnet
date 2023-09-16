@@ -1,4 +1,35 @@
 const mongoose = require('mongoose')
+const locationSchema = new mongoose.Schema({
+    countryName: {
+        type: String,
+        required: [true, 'provide the country'],
+    },
+    state: {
+        type: String,
+        required: [true, 'provide the state'],
+    },
+    city: {
+        type: String,
+        required: [true, 'provide the city'],
+    },
+    addressLine1: {
+        type: String,
+        required: [true, 'provide the addressLine1'],
+    },
+    addressLine2: {
+        type: String,
+        required: [true, 'provide the addressLine2'],
+    },
+    deliveryDuration: {
+        type: String,
+        required: [true, 'provide how long it takes to deliver this item'],
+    },
+    fee: {
+        type: Number,
+        required: [true, 'how much do you charge to deliver to this location']
+    }
+
+});
 const shopSchema = new mongoose.Schema({
     name: {
         type: String,  
@@ -13,13 +44,10 @@ const shopSchema = new mongoose.Schema({
         type: String, 
         required: [true, 'please state the category of goods you sell']
     },
-    location: {
-        type: String, 
-        required: [true, 'please state the location of this shop']
-    },
-    deliverableDistance: {
-        type: String, 
-    },
+    deliveryLocations:[locationSchema],
+    homeDeliveryFee: Number,
+    homeDeliverySpeed: Number,
+    homeDeliveryDistance: String,
     owner: {
         type: String, 
         required: [true, 'who owns this shop']
@@ -54,16 +82,15 @@ const shopSchema = new mongoose.Schema({
         default: ''
     },
     rating: {
-        type: Number, 
+        type: [Number], 
         default: 0
     },
     ratingQuantity:  {
         type: Number, 
         default: 0
     },
-    ratingAvearage:  {
-        type: Number, 
-        default: 0
+    reviews: {
+        type: [String]
     },
     shopCatchPhrase: {
         type: String,  
@@ -87,29 +114,16 @@ const shopSchema = new mongoose.Schema({
         required: [true, 'please specify the type of shop you sell']
     },
     Orders: {
-        type: [Number],
-        default: []
-    },
-    Delivered: {
-        type: [Number],
+        type: [Object],
         default: []
     },
     MagnetsAttached: {
-        type: [Number],
+        type: [Object],
         default: []
     },
-    seenBy: {
-        type: [Number],
-        default: []
-    },
-    pending: {
-        type: [Number],
-        default: []
-    },
-    
     score: {
-        type: Number, 
-        default: 1
+        type: [Number], 
+        default: [1]
     },
     products: {
         type: [String],
@@ -118,11 +132,11 @@ const shopSchema = new mongoose.Schema({
     currencySymbol: {
         type: String,
         default: '$'
+    },
+    currency: {
+        type: String,
+        default: 'united states dollar'
     }
-
-
-    
-
 
 })
 const Shop = mongoose.model('Shop', shopSchema)
