@@ -3,7 +3,7 @@ import { Menu, MenuItem, Typography, TextField } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // import './Dropdown.css'
 
-const CountrySelector = ({ countries, handleDataCountrySelector }) => {
+const CountrySelector = ({ countries, handleDataCountrySelector, prefilled }) => {
  
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState('');
@@ -33,7 +33,7 @@ const CountrySelector = ({ countries, handleDataCountrySelector }) => {
           borderRadius: '5px'
         }}
       >
-        {selectedCountry || 'Select your country'}
+        {selectedCountry || prefilled || 'Select your country'}
         <ExpandMoreIcon sx={{ ml: 1 }} />
       </Typography>
       <Menu
@@ -41,9 +41,7 @@ const CountrySelector = ({ countries, handleDataCountrySelector }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
         sx={{
-          width: '100%', // Same width as the form
-        //   transform: 'translateX(50%)',
-        //   margin: '50%'
+          width: '100%', 
         }}
       >
         {countries.map((country) => (

@@ -16,7 +16,6 @@ import {
   TableRow
 } from '@mui/material';
 import { SeverityPill } from './severity-pill';
-import { Scrollbar } from './scrollbar'
 
 const statusMap = {
   pending: 'warning',
@@ -25,27 +24,26 @@ const statusMap = {
 };
 
 export const OverviewLatestOrders = (props) => {
-  const customScrollbarStyles = {
-    height: '100%',
-    '& .simplebar-content': {
-      height: '100%',
-      paddingRight: '5px',
-    },
-    '& .simplebar-scrollbar:before': {
-      background: 'neutral.400',
-      borderRadius: '4px', 
-    },
-  };
   const { orders = [], sx } = props;
 
   return (
-    // <div sx={{...customScrollbarStyles}}>
     <Card sx={sx}>
       <CardHeader title="Latest Orders" />
-        <Scrollbar sx={{maxHeight: '422px'}}>
+        <div style={{
+         overflow: 'auto',
+         '&::-webkit-scrollbar': {
+           width: '5px',
+         },
+         '&::-webkit-scrollbar-thumb': {
+           backgroundColor: '#ccc',
+           borderRadius: '6px',
+         },
+         '&::-webkit-scrollbar-track': {
+           backgroundColor: '#f0f0f0',
+         }
+        }}>
       <Box sx={{ 
         minWidth: 800, 
-        overflow: 'auto',
         }}>
           <Table>
             <TableHead>
@@ -93,7 +91,7 @@ export const OverviewLatestOrders = (props) => {
             </TableBody>
           </Table>
       </Box>
-          </Scrollbar>
+    </div>
       <Divider />
       <CardActions sx={{ justifyContent: 'flex-end' }}>
         <Button

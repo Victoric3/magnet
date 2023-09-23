@@ -14,7 +14,7 @@ const sideNavStyles = {
 export const SideNav = (props) => {
   const navigate = useNavigate()
   const { open, onClose } = props;
-  const pathname = window.location.pathname; // Use window.location.pathname to get the current pathname
+  const pathname = window.location.pathname; 
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const customScrollbarStyles = {
     height: '100%',

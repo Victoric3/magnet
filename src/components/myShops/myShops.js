@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
+import EditIcon from '@mui/icons-material/Edit';
+import ConfirmationModal from "../utilities/confirmationModal";
 import {
   Box,
   Button,
@@ -10,6 +12,9 @@ import {
   Stack,
   SvgIcon,
   Typography,
+  Badge,
+  IconButton,
+  Tooltip,
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import { CompanyCard } from './myShops-card';
@@ -17,11 +22,29 @@ import { CompaniesSearch } from './myShops-search';
 import Layout from '../utilities/layout';
 import { useAuth } from '../utilities/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import useDeleteShop from '../hooks/useDeleteShop';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import TurnedInIcon from '@mui/icons-material/TurnedIn';
+import useFetchProduct from '../hooks/useFetchProducts';
+
 
 const Myshops = () => {
-  const { shopData, baseUrl, updateAuth, token } = useAuth()
+  const { shopData, baseUrl, updateAuth, token, currentShopData } = useAuth()
   const navigate = useNavigate()
   const [IsEditing, setIsEditing] = useState(false)
+  const { fetchProduct } = useFetchProduct()
+  const { deleteShop } = useDeleteShop()
+   const [showconfirmModal, setShowconfirmModal] = useState(false);
+   
+   const openconfirmModal = () => {
+     setShowconfirmModal(true);
+   };
+ 
+   const closeconfirmModal = () => {
+     setShowconfirmModal(false);
+   };
   useEffect(() => {
     fetch(baseUrl(`shops/`), {
       method: 'GET',
@@ -89,7 +112,7 @@ const Myshops = () => {
               <Button
                 startIcon={(
                   <SvgIcon fontSize="small">
-                    <PlusIcon />
+                    <EditIcon />
                   </SvgIcon>
                 )}
                 variant="contained"
@@ -124,7 +147,91 @@ const Myshops = () => {
                 lg={4}
                 key={index}
               >
-                <CompanyCard shop={shop} Editing={IsEditing}/>
+              <CompanyCard 
+                image={shop.shopImgUrl}
+                name={shop.name}
+                catchPhrase={shop.shopCatchPhrase}
+                orders={shop?.orders?.length || 0}
+                items={shop?.products?.length || 0}
+                ordersCaption={'order(s)'}
+                itemsCaption={'product(s)'}
+                ordersIcon={(
+                  <SvgIcon
+                    color="action"
+                    fontSize="small"
+                  >
+                    <ReceiptIcon />
+                  </SvgIcon>
+                )}
+              />
+                {IsEditing? <div style={{
+                  display: 'flex',
+                  justifyContent: 'end',
+                  marginTop: '5px',
+                  gap: '5px'
+                  }}>
+              <Tooltip title="Add Product">
+              <IconButton>
+                
+              <SvgIcon
+                  color="action"
+                  fontSize="medium"
+                >
+              <AddIcon onClick={() => {
+              localStorage.setItem("currentShopData", JSON.stringify(shop))
+              navigate('/createProduct')
+              }} sx={{cursor: 'pointer'}}/>
+            </SvgIcon>
+            
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Edit Shop">
+              <IconButton>
+                
+            <SvgIcon
+                color="action"
+                fontSize="medium"
+              >
+                <EditIcon onClick={() => navigate('/editShop')} sx={{cursor: 'pointer'}}/>
+            </SvgIcon>
+            
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Products">
+              <IconButton>
+                
+            <SvgIcon
+                color="action"
+                fontSize="medium"
+              >
+                <TurnedInIcon onClick={
+                  () => {
+                    localStorage.setItem("currentShopData", JSON.stringify(shop))
+                    fetchProduct(shop)
+                    navigate('/products')
+                    }} sx={{cursor: 'pointer'}}/>
+            </SvgIcon>
+            
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete">
+              <IconButton>
+            <SvgIcon
+                color="action"
+                fontSize="medium"
+              >
+                <DeleteIcon onClick={openconfirmModal} sx={{cursor: 'pointer'}}/>    
+            </SvgIcon>
+            
+              </IconButton>
+            </Tooltip>
+            </div> : '' }
+            <ConfirmationModal 
+              open={showconfirmModal}
+              onClose={closeconfirmModal}
+              onConfirm={() => {deleteShop(shop); setShowconfirmModal(false)}}
+              message={`are you sure you want to delete ${shop?.name}`}
+              />
               </Grid>
             ))
             :

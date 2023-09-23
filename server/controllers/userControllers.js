@@ -51,24 +51,42 @@ exports.getAllUsers = async (req, res) => {
   };
   exports.updateCurrentUser = async (req, res) => {
     try {
-        const userId = req.user.id;
-        const updateData = req.body;
-        const newShopName = req.body.shop; 
+        const userId = req.user._id;
+        const allowedFields = [
+          'email',
+          'firstName',
+          'lastName',
+          'phoneNumber',
+          'countryName',
+          'currency',
+          'currencySymbol',
+          'city',
+          'state',
+          'addressLine1',
+          'addressLine2',
+          'addressCode'
+        ];
+      
+        const userData = req.body;
+      
+        // Only allow allowed fields to be updated
+        const updateData = {};
+        allowedFields.forEach(field => {
+          if (userData[field]) {
+            updateData[field] = userData[field];
+          }
+        });
 
-        const { shop, ...otherUpdates } = updateData;
-        const updatedUserWithoutShop = await User.findByIdAndUpdate(userId, { $set: otherUpdates }, {
+        const updatedUser = await User.findByIdAndUpdate(userId, { $set: updateData }, {
             new: true,
             runValidators: true
         });
+          
 
-        const updatedUserWithShop = await User.findByIdAndUpdate(userId, { $push: { shop: newShopName } }, {
-            new: true,
-            runValidators: true
-        });
 
         res.status(201).json({
             status: 'success',
-            user: updatedUserWithShop
+            user: updatedUser
         });
     } catch (err) {
         res.status(404).json({
@@ -98,3 +116,33 @@ exports.getAllUsers = async (req, res) => {
       throw err;
     }
   };
+
+  exports.updateUserImage = async (req, res) => {
+    try {
+      const userId  = req.user._id;
+  
+      if (!req.file) {
+        return res.status(400).json({ error: 'Please provide a valid image file' });
+      }
+  
+      const updateFields = {
+        image: req.file.path,
+        imageUrl: `${process.env.BASEURL}/images/${req.file.filename}`
+      };
+  
+      const user = await User.findByIdAndUpdate(userId, { $set: updateFields }, { new: true });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      res.status(200).json({
+        status: 'successfully uploaded image',
+        userData: user
+      });
+  
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal server error', message: error.message });
+    }
+  };
+  

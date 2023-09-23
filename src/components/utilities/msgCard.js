@@ -39,7 +39,7 @@ const MsgCard = () => {
       }}
       >
         <Typography variant="h6" sx = {{ color: success ? 'green' : 'red', padding: '25px'}}>
-          { success || error } <StatusIcon success={success}/>
+          { success || error } {success ? '😁' : '😥'}<StatusIcon success={success}/>
         </Typography>
         <Button variant="contained" color="primary" onClick={handleOkClick} >
             OK

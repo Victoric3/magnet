@@ -130,8 +130,23 @@ exports.updateOtherProductDetails = async(req, res) => {
   if(req.body.commision){
     updateFields.commision = req.body.commision
   }
+  if(req.body.productSpecifications){
+    updateFields.productSpecifications = req.body.productSpecifications
+  }
   if(req.body.price){
     updateFields.price = req.body.price
+  }
+  if(req.body.deliveryLocations){
+    updateFields.deliveryLocations = req.body.deliveryLocations
+  }
+  if(req.body.homeDeliveryFee){
+    updateFields.homeDeliveryFee = req.body.homeDeliveryFee
+  }
+  if(req.body.homeDeliverySpeed){
+    updateFields.homeDeliverySpeed = req.body.homeDeliverySpeed
+  }
+  if(req.body.homeDeliveryDistance){
+    updateFields.homeDeliveryDistance = req.body.homeDeliveryDistance
   }
   if(returnPolicy.includes(req.body.returnPolicy)){
       updateFields.returnPolicy = req.body.returnPolicy

@@ -32,7 +32,7 @@ const CreateShop = () => {
         linkedIn: '',
         twitter: '',
         instagram: '',
-        facebook: '',
+        faceBook: '',
         closingHours: '',
         openingHours: '',
         homeDeliverySpeed: '',
@@ -52,7 +52,6 @@ const CreateShop = () => {
           deliveryLocations: updatedData,
         }));
       };
-      console.log(formData);
       const [Error, setError] = useState(null)
       const [Success, setSuccess] = useState(null)
       const [value, setValue] = useState('')
@@ -99,8 +98,12 @@ const CreateShop = () => {
        const handleCheckboxChange = event => {
          setChecked(event.target.checked);
        };
+
+       ///handle submit function
        const handleSubmit = async (event) => {
          event.preventDefault();
+         setError(null)
+         setSuccess(null)
          messageShower(true)
         const form = new FormData();
 
@@ -120,7 +123,6 @@ const CreateShop = () => {
         category: categoryValue,
         homeDeliveryDistance: deliveryListValue,
       };
-      console.log(nonImageFields);
 
         if(!selectedImgFile){
             setError('please select an image for your shop')
@@ -138,7 +140,7 @@ const CreateShop = () => {
             setError('please select your shop category')
             return;
         }else if(!deliveryListValue){
-            setError('please select a how far you can deliver services')
+            setError('please select how far you can deliver services')
             return;
         }else{
 
@@ -169,20 +171,20 @@ const CreateShop = () => {
               setError(null);
               setSuccess('your shop was created successfully');  
               setTimeout(() => {navigate('/MyPshop')}, 2000)
-      }
-      else{
+      }else{
         setError('there was an issue uploading your image, please do that by updating your shop with your desired image')
         navigate('/MyPshop');
       }} catch(err){
         setError(err.message)
         }
                 
-      }
-      else{
-        setError(await response?.json()?.errormessage)
+      }else if(response.status === 400){
+        const error = await response?.json()
+        console.log(error, 'errorMessage');
+        setError(error?.errorMessage)
       }
     } catch (error) {
-      setError(await response?.json()?.errormessage)
+      setError(error.message)
     }
     }
         

@@ -7,6 +7,8 @@ require('dotenv').config()
 const secretKey = process.env.MY_SECRET_KEY;
 const Email = require('../utilities/email')
 const crypto = require('crypto')
+const bcrypt = require('bcryptjs')
+const Shop = require('../models/shopSchema')
 
 if (!secretKey) {
   process.exit(1);
@@ -19,6 +21,9 @@ const signToken= id => {
     })
 }
 exports.signUp = async(req, res)=>{
+    const { userName } = req.body
+    const { email } = req.body
+
     const newUser = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -33,10 +38,29 @@ exports.signUp = async(req, res)=>{
         addressLine2: req.body.addressLine2,
         addressCode: req.body.addressCode,
         phoneNumber: req.body.phoneNumber,
+        phoneCountry: req.body.phoneCountry,
         currency: req.body.currency,
         currencySymbol: req.body.currencySymbol,
         Date: new Date(Date.now())
     })
+    if(req.body.countryName !== req.body.phoneCountry){
+        res.status(400).json({
+            status: 'failed',
+            message: `seems this number is not used by ${req.body.countryName}`
+        })
+        return;
+    }
+    const user = await Shop.findOne({ userName }); 
+    const emailCheck = await Shop.findOne({ email }); 
+      if (user) {
+      res.status(400).json({ errorMessage: 'userName is already taken. Please choose a different one.' });
+      return;
+    }
+      if (emailCheck) {
+      res.status(400).json({ errorMessage: 'email is already taken. Please choose a different one.' });
+      return;
+    }
+
     try{await newUser.save()
         const token = signToken(newUser._id)
         res.cookie('jwt', token, {
@@ -205,3 +229,39 @@ exports.resetPassword = catchAsync(async(req, res, next) => {
         })
 
 }})
+
+
+exports.updatePassword = async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    
+    try {
+        const user = await User.findById(req.user._id).select('+password');
+    if(!user){
+        return res.status(401).json({
+            status: 'failed',
+            message: 'user not found'
+        })
+    }
+    const isPasswordValid = await user.correctPassword(oldPassword, user.password)
+    console.log(isPasswordValid, req.body.oldPassword+1, req.body);
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: 'your old password is incorrect' });
+    }
+
+
+
+    user.password = newPassword;
+    user.passwordConfirm = newPassword
+    await user.save();
+    const token = signToken(user._id)
+    res.cookie('jwt', token, {
+        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRATION_DATE * 24 * 60 * 60 * 1000),
+        secure: false,
+        httpOnly: true
+    })
+
+    res.status(200).json({ message: 'Password updated successfully', token: token });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}

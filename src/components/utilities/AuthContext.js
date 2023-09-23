@@ -5,24 +5,12 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate("currentProductData")
-  // let userData
-  // let currentShopData
-  // let currentProductData
-//   if(localStorage.getItem("userData") === undefined){
-//     localStorage.removeItem("userData")
-//   }
-//   if(localStorage.getItem("currentShopData") === undefined){
-//     localStorage.removeItem("currentShopData")
-//   }
-//   if(localStorage.getItem("currentProductData" === undefined)){
-//     localStorage.removeItem("currentProductData")
-// }
   const userData = JSON.parse(localStorage.getItem("userData"))
   const currentShopData = JSON.parse(localStorage.getItem("currentShopData"))
   const currentProductData = JSON.parse(localStorage.getItem("currentProductData"))
+  const shopProductData = JSON.parse(localStorage.getItem("shopProductData"))
   const token = localStorage.getItem("token")
   const [shopData, setShopData] = useState();
-  const [shopProductData, setShopProductData] = useState();
   const [allProductData, setAllProductData] = useState();
   const [showPopUp, setShowPopUp] = useState(false)
   const [error, setError] = useState()
@@ -43,21 +31,20 @@ export const AuthProvider = ({ children }) => {
     setSuccess(success);
   };
   const messageShower = (boolean) => {
-      setShowmsg(boolean)
+    setShowmsg(boolean)
   }
   const handleOkClick = () => {
     setShowmsg(false);
   }
-
+  
   
 
   const updateAuth = ( shopData) => {
     setShopData(shopData)
   };
   
-  const updateProductData = (allProductData, shopProductData) => {
+  const updateProductData = (allProductData) => {
     setAllProductData(allProductData)
-    setShopProductData(shopProductData)
   }
 
   const logout = () => {

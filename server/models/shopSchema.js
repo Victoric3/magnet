@@ -20,6 +20,10 @@ const locationSchema = new mongoose.Schema({
         type: String,
         required: [true, 'provide the addressLine2'],
     },
+    addressCode: {
+        type: String,
+        required: [true, 'provide the addressCode'],
+    },
     deliveryDuration: {
         type: String,
         required: [true, 'provide how long it takes to deliver this item'],
@@ -30,6 +34,11 @@ const locationSchema = new mongoose.Schema({
     }
 
 });
+const chatMessageSchema = new mongoose.Schema({
+    sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    message: String,
+    dateReceived: { type: Date, default: Date.now }
+  });
 const shopSchema = new mongoose.Schema({
     name: {
         type: String,  
@@ -45,9 +54,18 @@ const shopSchema = new mongoose.Schema({
         required: [true, 'please state the category of goods you sell']
     },
     deliveryLocations:[locationSchema],
-    homeDeliveryFee: Number,
-    homeDeliverySpeed: Number,
-    homeDeliveryDistance: String,
+    homeDeliveryFee: {
+        type: Number,
+        default:0
+    },
+    homeDeliverySpeed: {
+        type: Number,
+        default:0
+    },
+    homeDeliveryDistance: {
+        type: String,
+        default: 'none'
+    },
     owner: {
         type: String, 
         required: [true, 'who owns this shop']
@@ -60,11 +78,26 @@ const shopSchema = new mongoose.Schema({
         type: String, 
         required: [true, 'closingHours is required']
     },
-    faceBook: String,
-    instagram: String,
-    linkedIn: String,
-    twitter: String,
-    email: String,
+    faceBook: {
+        type: String,
+        default: 'nolink'
+    },
+    instagram: {
+        type: String,
+        default: 'nolink'
+    },
+    linkedIn: {
+        type: String,
+        default: 'nolink'
+    },
+    twitter: {
+        type: String,
+        default: 'nolink'
+    },
+    email: {
+        type: String,
+        default: 'nolink'
+    },
     image: {
         type: String,
         default: ''
@@ -117,6 +150,10 @@ const shopSchema = new mongoose.Schema({
         type: [Object],
         default: []
     },
+    customers: [{
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },  // Reference to 'User' model
+        messages: [chatMessageSchema]
+      }],
     MagnetsAttached: {
         type: [Object],
         default: []

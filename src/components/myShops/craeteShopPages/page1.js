@@ -27,7 +27,7 @@ const Page1 = ({
 }) => {
     return(<>
         <form onSubmit={handleNext} style={{display: 'flex', flexDirection: 'column', gap: '5px'}}>
-    <Card>
+        <Card>
           <CardHeader
           subheader="tell us about your shop"
           title="Create a shop"

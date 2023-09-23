@@ -38,6 +38,7 @@ const Page2 = ({
         fee: '',
         addressLine1: '',
         addressLine2: '',
+        addressCode: '',
         city: '',
         state: '', 
     }]);
@@ -203,6 +204,17 @@ const Page2 = ({
                 onChange={(e) => handleFieldChange(index, 'addressLine2', e.target.value)}
                 fullWidth
               />
+              </Grid>
+            <Grid item xs={12}
+                md={6}>
+              <TextField
+                label="Address code or postal code"
+                name="addressCode"
+                value={field.addressCode}
+                type='Number'
+                onChange={(e) => handleFieldChange(index, 'addressCode', e.target.value)}
+                fullWidth
+              />
             </Grid>
             <Grid item xs={12}
                 md={6}>
@@ -233,15 +245,14 @@ const Page2 = ({
         ))}
         <CardActions sx={{ 
             display: 'flex', 
-            background: '#007bff', 
-            width: '150px', 
+            background: '#fff', 
             height: 'auto',
             alignSelf: 'center',
             borderRadius: '5px',
             marginTop: '5px'
         }}>
-        <Button type="button" variant="Button" color="primary" sx={{width: '100%'}} onClick={addField}>
-            Add Location
+        <Button type="button" variant="contained" color="primary" sx={{width: '80px'}} onClick={addField}>
+            Add
         </Button>
         </CardActions>
         </> 
@@ -251,7 +262,7 @@ const Page2 = ({
             </CardContent>
             </Card>
             <Divider />
-            <CardActions sx={{ justifyContent: 'space-between' }}>
+            <CardActions sx={{ justifyContent: {xs: 'start', md: 'space-between'}, flexDirection: { xs: 'column', md: 'row' } }}>
             <FormControlLabel
             control={<Checkbox checked={checked} onChange={handleCheckboxChange} />}
             label={ <span>

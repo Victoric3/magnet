@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box,
   Button,
@@ -15,68 +15,25 @@ import { useAuth } from '../../utilities/AuthContext';
 import CountrySelector from '../../utilities/countrySelector'
 import { Currencies } from '../../utilities/formLists'
 import CurrencyMapping from '../../utilities/formLists'
+import PhoneInput from 'react-phone-input-2';
 
-export const AccountProfileDetails = () => {
+export const AccountProfileDetails = ({
+  values,
+  handleChange,
+  countries,
+  handleDataCountrySelector,
+  handleCurrencyList,
+  handleSubmit,
+  handlePhoneNumberChange,
+  selectedCountry
+}) => {
   const { userData } = useAuth()
-  const [values, setValues] = useState({
-    firstName: `${userData.firstName}`,
-    lastName: `${userData.lastName}`,
-    email: `${userData.email}`,
-    phone: `${userData.phoneNumber}`,
-    country: `${userData.countryName}`,
-    state: `${userData.state}`,
-    city: `${userData.city}`,
-    addressLine1: `${userData.addressLine1}`,
-    addressLine2: `${userData.addressLine2}`,
-    addresscode: `${userData.addresscode}`,
-  });
-  const [selectedCurrency, setSelectedCurrency] = useState(userData.currency)
-  const handleCurrencyList = (value) => {
-    setSelectedCurrency(value)
-}
-
-const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
-  const handleChange = useCallback(
-    (event) => {
-      setValues((prevState) => ({
-        ...prevState,
-        [event.target.name]: event.target.value
-      }));
-    },
-    []
-  );
-
   
-  const [selectedCountry, setSelectedCountry] = useState(''); 
-    const handleDataCountrySelector = (data) => {
-      setSelectedCountry(data);
-    };
-  const [countries, setCountries] = useState([]);
-  useEffect(() => {
-    fetch('https://restcountries.com/v3.1/all')
-    .then((response) => response.json())
-      .then((data) => {
-        const extractedCountries = data.map((country) => ({
-          label: country.name.common,
-          value: country.cca3,
-        }));
-        const sortedCountries = extractedCountries.slice().sort((a, b) => a.label.localeCompare(b.label))
-        setCountries(sortedCountries);
-      })
-      .catch((error) => {
-          console.error(error);
-      });
-    }, []);
-    const handleSubmit = useCallback(
-      (event) => {
-        event.preventDefault();
-      },
-      []
-    );
+    
+
   return (
     <form
       autoComplete="off"
-      noValidate
       onSubmit={handleSubmit}
     >
       <Card>
@@ -134,25 +91,33 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
                 xs={12}
                 md={6}
               >
-                <TextField
-                  fullWidth
-                  label="Phone Number"
-                  name="phone"
-                  onChange={handleChange}
-                  type="number"
-                  value={values.phone}
-                />
-              </Grid>
+              <PhoneInput
+                name='phoneNumber'
+                value={userData.phoneNumber}
+                onChange={handlePhoneNumberChange}
+                country={`us`} 
+
+                inputProps={{
+                  className: 'form-input', 
+                  style: {
+                    padding: '18px',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '16px',
+                    width: '92%',
+                    marginLeft: '8%'
+                  },
+                }}
+              /></Grid>
               <Grid
                 xs={12}
                 md={6}
               >
                 <CountrySelector 
                   countries={countries} 
-                  required 
-                  handleDataCountrySelector = { 
-                    handleDataCountrySelector 
-                }/>
+                  prefilled={userData.countryName} 
+                  handleDataCountrySelector = {handleDataCountrySelector}
+                  />
               </Grid>
               <Grid
                 xs={12}
@@ -210,28 +175,15 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
                 xs={12}
                 md={6}
               >
-                <TextField
-                  fullWidth
-                  label="Postal code or mailbox"
-                  name="addressCode"
-                  onChange={handleChange}
-                  required
-                  value={values.addressCode}
-                />
-              </Grid>
-              <Grid
-                xs={12}
-                md={6}
-              >
-                <TextField
-                  fullWidth
-                  label="Phone Number2"
-                  name="phone2"
-                  onChange={handleChange}
-                  type="number"
-                  value={values.phone2}
-                />
-              </Grid>
+              <TextField
+                label="Postal code or mailbox"
+                name="addressCode"
+                value={values.addressCode}
+                type="Number"
+                onChange={handleChange}
+                fullWidth
+                required
+              /></Grid>
               <Grid
                 xs={12}
                 md={6}
@@ -246,7 +198,7 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">
+          <Button variant="contained" type='submit'>
             Save details
           </Button>
         </CardActions>

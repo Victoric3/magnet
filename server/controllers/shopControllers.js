@@ -69,7 +69,7 @@ exports.getAllShops= async(req, res) => {
 
 
 exports.createShop = async (req, res) => {
-    
+   const { name } = req.body
   const shop = new Shop({
         shopType: req.body.shopType,
         shopOverview: req.body.shopOverview,
@@ -97,6 +97,11 @@ exports.createShop = async (req, res) => {
         homeDeliveryDistance: req.body.homeDeliveryDistance
       });
       try{
+      const user = await Shop.findOne({ name }); 
+      if (user) {
+      res.status(400).json({ errorMessage: 'ShopName is already taken. Please choose a different one.' });
+      return;
+    }
     await shop.save()
     await updateCurrentUserShop( req.user.id, shop._id );
     
@@ -170,8 +175,8 @@ exports.updateOtherShopDetails = async(req, res) => {
   if(req.body.instagram){
     updateFields.instagram = req.body.instagram
   }
-  if(req.body.facebook){
-    updateFields.facebook = req.body.facebook
+  if(req.body.faceBook){
+    updateFields.faceBook = req.body.faceBook
   }
   if(req.body.location){
     updateFields.location = req.body.location
@@ -181,6 +186,18 @@ exports.updateOtherShopDetails = async(req, res) => {
   }
   if(req.body.openingHours){
     updateFields.openingHours = req.body.openingHours
+  }
+  if(req.body.deliveryLocations){
+    updateFields.deliveryLocations = req.body.deliveryLocations
+  }
+  if(req.body.homeDeliveryFee){
+    updateFields.homeDeliveryFee = req.body.homeDeliveryFee
+  }
+  if(req.body.homeDeliverySpeed){
+    updateFields.homeDeliverySpeed = req.body.homeDeliverySpeed
+  }
+  if(req.body.homeDeliveryDistance){
+    updateFields.homeDeliveryDistance = req.body.homeDeliveryDistance
   }
   if(deliveryList.includes(req.body.deliverableDistance)){
       updateFields.deliverableDistance = req.body.deliverableDistance
@@ -267,6 +284,57 @@ exports.deleteShop = async (req, res) => {
     });
   }finally {
     User.schema.set('validateBeforeSave', true);
+  }
+};
+
+exports.startChat = async (req, res) => {
+  const { userId, shopId } = req.body;
+
+  try {
+    // Check if the chat already exists
+    const shop = await Shop.findById(shopId);
+    const existingChat = shop.customers.find(customer => customer.userId.toString() === userId);
+
+    if (existingChat) {
+      return res.status(200).json(existingChat);
+    }
+
+    // If not, create a new chat
+    const newChat = { userId, messages: [] };
+    shop.customers.push(newChat);
+    await shop.save();
+
+    await User.findByIdAndUpdate(userId, { $push: { chats: { shopId, messages: [] } } });
+
+    res.status(201).json(newChat);
+  } catch (error) {
+    console.error('Error starting chat:', error);
+    res.status(500).send('Error starting chat.');
+  }
+};
+
+exports.sendMessage = async (req, res) => {
+  const { userId, shopId, message } = req.body;
+
+  try {
+    // Update the shop's chat
+    await Shop.findByIdAndUpdate(
+      shopId,
+      { $push: { "customers.$[elem].messages": { sender: userId, message } } },
+      { arrayFilters: [{ "elem.userId": userId }] }
+    );
+
+    // Update the user's chat
+    await User.findByIdAndUpdate(
+      userId,
+      { $push: { "chats.$[elem].messages": { sender: shopId, message } } },
+      { arrayFilters: [{ "elem.shopId": shopId }] }
+    );
+
+    res.status(200).send('Message sent successfully.');
+  } catch (error) {
+    console.error('Error sending message:', error);
+    res.status(500).send('Error sending message.');
   }
 };
 

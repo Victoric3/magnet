@@ -11,18 +11,9 @@ import {
 } from '@mui/material';
 import { useAuth } from '../../utilities/AuthContext';
 
-export const AccountProfile = () => {
+export const AccountProfile = ({ selectedFile, selectedFileUrl, handleFileChange}) => {
   const { userData } = useAuth()
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedFileUrl, setSelectedFileUrl] = useState(null)
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-      setSelectedFileUrl(URL.createObjectURL(file));
-    }
-  };
+  
 
   const handleUploadClick = () => {
     // Trigger the file input when the "Upload picture" button is clicked
@@ -42,9 +33,9 @@ export const AccountProfile = () => {
           flexDirection: 'column'
         }}
       >
-        {selectedFile ?
+        {selectedFile || userData.imageUrl ?
         <img
-          src={selectedFileUrl}
+          src={selectedFileUrl || userData.imageUrl}
           alt="User Avatar"
           style={{
             height: '80px',
@@ -53,12 +44,7 @@ export const AccountProfile = () => {
             borderRadius: '50%'
           }}
         /> : <Avatar
-          src={userData.avatar}
-          sx={{
-            height: 80,
-            mb: 2,
-            width: 80
-          }}
+            src={userData.imageUrl}
         />}
         <Typography
           gutterBottom
