@@ -50,7 +50,7 @@ export const items = [
   },
   {
     title: 'Wallet',
-    path: '/balance',
+    path: 'balance',
     icon: (
       <SvgIcon fontSize="small">
         <AccountBalanceWalletRoundedIcon />
@@ -68,7 +68,7 @@ export const items = [
   },
   {
     title: 'Affiliate',
-    path: '/affiliate',
+    path: 'affiliate',
     icon: (
       <SvgIcon fontSize="small">
         <RocketRoundedIcon />
@@ -77,7 +77,7 @@ export const items = [
   },
   {
     title: 'Settings',
-    path: '/settings',
+    path: 'settings',
     icon: (
       <SvgIcon fontSize="small">
         <CogIcon />

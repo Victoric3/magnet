@@ -34,7 +34,7 @@ const MyPshop = () => {
         })
         .then(response => response.json())
         .then(data => {
-            updateProductData(allProductData, data.productData, currentProductData)
+            updateProductData(allProductData, data.productData)
         })
         .catch(error => {
           console.error('Error fetching shop data, please login or reload the page')

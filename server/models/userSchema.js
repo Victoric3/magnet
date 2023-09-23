@@ -2,6 +2,13 @@ const mongoose = require('mongoose')
 const crypto = require('crypto')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
+
+const chatMessageSchema = new mongoose.Schema({
+    sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    message: String,
+    timestamp: { type: Date, default: Date.now }
+  });
+  
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -23,7 +30,8 @@ const userSchema = new mongoose.Schema({
         Lowercase:true,
         validate: [validator.isEmail, 'please provide a valid email']
     },
-    photo: String,
+    image: String,
+    imageUrl: String,
     
     password: {
         type: String,
@@ -68,9 +76,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'please tell us your addressCode'],
     },
+    chats: [{
+        shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },  // Reference to 'Shop' model
+        messages: [chatMessageSchema]  // Embedding the message schema
+      }],
     phoneNumber: {
         type: String,
         required: [true, 'please provide a phone number'],
+    },
+    phoneCountry: {
+        type: String,
+        required: [true, 'please provide a phone country'],
     },
     role: {
         type: [String],

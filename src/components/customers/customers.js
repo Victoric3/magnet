@@ -1,16 +1,14 @@
 import { useCallback, useMemo, useState } from 'react';
-import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
-import { useSelection } from 'src/hooks/use-selection';
-import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { CustomersTable } from 'src/sections/customer/customers-table';
-import { CustomersSearch } from 'src/sections/customer/customers-search';
-import { applyPagination } from 'src/utils/apply-pagination';
-
+import { useSelection } from '../hooks/use-selection';
+import Layout  from '../utilities/layout';
+import { CustomersTable } from './customers-table';
+import { CustomersSearch } from './customers-search';
+import { applyPagination } from './apply-pagination';
 const now = new Date();
 
 const data = [
@@ -174,7 +172,7 @@ const useCustomerIds = (customers) => {
   );
 };
 
-const Page = () => {
+const Customers = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const customers = useCustomers(page, rowsPerPage);
@@ -197,11 +195,7 @@ const Page = () => {
 
   return (
     <>
-      <Head>
-        <title>
-          Customers | Devias Kit
-        </title>
-      </Head>
+    <Layout>
       <Box
         component="main"
         sx={{
@@ -277,14 +271,9 @@ const Page = () => {
           </Stack>
         </Container>
       </Box>
+      </Layout>
     </>
   );
 };
 
-Page.getLayout = (page) => (
-  <DashboardLayout>
-    {page}
-  </DashboardLayout>
-);
-
-export default Page;
+export default Customers;

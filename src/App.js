@@ -14,17 +14,21 @@ import Page from './components/dashPrimary'
 import CreateShop from './components/myShops/craeteShopPages/createShop';
 import CreateProduct from './components/myShops/createProduct/createProduct';
 import MyPshop from './components/MyPshop';
-import EditMyShop from './components/myShops/craeteShopPages/editShop'
+import EditMyShop from './components/myShops/editShop.js/editShop'
 import DeleteProduct from './components/deleteProduct';
-import EditProduct from './components/myShops/createProduct/editProduct';
+import EditProduct from './components/myShops/editProduct/editProduct';
 import Tools from './components/tools'
 import Myshops from './components/myShops/myShops';
 import Account from './components/settings/account/account'  
 import useFetchUserData from './components/hooks/useFetchData';
+import Settings from './components/settings/account/settings';
+import Customers from './components/customers/customers';
+import ChatUI from './components/customers/chat-ui';
+import Products from './components/myShops/products';
 
 
 function App() {
-  const { error, success,token } = useAuth();
+  const { error, success, token } = useAuth();
   useFetchUserData(token)
   
   return (
@@ -45,10 +49,14 @@ function App() {
             <Route path='/createProduct' element={<CreateProduct />} />
             <Route path='/myPshop' element={<MyPshop />} />
             <Route path='/myShops' element={<Myshops />} />
+            <Route path='/products' element={<Products />} />
             <Route path='/editShop' element={<EditMyShop />} />
             <Route path='/editProduct' element={<EditProduct />} />
             <Route path='/deleteProduct' element={<DeleteProduct />} />
             <Route path='/account' element={<Account />} />
+            <Route path='/customers' element={<Customers />} />
+            <Route path='/chatUi' element={<ChatUI />} />
+            <Route path='/settings' element={<Settings />} />
           </Routes>
         </ThemeProvider>
     </div>

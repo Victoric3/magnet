@@ -14,10 +14,13 @@ import {
   TableRow,
   Typography
 } from '@mui/material';
-import { Scrollbar } from 'src/components/scrollbar';
-import { getInitials } from 'src/utils/get-initials';
+import { Scrollbar } from '../overview/scrollbar';
+import { getInitials } from '../utilities/get-initials';
+import { useNavigate } from 'react-router-dom';
 
 export const CustomersTable = (props) => {
+  const navigate = useNavigate()
+
   const {
     count = 0,
     items = [],
@@ -82,6 +85,7 @@ export const CustomersTable = (props) => {
                     hover
                     key={customer.id}
                     selected={isSelected}
+                    onClick={() => {navigate('/chatUi')}}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox

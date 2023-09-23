@@ -1,10 +1,8 @@
-import { TextField, Button, Link, Typography, FormControlLabel, Checkbox } from '@mui/material';
+import { TextField, Button, Link, Typography, Box, Stack } from '@mui/material';
 import { React, useState, useEffect } from 'react';
-import style from './signUpForm.css'; 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../utilities/AuthContext';
-import { Card, CardHeader, CardActions, Divider } from '@mui/material'
-
+import Layout from './signInPageLayout'
 
 const SignInForm = () => {
     const [identity, setIdentity] = useState('')
@@ -16,6 +14,7 @@ const SignInForm = () => {
 
       const [Error, setError] = useState(null)
       const [Success, setSuccess] = useState(null)
+
       //sign in logic
       const handleSubmit = async (event) => {
         event.preventDefault();
@@ -51,45 +50,87 @@ const SignInForm = () => {
           handleMsgCollector(Error, Success);
       }, [Error, Success])
     return ( 
-        <div className="signin-container" style={style}>
-        <Card>
-          <CardHeader
-          subheader="login to continue"
-          title="Sign in"
-        />
-        <form onSubmit={handleSubmit}>
+        <>
+       <Layout>
+      <Box
+      sx={{
+        flex: '1 1 auto',
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center'
+      }}
+    >
+      <Box
+        sx={{
+          maxWidth: 550,
+          px: 3,
+          py: '100px',
+          width: '100%'
+        }}
+      >
+        <div>
+          <Stack
+            spacing={1}
+            sx={{ mb: 3 }}
+          >
+            <Typography variant="h4">
+              Login
+            </Typography>
+            <Typography
+              color="text.secondary"
+              variant="body2"
+            >
+              Don&apos;t have an account?
+              &nbsp;
+              <Link
+                href="/signUp"
+                underline="hover"
+                variant="subtitle2"
+                sx={{cursor: 'pointer'}}
+              >
+                Register
+              </Link>
+            </Typography>
+          </Stack>
+          <form
+              onSubmit={handleSubmit}
+            >
+          <Stack spacing={3}>
           <TextField
-            label="UserName or Email"
-            name="UserName or Email"
-            type="Text"
-            value={identity}
-            onChange={(e) => setIdentity(e.target.value)}
-            required
-            fullWidth
-          />
-          
-          <TextField
-            label="password"
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            fullWidth
-          />
-        <Divider />
-        <CardActions sx={{ justifyContent: 'center', background: '#007bff', marginTop: '10px'}}>
-        <Button type="submit" variant="Button" color="white" >
-            Log In
-          </Button>
-        </CardActions>
-        </form>
-        </Card>
-        <Typography variant="body1" align="center" sx={{ padding: '20px', color: '#333', cursor: 'pointer'}} >
-        don't have an account? <Link onClick={() => {navigate('/signUp')}}>sign up</Link>
-      </Typography>
-     </div>
-
+        label="UserName or Email"
+        name="UserName or Email"
+        type="Text"
+        value={identity}
+        onChange={(e) => setIdentity(e.target.value)}
+        required
+        fullWidth
+      />
+      
+      <TextField
+        label="password"
+        type="password"
+        name="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+        fullWidth
+      />
+      </Stack>
+          <Button
+                  fullWidth
+                  size="large"
+                  sx={{ mt: 3 }}
+                  type="submit"
+                  variant="contained"
+                >
+                  Continue
+              </Button>
+      </form>
+        </div>
+        </Box>
+      </Box>
+      </Layout>
+      </>
      );
 }
  

@@ -128,6 +128,7 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
   const formData2 = {
     countryName : selectedCountry,
     phoneNumber: phoneNumber,
+    phoneCountry: phoneCountry.name,
     password: Password,
     passwordConfirm: PasswordConfirm,
     currency: selectedCurrency,
@@ -168,12 +169,12 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
               navigate('/signIn'); 
             }, 2000); 
 
-          }else if(!response.ok){
+          }else if(response.status === 400){
             const data = await response.json()
             setError(data.message)
           }
         } catch (error) {
-          setError(error)
+          setError(error.message)
         }
       }
       messageShower(true)

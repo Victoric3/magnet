@@ -28,12 +28,13 @@ const CreateProduct = () => {
         discount: '',
         quantity: '',
         price: '',
-        productSpecifications: [{caption: '', description: ''}],
+        productSpecifications: [{title: '', items: [{caption: '', description: ''}]}],
         homeDeliverySpeed: currentShopData.homeDeliverySpeed,
         homeDeliveryFee: currentShopData.homeDeliveryFee,
         homeDeliveryDistance: currentShopData.homeDeliveryDistance,
         deliveryLocations: currentShopData.deliveryLocations,
       });
+
       const handleChange = (event) => {
         const { name, value } = event.target;
   
@@ -47,6 +48,7 @@ const CreateProduct = () => {
           productSpecifications: updatedData,
         }));
       };
+      console.log(formData);
       const updatedeliveryFormData = (updatedData) => {
         setFormData((prevData) => ({
           ...prevData,
@@ -89,7 +91,6 @@ const CreateProduct = () => {
         setImage4(file);
       }
     };
-    console.log(formData, image1, image2);
     const [Success, setSuccess] = useState(null)
     const [Error, setError] = useState(null)
     
@@ -223,6 +224,7 @@ const CreateProduct = () => {
         handleCheckboxChange = {handleCheckboxChange}
         handlePrevious={handlePrevious}
         handleSubmit={handleSubmit}
+        checkbox={true}
         />}
       </Layout>
     

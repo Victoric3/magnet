@@ -24,7 +24,8 @@ const Page3 = (
     handleCheckboxChange,
     handleChange,
     handleSubmit,
-    handlePrevious
+    handlePrevious,
+    checkbox
   }
     ) => {
     const { currentShopData } = useAuth()
@@ -39,6 +40,7 @@ const Page3 = (
           state: deliveryLocations.state
         }))
       );
+      console.log(currentShopData, currentShopData.deliveryLocations);
   const handleFieldChange = (index, name, value) => {
     const updatedFields = [...fields];
     updatedFields[index][name] = value;
@@ -61,7 +63,10 @@ const Page3 = (
         {currentShopData.homeDeliveryDistance? <>
             <Card>
         <CardHeader
-          subheader="give us details of your home delivery services"
+          subheader={
+            <Typography variant='body1'>
+              give us details of your home delivery services
+            </Typography>}
           title={<Typography variant='h6'>
                     Home delivery details
                   </Typography> }
@@ -111,7 +116,10 @@ const Page3 = (
         {fields.map((field, index) => (
             <Card>
             <CardHeader
-          subheader={`You can Edit this location -(${field.state}, ${field.city} ${field.addressLine1}) or ignore`}
+          subheader={
+          <Typography variant='body1'>
+            You can Edit this location -({field.state}, {field.city} {field.addressLine1}) or ignore
+            </Typography>}
           title={<Typography variant='h6'>
                     {`Location ${index + 1} (${field.countryName})`}
                   </Typography>
@@ -157,7 +165,7 @@ const Page3 = (
           </Box>
         </CardContent>
           </Card>
-          <CardActions sx={{ justifyContent: 'space-between' }}>
+          {checkbox && <CardActions sx={{ justifyContent: {xs: 'start', md: 'space-between'}, flexDirection: { xs: 'column', md: 'row' } }}>
             <FormControlLabel
             control={<Checkbox checked={checked} onChange={handleCheckboxChange} />}
             label={ <span>
@@ -175,7 +183,7 @@ const Page3 = (
             <AssignmentLateOutlinedIcon />
             <Typography variant='body1'>Ensure you are careful in choosing delivery speed or duration <span><Link to="/product-terms-of-service" target="_blank" rel="noopener">Read more</Link></span></Typography>
             </div>
-            </CardActions>
+            </CardActions>}
             <CardActions sx={{ 
                 display: 'flex', 
                 justifyContent: "space-between", 
