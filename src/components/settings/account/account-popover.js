@@ -2,10 +2,19 @@ import PropTypes from 'prop-types';
 import { Box, Divider, MenuItem, MenuList, Popover, Typography } from '@mui/material';
 import { useAuth } from '../../utilities/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import PersonIcon from '@mui/icons-material/Person';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import BookmarkBorderRoundedIcon from '@mui/icons-material/BookmarkBorderRounded';
+import SupportAgentRoundedIcon from '@mui/icons-material/SupportAgentRounded';
 
 
 export const AccountPopover = (props) => {
-  const { anchorEl, onClose, open } = props;
+  const { anchorEl, onClose, open, pshop } = props;
   const { userData, logout } = useAuth()
   const navigate = useNavigate()
 
@@ -20,40 +29,42 @@ export const AccountPopover = (props) => {
       open={open}
       PaperProps={{ sx: { width: 200 } }}
     >
-      <Box
-        sx={{
-          py: 1.5,
-          px: 2
-        }}
-      >
-        <Typography variant="overline">
-          Account
-        </Typography>
-        <Typography
-          color="text.secondary"
-          variant="body2"
-        >
-          {`${userData.firstName} ${userData.lastName}`}
-        </Typography>
-      </Box>
-      <Divider />
-      <MenuList
-        disablePadding
-        dense
-        sx={{
-          p: '8px',
-          '& > *': {
-            borderRadius: 1
-          }
-        }}
-      >
-        <MenuItem onClick={() => {
+      <List>
+        <ListItem button>
+          <ListItemIcon>
+            <PersonIcon />
+          </ListItemIcon>
+          <ListItemText primary={`${userData.firstName}`} />
+        </ListItem>
+        {pshop? <><ListItem button>
+          <ListItemIcon>
+            <BookmarkBorderRoundedIcon />
+          </ListItemIcon>
+          <ListItemText primary='Orders(0)' />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <FavoriteIcon />
+          </ListItemIcon>
+          <ListItemText primary="Wishlist(0)" />
+        </ListItem></>: ''}
+        <ListItem button>
+          <ListItemIcon>
+            {/* {navItem.icon} */}
+          </ListItemIcon>
+          {/* <ListItemText primary={navItem.title} /> */}
+        </ListItem>
+        <Divider />
+        <ListItem button>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary="Logout" onClick={() => {
           logout(); 
           navigate('/')
-          }}>
-          Sign out
-        </MenuItem>
-      </MenuList>
+          }}/>
+        </ListItem>
+      </List>
     </Popover>
   );
 };

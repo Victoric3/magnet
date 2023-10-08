@@ -9,7 +9,7 @@ import Home from './components/home';
 import Header from '../src/components/header';
 import MsgCard from './components/utilities/msgCard';
 import { AuthProvider, useAuth } from './components/utilities/AuthContext';
-import Pshop from './components/pShop';
+import Pshop from './components/pshop/pShop';
 import Page from './components/dashPrimary'
 import CreateShop from './components/myShops/craeteShopPages/createShop';
 import CreateProduct from './components/myShops/createProduct/createProduct';
