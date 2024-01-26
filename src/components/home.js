@@ -107,6 +107,8 @@ const faqData = [
     
     return ( 
       <>
+
+
       <div style={{
         width: '80%',
         margin: '0px auto'
