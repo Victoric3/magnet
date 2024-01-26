@@ -126,6 +126,17 @@ const Currencies =[
           '5-year guarantee',
 
       ]
+      const psample = [
+        "Toys & Games",
+        "Clothing & Fashion",
+        "Electronics & Gadgets",
+        "Shoes & Footwear",
+        "Home & Living",
+        "Watches & Accessories"
+      ]
+      const deals = [
+        
+      ]
 
   module.exports ={
     CurrencyMapping,
@@ -134,5 +145,6 @@ const Currencies =[
     eShopCategoryList,
     pShopCategoryList,
     shopTypeList,
-    returnPolicyList
+    returnPolicyList,
+    psample
   }

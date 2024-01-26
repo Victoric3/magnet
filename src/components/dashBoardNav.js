@@ -4,8 +4,11 @@ import ArrowTopRightOnSquareIcon from '@heroicons/react/24/solid/ArrowTopRightOn
 import ChevronUpDownIcon from '@heroicons/react/24/solid/ChevronUpDownIcon';
 import { Box, Button, Divider, Drawer, Stack, SvgIcon, Typography, useMediaQuery } from '@mui/material';
 import { items } from './utilities/config';
+import { items2 } from './pshop/shopNavItems';
 import { SideNavItem } from './utilities/sideNavItem';
 import { useNavigate } from 'react-router-dom';
+import eshop  from '../img/E-shop.jpg'
+import './customScrollBar.css'
 
 const sideNavStyles = {
   backgroundColor: '#ff3811', 
@@ -13,28 +16,28 @@ const sideNavStyles = {
 };
 export const SideNav = (props) => {
   const navigate = useNavigate()
-  const { open, onClose } = props;
+  const { open, onClose, shop } = props;
+  const sideNavItems = shop? items2 : items;
   const pathname = window.location.pathname; 
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
-  const customScrollbarStyles = {
-    height: '100%',
-    '& .simplebar-content': {
-      height: '100%',
-      paddingRight: '5px',
-    },
-    '& .simplebar-scrollbar:before': {
-      background: 'neutral.400',
-      borderRadius: '4px', 
-    },
-  };
+  
 
   const content = (
-    <div sx={{ ...customScrollbarStyles }}>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          height: '100%'
+          height: '100%',
+          '&::-webkit-scrollbar': {
+            width: '10px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#ccc',
+            borderRadius: '6px',
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: '#f0f0f0',
+          }
         }}
       >
         <Box sx={{ p: 3 }}>
@@ -85,7 +88,7 @@ export const SideNav = (props) => {
               alignItems: 'start'
             }}
           >
-            {items.map((item) => {
+            {sideNavItems.map((item) => {
               const active = item.path ? (pathname === item.path) : false;
 
               return (
@@ -113,13 +116,13 @@ export const SideNav = (props) => {
             color="neutral.100"
             variant="subtitle2"
           >
-            More shop templates?
+            Magnet Eshop
           </Typography>
           <Typography
             color="neutral.500"
             variant="body2"
           >
-            Check out our Premuim template.
+            Check out our Eshop here.
           </Typography>
           <Box
             sx={{
@@ -133,8 +136,8 @@ export const SideNav = (props) => {
             }}
           >
             <img
-              alt="Go to pro"
-              src="/assets/devias-kit-pro.png"
+              alt="magnet shop"
+              src={eshop}
             />
           </Box>
           <Button
@@ -150,11 +153,10 @@ export const SideNav = (props) => {
             target="_blank"
             variant="contained"
           >
-            Pro Live Preview
+            Visit Eshop
           </Button>
         </Box>
       </Box>
-    </div>
   );
 
   if (lgUp) {

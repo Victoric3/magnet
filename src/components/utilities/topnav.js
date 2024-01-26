@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import Bars3Icon from '@heroicons/react/24/solid/Bars3Icon';
 import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
@@ -23,6 +24,7 @@ const TOP_NAV_HEIGHT = 64;
 
 export const TopNav = (props) => {
   const { onNavOpen } = props;
+  const { pshop } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const accountPopover = usePopover();
   const { userData } = useAuth()
@@ -31,7 +33,7 @@ export const TopNav = (props) => {
       <Box
         component="header"
         sx={{
-          backdropFilter: 'blur(6px)',
+          backdropFilter: !pshop ? "blur(6px)" : 0,
           position: 'sticky',
           left: {
             lg: `${SIDE_NAV_WIDTH}px`
@@ -76,7 +78,7 @@ export const TopNav = (props) => {
           <Stack
             alignItems="center"
             direction="row"
-            spacing={2}
+            spacing={1.5}
           >
             <Tooltip title="support">
               <IconButton>
@@ -90,7 +92,7 @@ export const TopNav = (props) => {
                 <Badge
                   badgeContent={4}
                   color="success"
-                  variant="dot"
+                  maxContent={99}
                 >
                   <SvgIcon fontSize="medium">
                     <NotificationsNoneIcon />
@@ -98,6 +100,20 @@ export const TopNav = (props) => {
                 </Badge>
               </IconButton>
             </Tooltip>
+            { pshop?
+            <Tooltip title="shopping cart">
+              <IconButton>
+                <Badge
+                  badgeContent={6}
+                  color="error"
+                  maxContent={99}
+                >
+                  <SvgIcon fontSize="medium">
+                    <ShoppingCartIcon />
+                  </SvgIcon>
+                </Badge>
+              </IconButton>
+            </Tooltip>: ''}
             <Avatar
               onClick={accountPopover.handleOpen}
               ref={accountPopover.anchorRef}
@@ -115,6 +131,7 @@ export const TopNav = (props) => {
         anchorEl={accountPopover.anchorRef.current}
         open={accountPopover.open}
         onClose={accountPopover.handleClose}
+        pshop={pshop}
       />
     </>
   );

@@ -24,7 +24,7 @@ const theme = createTheme({
       sm: 600,
       md: 912,
       lg: 1040,
-      xl: 1920,
+      xl: 1400,
     },
   },
   typography: {

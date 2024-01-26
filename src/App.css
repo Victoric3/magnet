@@ -1,17 +1,19 @@
 .app-container{
-    background-color: #ffffff90;
+    background-color: #ffffff4f;
+    overflow-x: hidden;
    }  
 html{
-    background-color: #ffffff90;
+    background-color: #ffffff4f;
    }  
    &::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
   }
   &::-webkit-scrollbar-thumb{
     background-color: #ccc;
-    border-radius: 6px;
+    border-radius: 3px;
   }
   &::-webkit-scrollbar-track{
-    background-color: #f0f0f0;
+    background-color: #ffffff4f;
   }
+  
   
