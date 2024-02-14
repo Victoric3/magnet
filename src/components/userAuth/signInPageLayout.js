@@ -1,17 +1,17 @@
 import React from 'react';
 import { Box, Typography, Grid } from '@mui/material';
-import logo from '../../img/magnet-logo-org.png';
+// import logo from '../../img/alpha3 logo.jpg';
 import signInBanner from '../../img/affiliate-marketing.png';
 
 
 
-const Layout = ({ children }) => {
+const Layout = ({ children, component }) => {
   return (
     <Box
       component="main"
       sx={{
         display: 'flex',
-        flex: '1 1 auto'
+        flex: '1 1 auto',
       }}
     >
       <Grid container sx={{ flex: '1 1 auto' }}>
@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
             backgroundColor: 'background.paper',
             display: 'flex',
             flexDirection: 'column',
-            position: 'relative'
+            position: 'relative',
           }}
         >
           <Box
@@ -35,15 +35,6 @@ const Layout = ({ children }) => {
               width: '100%'
             }}
           >
-            <Box
-              sx={{
-                display: 'inline-flex',
-                height: 32,
-                width: 32
-              }}
-            >
-              <img src={logo} alt='logo'/>
-            </Box>
           </Box>
           {children}
         </Grid>
@@ -52,10 +43,11 @@ const Layout = ({ children }) => {
           lg={6}
           sx={{
             alignItems: 'center',
-            background: 'radial-gradient(50% 50% at 50% 50%, #122647 0%, #090E23 100%)',
+            background: theme=> `radial-gradient(50% 50% at 50% 50%, ${theme.palette.primary.main} 0%, ${theme.palette.tetiary.main} 100%)`,
             color: 'white',
             display: 'flex',
             justifyContent: 'center',
+            height: component==='signUp' ? 'auto' : '100vh',
             '& img': {
               maxWidth: '100%'
             }
@@ -75,7 +67,7 @@ const Layout = ({ children }) => {
               Welcome to{' '}
               <Box
                 component="a"
-                sx={{ color: '#15B79E' }}
+                sx={{ color: theme=> theme.palette.secondary.main }}
                 target="_blank"
               >
                 Alphamagnet3
@@ -84,12 +76,12 @@ const Layout = ({ children }) => {
             <Typography
               align="center"
               sx={{ mb: 3 }}
-              variant="subtitle1"
+              variant="body1"
             >
-              Where Shopping Feels Personal 
+              Like a magnet, we connect buyers and sellers 
             </Typography>
             <img
-              alt=""
+              alt="layout Banner"
               src={signInBanner}
             />
           </Box>

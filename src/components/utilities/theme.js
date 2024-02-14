@@ -13,6 +13,8 @@ const theme = createTheme({
     },
     text: {
       primary: '#333333',
+      secondary: '#fff',
+      special: '#007bff'
     },
     background: {
       default: '#ffffff',
@@ -40,7 +42,7 @@ const theme = createTheme({
       lineHeight: 1.57
     },
     button: {
-      fontWeight: 600
+      fontWeight: 700,
     },
     caption: {
       fontSize: '0.75rem',

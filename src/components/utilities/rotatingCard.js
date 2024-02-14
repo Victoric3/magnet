@@ -28,7 +28,7 @@ const RotatingCard = (props) => {
           {flipped ? '' : 
            <img className='img-display' src={ props.FrontContent.imgString }
            alt={ props.FrontContent.altString } style={{
-               width: 'auto',
+               width: '100%',
                height: '220px',
                display: 'block',
                marginBottom: '15px'

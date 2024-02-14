@@ -6,7 +6,7 @@ import SignInForm from './components/userAuth/signIn';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import theme from './components/utilities/theme';
 import Home from './components/home';
-import Header from '../src/components/header';
+import Header from './components/header';
 import MsgCard from './components/utilities/msgCard';
 import { AuthProvider, useAuth } from './components/utilities/AuthContext';
 import Pshop from './components/pshop/pShop';

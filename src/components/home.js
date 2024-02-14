@@ -1,12 +1,8 @@
 import React from "react";
-import { Container, Typography,  } from "@mui/material";
+import { Container, Typography, useMediaQuery, Button } from "@mui/material";
 import RotatingCard from "./utilities/rotatingCard";
 import responsiveFlexStyle from "./utilities/flexContainerRotating.css";
 import responsiveFlexStyleSquare from "./utilities/flexContainerSquare.css";
-import shopImg from "../img/shop.jpg"
-import eShopImg from "../img/E-shop.jpg"
-import PromoteImg from "../img/affiliate-marketing.png"
-import ToolsImg from "../img/tools.png"
 import SquareCard from "./utilities/squareCard";
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
@@ -20,87 +16,40 @@ import PromotersWorkFlow from '../img/process-flow-for-promoters.png';
 import FAQComponent from "./utilities/faqComp";
 import { styled } from '@mui/system';
 import ContactComponent from "./utilities/contact";
+import Banner from "./home/banner";
+import LandingPageSection from "./home/feature2";
+import vendorImg from '../img/shop.jpg'
+import marketerImg from '../img/affiliate.jpg'
+import faqImg from '../img/questions-6988157_1280-removebg-preview.png'
+import Investment from '../img/investment.jpg'
+import Shopping from '../img/shop.jpg'
+import Skill from '../img/skill.jpg'
 
 
+import { 
+  faqData,
+  ToolsBackInfo,
+  ToolsFrontInfo,
+  PromoteBackInfo,
+  PromoteFrontInfo,
+  eShopBackInfo,
+  eShopFrontInfo,
+  ShopBackInfo,
+  ShopFrontInfo
+} from "./home/formLists";
+import cardBackground from '../img/_4872d2e3-da27-45b1-9b87-bc68d06aafd4.jpg'
 
 const Home = () => {
-  ///rotating card data
-  const ShopFrontInfo = {
-    title: `🛒P Shop`,
-    imgString: shopImg,
-    altString: 'shop image',
-    description1: 'Open a physical store online',
-    description2: `click to view back`,
-    titleColor: theme => theme.palette.background.default,
-    titleBackground: theme=> theme.palette.secondary.main,
-  }
-  const ShopBackInfo = {
-    description1: '⚙ this is a place where you can show case the items you sell and can deliver,every physical product is arranged into different categories',
-    description2: '⚙ you can maximize your profit by collaborating with other shop owners to share one anothers products and reach more audience fast or you can reach out to affiliates and inducers to promote your products based on personal agreement '
-  }
-  const eShopFrontInfo = {
-    title: `🏪E Shop`,
-    imgString: eShopImg,
-    altString: 'e shop image',
-    description1: 'Open an online store',
-    description2: 'click to view back',
-    titleColor: theme => theme.palette.background.default,
-    titleBackground: theme=> theme.palette.primary.main,
-  }
-  const eShopBackInfo = {
-    description1: '⚙ this is a place where you can show case the digital products you create which may include:E courses, videos, Books, written movies, anime , comic books etc',
-    description2: '⚙ you can maximize your profit by collaborating with other shop owners to share one anothers products and reach more audience fast or you can reach out to affiliates and inducers to promote your products based on personal agreement'
-  }
-  const PromoteFrontInfo = {
-    title: `💷Promote`,
-    imgString: PromoteImg,
-    altString: 'Promote image',
-    description1: 'Become an affiliate',
-    description2: 'click to view back',
-    titleColor: theme => theme.palette.background.default,
-    titleBackground: theme=> theme.palette.tetiary.main,
-  }
-  const PromoteBackInfo = {
-    description1: "⚙ this is for users that promote other people's product and get paid,these users are either affiliates or influencers. Affiliates get paid when they make a sale while influencers are paid immediately they are hired",
-    description2: '⚙ Every user can promote a product as an affiliate while regular users get 20% commission on sale of magnet courses, affiliates get up to 40%'
-  }
-  const ToolsFrontInfo = {
-    title: `⚙Tools`,
-    imgString: ToolsImg,
-    altString: 'Tools image',
-    description1: 'Tools to maximize sales',
-    description2: 'click to view back',
-    titleColor: theme => theme.palette.background.default,
-    titleBackground: theme=> theme.palette.text.primary,
-  }
-  const ToolsBackInfo = {
-    description1: '⚙ these are special tools like: magnet mailer,used to send emails, WA.Magnet used for whatsapp marketting e.t.c they are all used to maximize sales'
-  }
 
 ///app container
-const AppContainer = styled(Container)({
-  maxWidth: '100%',
-  overflowX: 'hidden',
-  margin: '0 auto'
-});
-//img data
-const Images=[ MindMap, PshopWorkFlow, PromotersWorkFlow, InvestmentProcess]
-
-//faq data
-const faqData = [
-  { question: 'what is the alpha P-shop about?', answer: 'it is a place where you can show case the items you sell and can deliver,every physical product is arranged into different categories' },
-  { question: "why can't i withdraw my money after user makes an order?", answer: 'you get paid when user coonfirms delivery' },
-  { question: "what is a magnet product?", answer: 'these are digital products sold by the official magnet primary shop, it is usually accompanied by special tools like: magnet mailer,used to send emails, WA.Magnet used for whatsapp marketting e.t.c' },
-  { question: "what is the alpha E shop?", answer: 'it is a place where you can show case the digital products you create which may include:E courses, videos, Books, written movies, anime , comic books e.t.c' },
-  { question: "what is the alpha P shop verification about?", answer: "it is an honourary tag sent based on the magnet's algorithm, this is to confirm users to identify user's legitmacy"},
-  { question: "why didn't i get up to 40% commision on sales?", answer: "Every user can promote a product as an affiliate while regular users get 20% commission on sale of magnet courses, affiliates get up to 40%, if you are an affiliate and didn't receive your 40% commision, then confirm that you are promoting a magnet course. other products not directly owned/sponsored by magnet has its own commision on sale"},
-  { question: "do i get higher commision as an affiliate when promoting courses not owned by magnet?", answer: "yes"},
-  { question: "what is the diffrence between an affiliate and an influencer?", answer: "they are both promoters but affiliates get paid when they make a sale while inflencers are paid immediately they are hired"},
-
-  // Add more FAQ items as needed
-];
-
-// ...
+  const AppContainer = styled(Container)({
+    maxWidth: '100%',
+    overflowX: 'hidden',
+    margin: '0 auto'
+  });
+  //img data
+  const Images=[ MindMap, PshopWorkFlow, PromotersWorkFlow, InvestmentProcess]
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
 
 
@@ -108,45 +57,80 @@ const faqData = [
     return ( 
       <>
 
+      <Banner />
 
       <div style={{
-        width: '80%',
-        margin: '0px auto'
+        width: isMobile? '100%' : '85%',
+        padding: isMobile? '10px' : '0px',
+        margin: '100px auto'
       }}>
-    
-       <Typography variant="h4" 
-       sx={{ 
-        marginTop: '130px', 
-        textAlign: 'center',
-        justifySelf: 'center',
-        fontWeight: '500',
-        }}>
-        Just like a magnet,
-       </Typography>
-       <Typography variant="h4" 
-       sx={{ 
-        marginTop: '5px', 
-        marginBottom: '15px', 
-        textAlign: 'center', 
-        justifySelf: 'center',
-        color: theme=> theme.palette.primary.main,
-        fontWeight: '500',
-        }}>
-        we attract your products to buyers
-       </Typography>
+        <LandingPageSection 
+        caption ={"Showcase Your Skills and Earn Money"}
+        description={'Create your own profile and list your skills or gigs that you can offer to others. We make it easy for you to reach a global market of customers who are looking for your services. Skill has never been more rewarding and flexible.'}
+        buttonText={'become a freeLancer'}
+        imageUrl={Skill}
+        />
+        <LandingPageSection 
+        caption ={'We reward you for recommending our high-quality products to users in need of it'}
+        description={"Whether you already have solid marketing skills or you are just starting out, our team of seasoned marketing experts is here to kickstart your journey or take your skills to the next level!"}
+        buttonText={'become a marketer'}
+        imageUrl={marketerImg}
+        inverted
+        />
+        <LandingPageSection 
+        caption ={"Create a physical store"}
+        description={'Do you have a product you’re proud of and want to sell to others? We provide the space to help you display your own merchandise. Our team of reliable partners will ensure that your product is delivered to the customer, connecting you with satisfied buyers.'}
+        buttonText={'become a partner'}
+        imageUrl={Shopping}
+        />
+        <LandingPageSection 
+        caption ={'Boost Your Business with Capital'}
+        description={"Discover a new way to access funding and grow your business. We help you list your shop on our platform, where you can attract investors who share your vision."}
+        buttonText={'Explore the stock market'}
+        imageUrl={Investment}
+        inverted
+        />
+      <div style={{
+        position: 'relative',
+        backgroundImage: `url(${cardBackground})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        height: '150px',
+        borderRadius: '10px',
+        overflow: 'hidden', /* Ensures the overlay does not overflow */
+      }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', zIndex: 0 }}></div>
+        <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+          <Typography variant="h4" 
+            sx={{ 
+              textAlign: 'center',
+              fontWeight: '500',
+              color: 'white',
+            }}>
+            Just like a magnet,
+          </Typography>
+          <Typography variant="h4" 
+            sx={{ 
+              marginTop: '5px', 
+              marginBottom: '15px', 
+              textAlign: 'center', 
+              color: 'white',
+              fontWeight: '500',
+            }}>
+            we attract your products to buyers
+          </Typography>
+        </div>
+      </div>
+
+
+       
        <div className="responsive-flex-container" style={responsiveFlexStyle}>
        <div className="card">
        <RotatingCard 
        FrontContent= { ShopFrontInfo }
        BackContent={ ShopBackInfo }
        />
-       </div>
-       <div className="card">
-       <RotatingCard 
-       FrontContent= { eShopFrontInfo }
-       BackContent={ eShopBackInfo }
-       />
-       </div>
+         </div>
        <div className="card">
        <RotatingCard 
        FrontContent= { PromoteFrontInfo }
@@ -155,11 +139,12 @@ const faqData = [
        </div>
        <div className="card">
        <RotatingCard 
-       FrontContent= { ToolsFrontInfo }
-       BackContent={ ToolsBackInfo }
+       FrontContent= { eShopFrontInfo }
+       BackContent={ eShopBackInfo }
        />
        </div>
        </div>
+      
 
        {/* //squareCard */}
        <Typography variant="h4" sx={{ 
@@ -199,8 +184,50 @@ const faqData = [
        <div>
        {/* <ReviewCarousel images={Images} /> */}
        </div>
-       <FAQComponent faqData={faqData} />
+       <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+       }}>
+        <div style={{
+          maxWidth: isMobile ? '100%' : '50%',
+        }}>
+       <FAQComponent faqData={faqData}/>
        
+        </div>
+       <div style={{
+         display: 'flex',
+         justifyContent: 'flex-end',
+         alignItems: 'center',
+         maxWidth: '50%',
+         height: 'auto'
+        }}>
+        {isMobile? '' : <img src={faqImg} alt="faq Page Image" />}
+      </div>
+         </div>     
+      <Typography variant='h5' 
+      sx={{ 
+        textAlign: 'center', 
+        fontWeight: '700',
+        marginTop: '100px',
+
+      }}> Haven't found an answer yet? you can visit the faq page below and make your inquires</Typography>
+      <Button variant='button'
+      sx={{
+          marginTop: '50px',
+          marginLeft: '50%',
+          transform: 'translateX(-50%)',
+          border: '1px solid black',
+          borderRaduis: '10px',
+          padding: '11px',
+          background: theme=> theme.palette.secondary.main,
+          color: theme=> theme.palette.background.default,
+          '&:hover': {
+              color: theme=> theme.palette.secondary.main,
+              background: theme=> theme.palette.background.default
+          }
+      }}
+      >more answers</Button>
        </div>
        <ContactComponent />
        </>

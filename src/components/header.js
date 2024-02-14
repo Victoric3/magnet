@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from '../img/magnet-logo-org.png';
+import logo from '../img/alpha3 logo.jpg';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './utilities/AuthContext';
 import ConfirmationModal from './utilities/confirmationModal';
@@ -7,43 +7,24 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   CssBaseline,
   useMediaQuery,
   Button,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   MenuItem,
   Menu
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import { ExpandMore } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import ShoppingCartCheckoutOutlinedIcon from '@mui/icons-material/ShoppingCartCheckoutOutlined';
-import RocketLaunchOutlinedIcon from '@mui/icons-material/RocketLaunchOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import AddBusinessOutlinedIcon from '@mui/icons-material/AddBusinessOutlined';
 import DatasetLinkedOutlinedIcon from '@mui/icons-material/DatasetLinkedOutlined';
 import Groups2OutlinedIcon from '@mui/icons-material/Groups2Outlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
-import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
-import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import LogoutIcon from '@mui/icons-material/Logout';
-
+import RenderSidebar from './renderSidebar';
 
 function Header() {
   const navigate = useNavigate()
@@ -94,173 +75,10 @@ function Header() {
       };
     
       const buttonStyle = {
-        backgroundColor: hovered ? '#007bff' : '#ffffff',
+        backgroundColor: hovered ? '#ff7a47' : '#ffffff',
         color: hovered ? '#ffffff':'#333333',
       };
   
-  const renderSidebar = (
-    <Drawer
-      variant={isMobile ? 'temporary' : 'permanent'}
-      anchor="right"
-      open={sidebarOpen}
-      onClose={handleSidebarToggle}
-      ModalProps={{
-        keepMounted: true,
-      }}
-      sx={{
-        width: 300, 
-        flexShrink: 0,
-      }}
-    >
-      <div/>
-      <List>
-        <ListItem button onClick={handleSidebarToggle}>
-        <ListItemIcon>
-            {sidebarOpen ? <CloseIcon /> : <MenuIcon />}
-          </ListItemIcon>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <HomeOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Home" onClick={() => {navigate('/')}}/>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <InfoOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="About" />
-        </ListItem>
-      <Accordion expanded={ShopExpanded} 
-      onChange={() => handleAccordionChange(ShopExpanded, setShopExpanded)}>
-            <AccordionSummary expandIcon={<ExpandMore />}>
-            <ShoppingCartOutlinedIcon />
-            <ListItemText primary="Shop" sx={{ paddingLeft : 3.5 }}/>
-            </AccordionSummary>
-            <AccordionDetails>
-              <List>
-                <ListItem button>
-                  <ListItemIcon>
-                  <ShoppingBagOutlinedIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="E shop" onClick={() => {navigate('/shop/Eshop')}}/>
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                  <ShoppingCartCheckoutOutlinedIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="P shop" onClick={() => {navigate('/shop/Pshop')}}/>
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                  <AddBusinessOutlinedIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Create" onClick={() => {navigate('/shop/create')}}/>
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                  <AttachMoneyOutlinedIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Invest" onClick={() => {navigate('/shop/invest')}}/>
-                </ListItem>
-              </List>
-            </AccordionDetails>
-          </Accordion>
-      <Accordion expanded={PromoteExpanded} 
-      onChange={() => handleAccordionChange(PromoteExpanded, setPromoteExpanded)}>
-            <AccordionSummary expandIcon={<ExpandMore />}>
-            <RocketLaunchOutlinedIcon />
-            <ListItemText primary="Promote" sx={{ paddingLeft : 3.5 }} />
-            </AccordionSummary>
-            <AccordionDetails>
-              <List>
-                <ListItem button>
-                  <ListItemIcon>
-                  <DatasetLinkedOutlinedIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Affiliate" onClick={() => {navigate('/promote/affiliate')}}/>
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                  <Groups2OutlinedIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Influencer" onClick={() => {navigate('/promote/influencer')}}/>
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                  <PaidOutlinedIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Sponsor" onClick={() => {navigate('/promote/sponsor')}}/>
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                  <GroupOutlinedIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Collaborate" onClick={() => {navigate('/promote/collaborate')}}/>
-                </ListItem>
-              </List>
-            </AccordionDetails>
-          </Accordion>
-        <ListItem button>
-          <ListItemIcon>
-            <BuildOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Tools" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <LocalPhoneOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Contact" />
-        </ListItem> 
-        
-        {userData ? <ListItem button>
-          <ListItemIcon>
-            <PersonOutlineIcon />
-          </ListItemIcon>
-          <ListItemText primary="DashBoard"
-          onClick={() => {navigate('/dashBoard')}}/>
-        </ListItem>
-        :
-        <ListItem button>
-          <ListItemIcon>
-            <LoginOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Login"
-          onClick={() => {navigate('/signIn')}}/>
-        </ListItem>}
-        {userData? 
-          <>
-          <ListItem button sx={{border: '1px solid black'}}>
-          <ListItemIcon>
-            <LogoutIcon />
-          </ListItemIcon>
-          <ListItemText 
-          primary="log out" 
-          onClick={openLogoutModal}/>
-          </ListItem>
-          <ConfirmationModal
-          open={showLogoutModal}
-          onClose={closeLogoutModal}
-          onConfirm={handleConfirmLogout}
-          message="Are you sure you want to log out?" /> 
-          </>
-        : <ListItem button sx={{border: '1px solid black'}}>
-          <ListItemIcon>
-            <PersonAddOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText 
-          primary="Sign up" 
-          onClick={() => {navigate('/signUp')}}/>
-        </ListItem>
-        }
-        
-      </List>
-    </Drawer>
-  );
-  
-  
-    
   return (
     <div>
       <CssBaseline />
@@ -275,28 +93,43 @@ function Header() {
       >
         <Toolbar sx={{ 
           display: 'flex', 
-          justifyContent: 'space-between',
-          width: '85%',
+          width: '100%',
           margin: '0px auto',
           textAlign: 'center',
           padding: '15px 5px',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: theme => theme.palette.secondary.main,
+           }}>
+        <div style={{
+          width: '85%', 
+          color: '#fff', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between',
           '@media (max-width: 600px)': {
             width: '100%', 
             margin: 0
           },
-           }}>
-            <div>
-            <img src={logo} alt='logo' style={{ width: '75px', height: 'auto'}}/></div>
-        <div>
+          }}>
+          <div style={{
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            gap: '5px'
+            }}>
+            <img src={logo} alt='logo' style={{ width: '45px', height: 'auto', borderRadius: '50%', margin: 0}}/>
+            <h1 style={{fontSize: '20px'}}>AlphaMagnet3</h1>
+          </div>
             
           {isMobile ? (
-              <IconButton edge="start" sx={{ color: theme => theme.palette.text.primary }} onClick={handleSidebarToggle}>
+              <IconButton edge="start" sx={{ color: theme => theme.palette.text.secondary }} onClick={handleSidebarToggle}>
               <MenuIcon />
             </IconButton>
           ) : (
               <div sx={{display: 'flex', alignItems: 'center',}}>
-              <Button sx={{ color: theme => theme.palette.text.primary }} onClick={() => {navigate('/')}}>Home</Button>
-              <Button sx={{ color: theme => theme.palette.text.primary }}>about</Button>
+              <Button sx={{ color: theme => theme.palette.text.secondary }} onClick={() => {navigate('/')}}>Home</Button>
+              <Button sx={{ color: theme => theme.palette.text.secondary }}>about</Button>
               
               <Button onClick={(e) => handleMenuClick(e, setShopEL)}>
                Shop <KeyboardArrowDownOutlinedIcon />
@@ -348,7 +181,7 @@ function Header() {
               Collaborate
                 </MenuItem>
             </Menu>
-           <Button sx={{ color: theme => theme.palette.text.primary }}>Contact</Button>
+           <Button sx={{ color: theme => theme.palette.text.secondary }}>Contact</Button>
               {userData ?<><Button
               onClick={() => navigate('/DashBoard')}
               ><PersonOutlineIcon sx={{ 
@@ -362,7 +195,7 @@ function Header() {
               }}/></Button></> 
               :
               <Button 
-              sx={{ color: theme => theme.palette.text.primary }}
+              sx={{ color: theme => theme.palette.text.secondary }}
               onClick={() => {navigate('/signIn')}}
               >Login</Button>}
               
@@ -375,7 +208,7 @@ function Header() {
               onClick={openLogoutModal}
 
               sx={{ 
-                color: theme => theme.palette.text.primary, 
+                color: theme => theme.palette.text.secondary, 
                 border: '1px solid black',
                 borderRadius: '10px',
                 padding: '2px 8px'
@@ -393,10 +226,11 @@ function Header() {
               onMouseLeave={handleMouseLeave}
               onClick={() => {navigate('/signUp')}}
               sx={{ 
-                color: theme => theme.palette.text.primary, 
+                color: theme => theme.palette.text.secondary, 
                 border: '1px solid black',
                 borderRadius: '10px',
-                padding: '2px 8px'
+                padding: '2px 8px',
+                background: '#ff7a47'
                  }}>Sign up</Button>
                  
               }
@@ -405,7 +239,22 @@ function Header() {
             </div>
         </Toolbar>
       </AppBar>
-      {isMobile ? renderSidebar : null}
+      {isMobile ? <RenderSidebar 
+      showLogoutModal={showLogoutModal}
+      closeLogoutModal={closeLogoutModal}
+      openLogoutModal={openLogoutModal}
+      handleConfirmLogout={handleConfirmLogout}
+      navigate={navigate}
+      userData={userData}
+      PromoteExpanded={PromoteExpanded}
+      setPromoteExpanded={setPromoteExpanded}
+      isMobile={isMobile}
+      ShopExpanded={ShopExpanded}
+      setShopExpanded={setShopExpanded}
+      handleAccordionChange={handleAccordionChange}
+      handleSidebarToggle={handleSidebarToggle}
+      sidebarOpen={sidebarOpen}
+      /> : null}
       <main sx={{ flexGrow: 1, p: 3 }}>
       </main>
     </div>
