@@ -1,15 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
-import {
-  CssBaseline,
-  Drawer,
-  IconButton,
-  useMediaQuery,
-  Container,
-  useTheme,
-  Box,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { CssBaseline } from '@mui/material';
 import {SideNav} from '../dashBoardNav';
 import {TopNav} from '../utilities/topnav'
 
@@ -35,8 +26,7 @@ const LayoutContent = styled('div')(({ theme, sx }) => ({
 
 const Layout = ({ children, sx }) => {
   const [openNav, setOpenNav] = useState(false);
-  const theme = useTheme();
-  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
+  // const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const handlePathnameChange = useCallback(() => {
     if (openNav) {
@@ -46,7 +36,7 @@ const Layout = ({ children, sx }) => {
 
   useEffect(() => {
     handlePathnameChange();
-  }, []);
+  }, [handlePathnameChange]);
 
   return (
     <div>

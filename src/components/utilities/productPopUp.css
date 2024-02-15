@@ -25,12 +25,12 @@
 }
 .product-pop-up-buttons{
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
 
 }
 .product-pop-up-content{
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     margin: 2px 15px
 }
 

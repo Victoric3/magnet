@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 import Style from './rotatingCard.css'; 
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 
@@ -28,7 +28,7 @@ const RotatingCard = (props) => {
           {flipped ? '' : 
            <img className='img-display' src={ props.FrontContent.imgString }
            alt={ props.FrontContent.altString } style={{
-               width: 'auto',
+               width: '100%',
                height: '220px',
                display: 'block',
                marginBottom: '15px'

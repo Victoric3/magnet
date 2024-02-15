@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Typography,useMediaQuery, Button  } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Typography,useMediaQuery  } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
@@ -42,29 +42,6 @@ const FAQComponent = ({ faqData }) => {
       ))}
     
     {/* typography */}
-<Typography variant='h5' 
-sx={{ 
-  textAlign: 'center', 
-  fontWeight: '700',
-  marginTop: '100px',
-
-   }}> Haven't found an answer yet? you can visit the faq page below and make your inquires</Typography>
-   <Button variant='button'
-   sx={{
-      marginTop: '50px',
-      marginLeft: '50%',
-      transform: 'translateX(-50%)',
-      border: '1px solid black',
-      borderRaduis: '10px',
-      padding: '11px',
-      background: theme=> theme.palette.secondary.main,
-      color: theme=> theme.palette.background.default,
-      '&:hover': {
-          color: theme=> theme.palette.secondary.main,
-          background: theme=> theme.palette.background.default
-      }
-   }}
-   >more answers</Button>
   
     </>
   );

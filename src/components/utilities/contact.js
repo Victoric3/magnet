@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Link, Divider } from '@mui/material';
 import { Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
-import logo from '../../img/magnet-logo-org.png';
+import logo from '../../img/alpha3 logo.jpg';
 import title from '../../img/magnet brand title.png'
 import './contact.css';
 
@@ -24,7 +24,7 @@ const ContactComponent = () => {
         </div>
         <Divider className='Divider' orientation="vertical" flexItem />
         <div className='imgFlex'>
-        <img src={logo} alt='logo' className='logo'/>
+        <img src={logo} alt='logo' className='logo' style={{borderRadius: '50%'}}/>
         <img src={title} alt='title' className='title'/>
         <Typography>Reach out to us on the faq page, our personel will answer your inquiries</Typography>
         </div>

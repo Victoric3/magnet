@@ -1,7 +1,7 @@
 // import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
 import { Box, Container, Unstable_Grid2 as Grid } from '@mui/material';
-import Layout  from '../components/utilities/layout';
+import Layout  from './utilities/layout';
 import { OverviewMonthlyIncome } from './overview/overview-budget';
 import { OverviewLatestOrders } from './overview/overview-latest-orders';
 import { OverviewLatestProducts } from './overview/overview-latest-products';

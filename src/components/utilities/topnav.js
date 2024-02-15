@@ -15,7 +15,7 @@ import {
   Tooltip,
   useMediaQuery
 } from '@mui/material';
-import { alpha } from '@mui/material/styles';
+// import { alpha } from '@mui/material/styles';
 import { usePopover } from '../hooks/usePopover';
 import { AccountPopover } from '../settings/account/account-popover';
 
@@ -75,7 +75,7 @@ export const TopNav = (props) => {
               </IconButton>
             </Tooltip>
           </Stack>
-          <Stack
+         {userData? <Stack
             alignItems="center"
             direction="row"
             spacing={1.5}
@@ -122,9 +122,9 @@ export const TopNav = (props) => {
                 height: 40,
                 width: 40
               }}
-              src={userData.imageUrl}
+              src={userData?.imageUrl}
             />
-          </Stack>
+          </Stack> : <button>Login</button>}
         </Stack>
       </Box>
       <AccountPopover

@@ -7,7 +7,7 @@ import BalanceCard from './utilities/balanceCard';
 import { Typography } from "@mui/material";
 import ManageShop from "./utilities/ManageShop";
 import  useFetchUserData  from './hooks/useFetchData';
-import { TopNav } from '../components/utilities/topnav'
+import { TopNav } from './utilities/topnav'
 
 const DashBoard = () => {
   const { updateAuth, token, shopData, baseUrl, userData } = useAuth();
