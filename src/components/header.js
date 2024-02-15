@@ -128,8 +128,8 @@ function Header() {
             </IconButton>
           ) : (
               <div sx={{display: 'flex', alignItems: 'center',}}>
-              <Button sx={{ color: theme => theme.palette.text.secondary }} onClick={() => {navigate('/')}}>Home</Button>
-              <Button sx={{ color: theme => theme.palette.text.secondary }}>about</Button>
+              <Button sx={{ color: theme => theme.palette.text.primary }} onClick={() => {navigate('/')}}>Home</Button>
+              <Button sx={{ color: theme => theme.palette.text.primary }}>about</Button>
               
               <Button onClick={(e) => handleMenuClick(e, setShopEL)}>
                Shop <KeyboardArrowDownOutlinedIcon />
@@ -139,19 +139,19 @@ function Header() {
                 open={Boolean(ShopEL)}
                 onClose={()=> handleMenuClose(setShopEL)}
               >
-              <MenuItem onClick={() => {navigate('/shop/Eshop')}}>
+              <MenuItem onClick={() => {navigate('/shop/Eshop')}} sx={{ color: theme=> theme.palette.text.secondary}}>
                <ShoppingBagOutlinedIcon sx={{ marginRight: '5px'}}/>
                 E shop
               </MenuItem>
-              <MenuItem onClick={() => {navigate('/shop/Pshop')}}>
+              <MenuItem onClick={() => {navigate('/shop/Pshop')}} sx={{ color: theme=> theme.palette.text.secondary}}>
               <ShoppingCartCheckoutOutlinedIcon sx={{ marginRight: '5px'}}/>
                 P shop
                 </MenuItem>
-              <MenuItem onClick={() => {navigate('/shop/create')}}>
+              <MenuItem onClick={() => {navigate('/shop/create')}} sx={{ color: theme=> theme.palette.text.secondary}}>
               <AddBusinessOutlinedIcon sx={{ marginRight: '5px'}}/>
                 Create
                 </MenuItem>
-              <MenuItem onClick={() => {navigate('/shop/invest')}}>
+              <MenuItem onClick={() => {navigate('/shop/invest')}} sx={{ color: theme=> theme.palette.text.secondary}}>
               <AttachMoneyOutlinedIcon sx={{ marginRight: '5px'}}/>
                 Invest
                 </MenuItem>
@@ -164,24 +164,24 @@ function Header() {
                 open={Boolean(PromoteEl)}
                 onClose={() => handleMenuClose(setPromoteEl)}
               >
-              <MenuItem onClick={() => {navigate('/promote/affiliate')}}>
+              <MenuItem onClick={() => {navigate('/promote/affiliate')}} sx={{ color: theme=> theme.palette.text.secondary}}>
                <DatasetLinkedOutlinedIcon  sx={{ marginRight: '5px'}}/>
                Affiliate
               </MenuItem>
-              <MenuItem onClick={() => {navigate('/promote/influencer')}}>
+              <MenuItem onClick={() => {navigate('/promote/influencer')}} sx={{ color: theme=> theme.palette.text.secondary}}>
               <Groups2OutlinedIcon  sx={{ marginRight: '5px'}}/>
               Influencer
                 </MenuItem>
-              <MenuItem onClick={() => {navigate('/promote/sponsor')}}>
+              <MenuItem onClick={() => {navigate('/promote/sponsor')}} sx={{ color: theme=> theme.palette.text.secondary}}>
               <PaidOutlinedIcon  sx={{ marginRight: '5px'}}/>
               Sponsor
                 </MenuItem>
-              <MenuItem onClick={() => {navigate('/promote/collaborate')}}>
+              <MenuItem onClick={() => {navigate('/promote/collaborate')}} sx={{ color: theme=> theme.palette.text.secondary}}>
               <GroupOutlinedIcon  sx={{ marginRight: '5px'}}/>
               Collaborate
                 </MenuItem>
             </Menu>
-           <Button sx={{ color: theme => theme.palette.text.secondary }}>Contact</Button>
+           <Button sx={{ color: theme => theme.palette.text.primary }}>Contact</Button>
               {userData ?<><Button
               onClick={() => navigate('/DashBoard')}
               ><PersonOutlineIcon sx={{ 
@@ -195,7 +195,7 @@ function Header() {
               }}/></Button></> 
               :
               <Button 
-              sx={{ color: theme => theme.palette.text.secondary }}
+              sx={{ color: theme => theme.palette.text.primary }}
               onClick={() => {navigate('/signIn')}}
               >Login</Button>}
               
@@ -208,7 +208,7 @@ function Header() {
               onClick={openLogoutModal}
 
               sx={{ 
-                color: theme => theme.palette.text.secondary, 
+                color: theme => theme.palette.text.primary, 
                 border: '1px solid black',
                 borderRadius: '10px',
                 padding: '2px 8px'

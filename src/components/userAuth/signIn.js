@@ -78,11 +78,11 @@ const SignInForm = () => {
             spacing={1}
             sx={{ mb: 3 }}
           >
-            <Typography variant="h4">
+            <Typography variant="h4" sx={{color: theme=> theme.palette.text.secondary}}>
               Login
             </Typography>
             <Typography
-              color="text.primary"
+              color="text.secondary"
               variant="body2"
             >
               Don&apos;t have an account?
