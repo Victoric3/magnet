@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
   res.send('server successfully running');
 });
 dotenv.config({ path: './config.env' });
-const allowedOrigins = ['https://alphamagnet3.netlify.app', 'http://localhost:3000'];
+const allowedOrigins = ['https://alphamagnet3-api.onrender.com'];
 const corsOptions = {
   origin: function (origin, callback) {
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
