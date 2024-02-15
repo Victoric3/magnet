@@ -29,7 +29,7 @@ import RenderSidebar from './renderSidebar';
 function Header() {
   const navigate = useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
   const { logout, userData } = useAuth();
 
   const handleSidebarToggle = () => {
@@ -102,7 +102,7 @@ function Header() {
           background: theme => theme.palette.secondary.main,
            }}>
         <div style={{
-          width: '85%', 
+          width: isMobile? '100%' : '85%', 
           color: '#fff', 
           display: 'flex', 
           alignItems: 'center', 
