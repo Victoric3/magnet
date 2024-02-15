@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Banner() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
   const navigate = useNavigate()
   
   useEffect(() => {
@@ -36,11 +36,13 @@ function Banner() {
         display: isMobile? '' : 'flex',
         height: 'auto',
         justifyContent: 'center',
+        paddingTop: '120px',
+        flexDirection: 'column'
         }}>
     <div style={{
         display: 'flex',
         flexDirection: isMobile ? 'column' : 'row',
-        margin: isMobile ? '20% 0%' : '10% 5%',
+        margin: isMobile ? '0%' : '0% 5%',
         alignItems: 'center',
         alignSelf: 'center',
         padding: isMobile ? '0 10px' : '0',
