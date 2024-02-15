@@ -62,7 +62,7 @@ const LandingPageSection = ({ caption, description, buttonText, imageUrl, invert
         <button>{buttonText}</button>
       </div>
       <div className="image-content">
-        {isMobile? '' : <img src={imageUrl} alt="Landing Page Image" />}
+        {isMobile? '' : <img src={imageUrl} alt="Landing Page" />}
       </div>
     </SectionContainer>
   );

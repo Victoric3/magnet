@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 import Style from './rotatingCard.css'; 
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 

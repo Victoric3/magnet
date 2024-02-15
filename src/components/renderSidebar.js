@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
@@ -19,11 +18,8 @@ import {
   ListItemText,
   Accordion,
   AccordionSummary,
-  AccordionDetails,
-  useMediaQuery,
-
+  AccordionDetails
 } from '@mui/material';
-import { useAuth } from './utilities/AuthContext';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartCheckoutOutlinedIcon from '@mui/icons-material/ShoppingCartCheckoutOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';

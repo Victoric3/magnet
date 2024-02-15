@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Typography, useMediaQuery, Button } from "@mui/material";
+import { Typography, useMediaQuery, Button } from "@mui/material";
 import RotatingCard from "./utilities/rotatingCard";
 import responsiveFlexStyle from "./utilities/flexContainerRotating.css";
 import responsiveFlexStyleSquare from "./utilities/flexContainerSquare.css";
@@ -8,17 +8,10 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import WalletIcon from '@mui/icons-material/Wallet';
 import Groups2OutlinedIcon from '@mui/icons-material/Groups2Outlined';
-import ReviewCarousel from "./utilities/carousel";
-import MindMap from '../img/alphaMagnetMindMap.png';
-import PshopWorkFlow from '../img/work-flow-for-P-shop.png';
-import InvestmentProcess from '../img/Investment-process.png';
-import PromotersWorkFlow from '../img/process-flow-for-promoters.png'; 
 import FAQComponent from "./utilities/faqComp";
-import { styled } from '@mui/system';
 import ContactComponent from "./utilities/contact";
 import Banner from "./home/banner";
 import LandingPageSection from "./home/feature2";
-import vendorImg from '../img/shop.jpg'
 import marketerImg from '../img/affiliate.jpg'
 import faqImg from '../img/questions-6988157_1280-removebg-preview.png'
 import Investment from '../img/investment.jpg'
@@ -28,8 +21,6 @@ import Skill from '../img/skill.jpg'
 
 import { 
   faqData,
-  ToolsBackInfo,
-  ToolsFrontInfo,
   PromoteBackInfo,
   PromoteFrontInfo,
   eShopBackInfo,
@@ -41,14 +32,7 @@ import cardBackground from '../img/_4872d2e3-da27-45b1-9b87-bc68d06aafd4.jpg'
 
 const Home = () => {
 
-///app container
-  const AppContainer = styled(Container)({
-    maxWidth: '100%',
-    overflowX: 'hidden',
-    margin: '0 auto'
-  });
   //img data
-  const Images=[ MindMap, PshopWorkFlow, PromotersWorkFlow, InvestmentProcess]
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
 
@@ -202,7 +186,7 @@ const Home = () => {
          maxWidth: '50%',
          height: 'auto'
         }}>
-        {isMobile? '' : <img src={faqImg} alt="faq Page Image" />}
+        {isMobile? '' : <img src={faqImg} alt="faq Page" />}
       </div>
          </div>     
       <Typography variant='h5' 

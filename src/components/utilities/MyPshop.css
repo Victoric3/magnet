@@ -41,7 +41,7 @@
     flex-shrink: none;
     flex-wrap: wrap;
     gap: 5px;
-    justify-content: start;
+    justify-content: flex-start;
     margin-left: 7%;
     margin-right: 3%;
     /* width: 19%; */

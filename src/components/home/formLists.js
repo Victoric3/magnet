@@ -1,4 +1,3 @@
-import React from "react"
 import shopImg from "../../img/shop.jpg"
 import eShopImg from "../../img/E-shop.jpg"
 import PromoteImg from "../../img/affiliate-marketing.png"

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAuth } from '../utilities/AuthContext';
 import Layout from './shopLayout';
 import {Typography, useMediaQuery}  from '@mui/material'
 import ShopBanner from './shopBanner';
@@ -11,7 +10,7 @@ import image3 from '../../img/laptop-1205256_1920.jpg'
 import image4 from '../../img/kicks-2213619_640.jpg'
 import image5 from '../../img/kitchen-3496594_1280.jpg'
 import image6 from '../../img/smart-watch-821557_1920.jpg'
-import ProductCard from './productCard';
+// import ProductCard from './productCard';
 
 //         "Toys & Games",
 //         "Clothing & Fashion",
@@ -20,11 +19,11 @@ import ProductCard from './productCard';
 //         "Home & Living",
 //         "Watches & Accessories"
 const Pshop = () => {
-    const { messageShower, handleMsgCollector, updateAuth } = useAuth()
+    // const { messageShower, handleMsgCollector, updateAuth } = useAuth()
     const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const isAvgScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
-    const isLargeScreen = useMediaQuery((theme) => theme.breakpoints.down('lg'));
-    const isNexhubtMax = useMediaQuery((theme) => theme.breakpoints.down('xl'));
+    // const isLargeScreen = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+    // const isNexhubtMax = useMediaQuery((theme) => theme.breakpoints.down('xl'));
     const categoryImages = [image1, image2, image3, image4, image5, image6]
     return ( 
     <>

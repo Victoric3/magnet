@@ -23,6 +23,8 @@ import { useAuth } from '../utilities/AuthContext'
 import CurrencyMapping from '../utilities/formLists'
 import { Currencies } from '../utilities/formLists'
 import './signUpForm.css'
+import Spinner from '../utilities/loader';
+
 
 const SignupForm = () => {
 const { messageShower, handleMsgCollector, baseUrl } = useAuth()
@@ -55,6 +57,7 @@ const { messageShower, handleMsgCollector, baseUrl } = useAuth()
   //save error state and move up the tray
   const [Error, setError] = useState(null)
   const [Success, setSuccess] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   //fetch countries
   const [countries, setCountries] = useState([]);
@@ -139,6 +142,7 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
   ///handle submit
   // Logic to handle signup 
   const handleSubmit = async (event) => {
+    setLoading(true)
     event.preventDefault();
       let response
     if (!checked) {
@@ -163,6 +167,7 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
           });
     
           if (response.ok) {
+            setLoading(false)
             setError(null);
             setSuccess('Registration successful, you will be redirected shortly');  
             setTimeout(() => {
@@ -170,10 +175,12 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
             }, 2000); 
 
           }else if(response.status === 400){
+            setLoading(false)
             const data = await response.json()
             setError(data.message)
           }
         } catch (error) {
+          setLoading(false)
           setError(error.message)
         }
       }
@@ -182,7 +189,7 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
     }
     useEffect(() => {
       handleMsgCollector(Error, Success);
-    }, [Error, Success]);
+    }, [Error, Success, handleMsgCollector]);
     const [passwordError, setPasswordError] = useState('')
     useEffect( () => {
       if (Password.split('').length<8) {
@@ -196,6 +203,7 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
   return (
       <div className='signup-container'>
         <form onSubmit={handleSubmit}>
+          {loading? <Spinner /> : ''}
           <Card>
           <CardHeader
           subheader="create a free account"
@@ -404,9 +412,9 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
         </CardContent>
           </Card>
           <Divider />
-        <CardActions sx={{ justifyContent: 'start' }}>
+        <CardActions sx={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
           <FormControlLabel
-          control={<Checkbox checked={checked} onChange={handleCheckboxChange} />}
+          control={<Checkbox checked={checked} onChange={handleCheckboxChange} sx={{color: '#333'}}/>}
           label={ <span>
             I agree to the{' '}
             <Link href="/privacy-policy" target="_blank" rel="noopener">
@@ -419,8 +427,8 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
           </span>}
           />
           </CardActions>
-          <CardActions sx={{ justifyContent: 'center', background: '#007bff' }}>
-          <Button type="submit" variant="button" sx={{color:"white"}} >
+          <CardActions sx={{ justifyContent: 'center', background: theme=> theme.palette.secondary.main, borderRadius: '5px' }}>
+          <Button type="submit" variant="button" sx={{color:"white", background: theme=> theme.palette.secondary.main, width: '100%'}} >
             Sign Up
           </Button>
           </CardActions>
