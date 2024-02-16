@@ -11,7 +11,7 @@ const FAQComponent = ({ faqData }) => {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   return (
     <>
-    <Typography variant='h5'> Frequently asked questions </Typography>
+    <Typography variant='h5' sx={{color: theme=> theme.palette.text.secondary}}> Frequently asked questions </Typography>
       {faqData.map((faq, index) => (
         <Accordion
           key={index}
@@ -29,13 +29,16 @@ const FAQComponent = ({ faqData }) => {
             color: expanded === `panel${index}` ?theme=> theme.palette.background.default : theme=> theme.palette.text.primary,
         }}
           >
-            <Typography variant="h5" 
+            <Typography 
+               variant="h5" 
+               sx={{color: theme=> theme.palette.text.secondary}}
                >{faq.question}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography variant='h6' 
             sx={{ 
                 fontWeight: '300',
+                color: theme=> theme.palette.text.secondary
             }}>{faq.answer}</Typography>
           </AccordionDetails>
         </Accordion>

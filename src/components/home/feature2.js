@@ -53,10 +53,10 @@ const LandingPageSection = ({ caption, description, buttonText, imageUrl, invert
   return (
     <SectionContainer inverted={inverted}>
       <div className="text-content">
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom sx={{color: theme=> theme.palette.text.secondary}}>
           {caption}
         </Typography>
-        <Typography variant="body1" paragraph>
+        <Typography variant="body1" paragraph sx={{color: theme=> theme.palette.text.secondary}}>
           {description}
         </Typography>
         <button>{buttonText}</button>

@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
   res.send('server successfully running');
 });
 dotenv.config({ path: './config.env' });
-const allowedOrigins = ['https://alphamagnet3.onrender.com'];
+const allowedOrigins = ['https://alphamagnet3.onrender.com', 'http://localhost:3000'];
 const corsOptions = {
   origin: function (origin, callback) {
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
