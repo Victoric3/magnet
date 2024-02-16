@@ -42,12 +42,13 @@ const SquareCard = (props) => {
         {React.createElement(props.icon, {style: {fontSize: '38px'}})}
       </IconWrapper>
       <CardContent>
-        <Typography variant='h5'  sx={{ textAlign: 'center' }}>
+        <Typography variant='h5'  sx={{ textAlign: 'center', color: theme=> theme.palette.text.secondary }}>
           {props.title}
         </Typography>
         <Typography variant='h6' sx={{ 
           textAlign: 'center', 
           marginTop: '10px',
+          color: theme=> theme.palette.text.secondary
           }}>
           {props.content}
         </Typography>

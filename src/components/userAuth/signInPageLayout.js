@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography, Grid } from '@mui/material';
-// import logo from '../../img/alpha3 logo.jpg';
+import logo from '../../img/alpha3 logo.jpg';
 import signInBanner from '../../img/affiliate-marketing.png';
 
 
@@ -36,6 +36,17 @@ const Layout = ({ children, component }) => {
             }}
           >
           </Box>
+          <div style={{
+            width: '100%', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            margin: '70px 0px -50px 0px'
+            }}>
+          <img src={logo} alt="alphamagnet3's logo" style={{width: '80px', height: 'auto', borderRadius: '50%'}}/>
+          <Typography variant='h5' sx={{color: theme=> theme.palette.text.secondary}}>Alphamagnet3</Typography>
+          </div>
           {children}
         </Grid>
         <Grid
