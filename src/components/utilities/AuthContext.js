@@ -16,10 +16,10 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState()
   const [success, setSuccess] = useState()
   const [showmsg, setShowmsg] = useState(false)
-  const development = false
+  const development = true
   const baseUrl = (finalEndPoint) => {
     if(development){
-      return `http://localhost:8000/api/v1/${finalEndPoint}`
+      return `http://localhost:10000/api/v1/${finalEndPoint}`
     }else{
       return `https://alphamagnet3-api.onrender.com/api/v1/${finalEndPoint}`
 

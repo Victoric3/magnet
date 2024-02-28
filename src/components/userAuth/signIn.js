@@ -100,8 +100,8 @@ const SignInForm = () => {
           
           <form
               onSubmit={handleSubmit}
-            >
-          {loading ? <Spinner /> : ''}
+              >
+              {loading ? <Spinner /> : ''}
           <Stack spacing={3}>
           <TextField
             label='UserName or Email'

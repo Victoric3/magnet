@@ -50,14 +50,14 @@ exports.signUp = async(req, res)=>{
         })
         return;
     }
-    const user = await Shop.findOne({ userName }); 
-    const emailCheck = await Shop.findOne({ email }); 
+    const user = await User.findOne({ userName }); 
+    const emailCheck = await User.findOne({ email }); 
       if (user) {
-      res.status(400).json({ errorMessage: 'userName is already taken. Please choose a different one.' });
+      res.status(400).json({ message: 'userName is already taken. Please choose a different one.' });
       return;
     }
       if (emailCheck) {
-      res.status(400).json({ errorMessage: 'email is already taken. Please choose a different one.' });
+      res.status(400).json({ message: 'email is already taken. Please choose a different one.' });
       return;
     }
 
@@ -75,7 +75,7 @@ exports.signUp = async(req, res)=>{
         token,
         data: newUser,
     })} catch(err){
-        res.status(400).json({
+        res.status(500).json({
             status: 'failed',
             message: err.message,
         })

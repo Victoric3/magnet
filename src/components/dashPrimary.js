@@ -1,4 +1,4 @@
-// import Head from 'next/head';
+import React, {useEffect, useState} from 'react'
 import { subDays, subHours } from 'date-fns';
 import { Box, Container, Unstable_Grid2 as Grid } from '@mui/material';
 import Layout  from './utilities/layout';
@@ -10,7 +10,50 @@ import { RatingProgress } from './overview/overview-tasks-progress';
 import { OverviewTotalCustomers } from './overview/overview-total-customers';
 import { OverviewTotalProfit } from './overview/overview-total-profit';
 import { OverviewTraffic } from './overview/overview-traffic';
+import { useAuth } from './utilities/AuthContext';
 
+
+const Page = () => {
+  const { userData } = useAuth();
+  const [thisMonthIncome, setThisMonthIncome] = useState(0);
+  const [lastMonthIncome, setLastMonthIncome] = useState(0);
+  const [difference, setDifference] = useState(0);
+  const [positive, setPositive] = useState(false);
+  const calculateMonthlyIncome = (userData, month, year) => {
+    if (!userData || !userData.transaction) return 0;
+  
+    const startOfMonth = new Date(year, month, 1);
+    const endOfMonth = new Date(year, month + 1, 0);
+    const transactions = userData.transaction.filter(transaction =>
+      new Date(transaction.date) >= startOfMonth && new Date(transaction.date) <= endOfMonth
+    );
+    const totalIncome = transactions.reduce((acc, transaction) => acc + transaction.amount, 0);
+    return totalIncome;
+  };
+  
+  useEffect(() => {
+    if (userData) {
+      const currentMonth = new Date().getMonth();
+      const currentYear = new Date().getFullYear();
+
+      const thisMonthIncome = calculateMonthlyIncome(userData, currentMonth, currentYear);
+      const lastMonthIncome = calculateMonthlyIncome(userData, currentMonth - 1, currentYear);
+
+      setThisMonthIncome(thisMonthIncome);
+      setLastMonthIncome(lastMonthIncome);
+      if (lastMonthIncome !== 0) {
+        const diff = thisMonthIncome - lastMonthIncome;
+        const percentage = (diff / lastMonthIncome) * 100;
+        setDifference(percentage);
+      } else {
+        setDifference(0);
+      }
+      setPositive(thisMonthIncome > lastMonthIncome);
+
+    }
+  }, [userData]);
+
+  console.log(userData.transaction)
 const now = new Date();
 const children = 
   <Box
@@ -31,13 +74,13 @@ const children =
           lg={3}
         >
           <OverviewMonthlyIncome
-            difference={12}
-            positive
+            difference={difference}
+            positive={positive}
             sx={{ 
               height: '100%', 
               borderRadius: '15px'
             }}
-            value="$24k"
+            value={`$${thisMonthIncome.toFixed(2)}`}
           />
         </Grid>
         <Grid
@@ -226,7 +269,6 @@ const children =
     </Container>
   </Box>
 
-const Page = () => {
   return(<>
   <Layout children={children} sx={{padding: '24px'}}/>
   </>)

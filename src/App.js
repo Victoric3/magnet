@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import SignUpForm from './components/userAuth/signUp';
@@ -8,7 +8,7 @@ import theme from './components/utilities/theme';
 import Home from './components/home';
 import Header from './components/header';
 import MsgCard from './components/utilities/msgCard';
-import { AuthProvider, useAuth } from './components/utilities/AuthContext';
+import { useAuth } from './components/utilities/AuthContext';
 import Pshop from './components/pshop/pShop';
 import Page from './components/dashPrimary'
 import CreateShop from './components/myShops/craeteShopPages/createShop';
@@ -40,7 +40,7 @@ function App() {
     
           <Routes>
             <Route path='/' element={<><Header /> <Home /></>} />
-            <Route path='/signUp' element={<><Header /> <SignUpForm /></>} />
+            <Route path='/signUp' element={<SignUpForm />} />
             <Route path='/signIn' element={<SignInForm />} />
             <Route path='/shop/Pshop' element={<Pshop />} />
             <Route path='/DashBoard' element={<Page />} />

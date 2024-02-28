@@ -2,10 +2,12 @@ import React from 'react';
 import { Box, Typography, Grid } from '@mui/material';
 import logo from '../../img/alpha3 logo.jpg';
 import signInBanner from '../../img/affiliate-marketing.png';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const Layout = ({ children, component }) => {
+  const navigate = useNavigate()
   return (
     <Box
       component="main"
@@ -44,7 +46,7 @@ const Layout = ({ children, component }) => {
             alignItems: 'center', 
             margin: '70px 0px -50px 0px'
             }}>
-          <img src={logo} alt="alphamagnet3's logo" style={{width: '80px', height: 'auto', borderRadius: '50%'}}/>
+          <img src={logo} alt="alphamagnet3's logo" onClick={() => navigate('/')} style={{width: '80px', height: 'auto', borderRadius: '50%', cursor: 'pointer'}}/>
           <Typography variant='h5' sx={{color: theme=> theme.palette.text.secondary}}>Alphamagnet3</Typography>
           </div>
           {children}

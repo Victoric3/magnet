@@ -28,7 +28,6 @@ exports.getAllUsers = async (req, res) => {
     try{
       //req.params.id
       const user = await User.findById(req.user._id)
-      
       res.status(201).json(
         {
       status: 'success',

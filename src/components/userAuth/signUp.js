@@ -24,6 +24,7 @@ import CurrencyMapping from '../utilities/formLists'
 import { Currencies } from '../utilities/formLists'
 import './signUpForm.css'
 import Spinner from '../utilities/loader';
+import logo from '../../img/alpha3 logo.jpg';
 
 
 const SignupForm = () => {
@@ -147,13 +148,18 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
       let response
     if (!checked) {
       setError('Please accept our privacy policy and terms of service');
-      } else if (!selectedCountry) {
-        setError('Please tell us your country');
-      } else if (!phoneNumber) {
+      setLoading(false)
+    } else if (!selectedCountry) {
+      setError('Please tell us your country');
+      setLoading(false)
+    } else if (!phoneNumber) {
+        setLoading(false)
         setError('your phone number is required for verification');
       } else if (!verification) {
+        setLoading(false)
         setError(`Please select a phone number used in ${selectedCountry}`);
       }else if (finalFormData.password !== finalFormData.passwordConfirm) {
+        setLoading(false)
         setError('Please ensure your password and confirmed password are the same');
         clearPassword();
       }else {
@@ -174,7 +180,7 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
               navigate('/signIn'); 
             }, 2000); 
 
-          }else if(response.status === 400){
+          }else if(!response.ok){
             setLoading(false)
             const data = await response.json()
             setError(data.message)
@@ -200,16 +206,35 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
 
     }, [Password])
     
-  return (
+    return (
       <div className='signup-container'>
         <form onSubmit={handleSubmit}>
-          {loading? <Spinner /> : ''}
+        <div style={{
+          display: 'flex', 
+          flexDirection: 'column', 
+          gap: '5px', 
+          justifyContent: 'center', 
+          alignItems: 'center',
+          margin: '-50px 0px 30px 0px'
+          }}>
+        <img src={logo} alt='alpha3 logo' style={{
+          width: '80px', 
+          height: 'auto', 
+          borderRadius: '50%',
+          cursor: 'pointer'
+          }}
+          onClick={() => navigate('/')}
+          />
+        <Typography variant='h5' sx={{color: theme=> theme.palette.text.secondary}}>Alphamagnet3</Typography>
+        </div>
+            {loading? <Spinner /> : ''}
           <Card>
           <CardHeader
+          sx={{color: theme=> theme.palette.text.secondary}}
           subheader="create a free account"
           title="Get started"
-        />
-        <CardContent sx={{ pt: 0 }}>
+          />
+          <CardContent sx={{ pt: 0 }}>
         <Box sx={{ m: -1.5 }}>
         <Grid
               container
@@ -415,7 +440,7 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
         <CardActions sx={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
           <FormControlLabel
           control={<Checkbox checked={checked} onChange={handleCheckboxChange} sx={{color: '#333'}}/>}
-          label={ <span>
+          label={ <span style={{color: '#333'}}>
             I agree to the{' '}
             <Link href="/privacy-policy" target="_blank" rel="noopener">
               Privacy Policy
@@ -427,8 +452,8 @@ const selectedCurrencySymbol = CurrencyMapping[selectedCurrency];
           </span>}
           />
           </CardActions>
-          <CardActions sx={{ justifyContent: 'center', background: theme=> theme.palette.secondary.main, borderRadius: '5px' }}>
-          <Button type="submit" variant="button" sx={{color:"white", background: theme=> theme.palette.secondary.main, width: '100%'}} >
+          <CardActions sx={{ justifyContent: 'center', background: loading? '#ccc' : theme=> theme.palette.secondary.main, borderRadius: '5px' }}>
+          <Button type="submit" variant="button" sx={{color: loading? "#333" : "white", background: theme=> theme.palette.secondary.main, width: '100%'}} disabled= {loading ? true : false}>
             Sign Up
           </Button>
           </CardActions>
