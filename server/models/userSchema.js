@@ -8,7 +8,6 @@ const chatMessageSchema = new mongoose.Schema({
     message: String,
     timestamp: { type: Date, default: Date.now }
   });
-  
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -115,8 +114,8 @@ const userSchema = new mongoose.Schema({
         default: '$'
     },
     transaction: {
-        type: [Number],
-        default: [0]
+        type: [Object],
+        default: []
     },
     pendingBalance: {
         type: [Number],
@@ -138,6 +137,7 @@ userSchema.pre('save', async function(next){
     next()
 
 })
+
 userSchema.pre('save', async function(next){
     if(!this.isModified('password') || this.isNew) return next();
     this.passwordChangedAt = Date.now() - 1000;

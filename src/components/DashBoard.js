@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from 'react'
 import { useAuth } from './utilities/AuthContext';
 import SquareCard from "./utilities/dashBoardSalesCard";
 import './utilities/DashBoard.css'
@@ -10,8 +10,8 @@ import  useFetchUserData  from './hooks/useFetchData';
 import { TopNav } from './utilities/topnav'
 
 const DashBoard = () => {
-  const { updateAuth, token, shopData, baseUrl, userData } = useAuth();
-  const navigate = useNavigate()
+  const { updateAuth, token, shopData, userData } = useAuth();
+
   useFetchUserData(token)
   updateAuth(shopData)
   const numbers1 = userData?.transaction;

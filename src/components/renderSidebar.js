@@ -69,7 +69,7 @@ const RenderSidebar = ({
       }}
     >
       <div/>
-      <List>
+      <List sx={{color: theme=> theme.palette.text.secondary}}>
         <ListItem button onClick={handleSidebarToggle}>
         <ListItemIcon>
             {sidebarOpen ? <CloseIcon /> : <MenuIcon />}
@@ -87,7 +87,9 @@ const RenderSidebar = ({
           </ListItemIcon>
           <ListItemText primary="About" />
         </ListItem>
-      <Accordion expanded={ShopExpanded} 
+      <Accordion 
+      sx={{color: theme=> theme.palette.text.secondary}}
+      expanded={ShopExpanded} 
       onChange={() => handleAccordionChange(ShopExpanded, setShopExpanded)}>
             <AccordionSummary expandIcon={<ExpandMore />}>
             <ShoppingCartOutlinedIcon />
@@ -122,7 +124,9 @@ const RenderSidebar = ({
               </List>
             </AccordionDetails>
           </Accordion>
-      <Accordion expanded={PromoteExpanded} 
+      <Accordion 
+      sx={{color: theme=> theme.palette.text.secondary}}
+      expanded={PromoteExpanded} 
       onChange={() => handleAccordionChange(PromoteExpanded, setPromoteExpanded)}>
             <AccordionSummary expandIcon={<ExpandMore />}>
             <RocketLaunchOutlinedIcon />
