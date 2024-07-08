@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState()
   const [success, setSuccess] = useState()
   const [showmsg, setShowmsg] = useState(false)
-  const development = true
+  const development = false
   const baseUrl = (finalEndPoint) => {
     if(development){
       return `http://localhost:10000/api/v1/${finalEndPoint}`
